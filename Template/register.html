@@ -72,6 +72,48 @@
                               German
                            </option>
                         </select>
+                        <div class="dd ddcommon borderRadius" id="countries_msdd" tabindex="-1" style="width: 300px">
+                           <div class="ddTitle borderRadiusTp">
+                              <span class="divider"></span><span class="ddArrow arrowoff"></span
+                              ><span class="ddTitleText" id="countries_title"
+                                 ><img src="img/flag-1.jpg" class="flag yt fnone" /><span class="ddlabel">English</span
+                                 ><span class="description" style="display: none"></span
+                              ></span>
+                           </div>
+                           <input
+                              id="countries_titleText"
+                              type="text"
+                              autocomplete="off"
+                              class="text shadow borderRadius"
+                              style="display: none"
+                           />
+                           <div
+                              class="ddChild ddchild_ border shadow"
+                              id="countries_child"
+                              style="
+                                 z-index: 9999;
+                                 display: none;
+                                 position: absolute;
+                                 visibility: visible;
+                                 height: 49px;
+                              "
+                           >
+                              <ul>
+                                 <li class="enabled _msddli_ selected" title="English">
+                                    <img src="img/flag-1.jpg" class="flag yt fnone" /><span class="ddlabel"
+                                       >English</span
+                                    >
+                                    <div class="clear"></div>
+                                 </li>
+                                 <li class="enabled _msddli_" title="Bangladesh">
+                                    <img src="img/flag-2.jpg" class="flag yu fnone" /><span class="ddlabel"
+                                       >German</span
+                                    >
+                                    <div class="clear"></div>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
                      </div>
                      <div class="dd ddcommon borderRadius" id="countries_msdd" tabindex="0" style="width: 300px">
                         <div class="ddTitle borderRadiusTp">
@@ -94,7 +136,7 @@
                            style="z-index: 9999; display: none; position: absolute; visibility: visible; height: 51px"
                         >
                            <ul>
-                              <li class="enabled _msddli_ selected" title="English">
+                              <li class="enabled _msddli_" title="English">
                                  <img src="img/flag-1.jpg" class="flag yt fnone" /><span class="ddlabel">English</span>
                                  <div class="clear"></div>
                               </li>
@@ -241,7 +283,13 @@
                </nav>
                <div id="mobile-menu-wrap">
                   <div class="slicknav_menu">
-                     <a href="#" aria-haspopup="true" role="button" tabindex="0" class="slicknav_btn slicknav_collapsed"
+                     <a
+                        href="#"
+                        aria-haspopup="true"
+                        role="button"
+                        tabindex="0"
+                        class="slicknav_btn slicknav_collapsed"
+                        style="outline: none"
                         ><span class="slicknav_menutxt">MENU</span
                         ><span class="slicknav_icon"
                            ><span class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span
@@ -258,7 +306,10 @@
                                  aria-haspopup="true"
                                  tabindex="-1"
                                  class="slicknav_item slicknav_row"
-                                 ><a href="#">Collection</a> <span class="slicknav_arrow">►</span></a
+                                 style="outline: none"
+                              >
+                                 <a href="#">Collection</a>
+                                 <span class="slicknav_arrow">►</span></a
                               >
                               <ul class="dropdown slicknav_hidden" role="menu" aria-hidden="true" style="display: none">
                                  <li><a href="#" role="menuitem" tabindex="-1">Men's</a></li>
@@ -275,8 +326,68 @@
                                  aria-haspopup="true"
                                  tabindex="-1"
                                  class="slicknav_item slicknav_row"
-                                 ><a href="#">Pages</a> <span class="slicknav_arrow">►</span></a
+                                 style="outline: none"
                               >
+                                 <a href="#">Pages</a>
+                                 <span class="slicknav_arrow">►</span></a
+                              >
+                              <ul class="dropdown slicknav_hidden" role="menu" aria-hidden="true" style="display: none">
+                                 <li><a href="./blog-details.html" role="menuitem" tabindex="-1">Blog Details</a></li>
+                                 <li><a href="./shopping-cart.html" role="menuitem" tabindex="-1">Shopping Cart</a></li>
+                                 <li><a href="./check-out.html" role="menuitem" tabindex="-1">Checkout</a></li>
+                                 <li><a href="./faq.html" role="menuitem" tabindex="-1">Faq</a></li>
+                                 <li><a href="./register.html" role="menuitem" tabindex="-1">Register</a></li>
+                                 <li><a href="./login.html" role="menuitem" tabindex="-1">Login</a></li>
+                              </ul>
+                           </li>
+                        </ul>
+                     </nav>
+                  </div>
+                  <div class="slicknav_menu">
+                     <a
+                        href="#"
+                        aria-haspopup="true"
+                        role="button"
+                        tabindex="0"
+                        class="slicknav_btn slicknav_collapsed"
+                        style="outline: none"
+                        ><span class="slicknav_menutxt">MENU</span
+                        ><span class="slicknav_icon"
+                           ><span class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span
+                           ><span class="slicknav_icon-bar"></span></span
+                     ></a>
+                     <nav class="slicknav_nav slicknav_hidden" aria-hidden="true" role="menu" style="display: none">
+                        <ul>
+                           <li><a href="./index.html" role="menuitem">Home</a></li>
+                           <li><a href="./shop.html" role="menuitem">Shop</a></li>
+                           <li class="slicknav_collapsed slicknav_parent">
+                              <a
+                                 href="#"
+                                 role="menuitem"
+                                 aria-haspopup="true"
+                                 tabindex="-1"
+                                 class="slicknav_item slicknav_row"
+                                 style="outline: none"
+                              ></a
+                              ><a href="#">Collection</a> <span class="slicknav_arrow">►</span>
+                              <ul class="dropdown slicknav_hidden" role="menu" aria-hidden="true" style="display: none">
+                                 <li><a href="#" role="menuitem" tabindex="-1">Men's</a></li>
+                                 <li><a href="#" role="menuitem" tabindex="-1">Women's</a></li>
+                                 <li><a href="#" role="menuitem" tabindex="-1">Kid's</a></li>
+                              </ul>
+                           </li>
+                           <li><a href="./blog.html" role="menuitem">Blog</a></li>
+                           <li><a href="./contact.html" role="menuitem">Contact</a></li>
+                           <li class="slicknav_collapsed slicknav_parent">
+                              <a
+                                 href="#"
+                                 role="menuitem"
+                                 aria-haspopup="true"
+                                 tabindex="-1"
+                                 class="slicknav_item slicknav_row"
+                                 style="outline: none"
+                              ></a
+                              ><a href="#">Pages</a> <span class="slicknav_arrow">►</span>
                               <ul class="dropdown slicknav_hidden" role="menu" aria-hidden="true" style="display: none">
                                  <li><a href="./blog-details.html" role="menuitem" tabindex="-1">Blog Details</a></li>
                                  <li><a href="./shopping-cart.html" role="menuitem" tabindex="-1">Shopping Cart</a></li>
@@ -301,7 +412,7 @@
             <div class="row">
                <div class="col-lg-6 offset-lg-3">
                   <div class="register-form">
-                     <h2>Register</h2>
+                     <h2>Registrazione</h2>
                      <form action="#">
                         <div class="group-input">
                            <label for="username">Nome *</label>
@@ -386,6 +497,11 @@
                   ><button type="button" role="presentation" class="owl-next"><i class="ti-angle-right"></i></button>
                </div>
                <div class="owl-dots disabled"></div>
+               <div class="owl-nav disabled">
+                  <button type="button" role="presentation" class="owl-prev"><i class="ti-angle-left"></i></button
+                  ><button type="button" role="presentation" class="owl-next"><i class="ti-angle-right"></i></button>
+               </div>
+               <div class="owl-dots disabled"></div>
             </div>
          </div>
       </div>
@@ -457,7 +573,7 @@
                         <script>
                            document.write(new Date().getFullYear());
                         </script>
-                        2023 All rights reserved | This template is made with
+                        2023 2023 All rights reserved | This template is made with
                         <i class="fa fa-heart-o" aria-hidden="true"></i> by
                         <a href="https://colorlib.com" target="_blank">Colorlib</a>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
