@@ -14,6 +14,7 @@ prezzo
 quantità_disponibile
 id_colore (chiave esterna verso la tabella Colore)
 id_categoria (chiave esterna verso la tabella Categoria)
+id_marca (chiave esterna verso la tabella Marca)
 
 3) Categoria
 id (chiave primaria)
@@ -93,3 +94,7 @@ url_immagine
 id (chiave primaria)
 user_id (chiave esterna verso la tabella Utenti)
 product_id (chiave esterna verso la tabella Prodotti)
+
+17) Marca:
+id (chiave primaria)
+nome_marca
