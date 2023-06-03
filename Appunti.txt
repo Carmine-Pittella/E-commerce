@@ -15,57 +15,22 @@ quantità_disponibile
 id_colore (chiave esterna verso la tabella Colore)
 id_categoria (chiave esterna verso la tabella Categoria)
 id_marca (chiave esterna verso la tabella Marca)
+id_promozione (chiave esterna verso la tabella Promozione)
 
-3) Categoria
+3) Colore
+id (chiave primaria)
+nome_colore
+codice_colore "esadecimale"
+
+4) Categoria
 id (chiave primaria)
 nome_categoria
 
-4) Ordine
+5) Marca:
 id (chiave primaria)
-user_id (chiave esterna verso la tabella Utenti)
-data_ordine
-data_spedizione
-prezzo_ordine
+nome_marca
 
-5) Oggetto_Ordine
-order_id (chiave esterna verso la tabella Ordini)
-product_id (chiave esterna verso la tabella Prodotti)
-quantità_prodotto
-
-6) Metodo_Pagamento
-id (chiave primaria)
-tipo_pagamento
-dettagli_pagamento
-
-7) Indirizzo_Spedizione
-id (chiave primaria)
-user_id (chiave esterna verso la tabella Utenti)
-indirizzo
-città
-CAP
-
-8) Recensioni
-id (chiave primaria)
-user_id (chiave esterna verso la tabella Utenti)
-product_id (chiave esterna verso la tabella Prodotti)
-testo_recensione
-valutazione "da 1 a 5" --> poi senza fare nesssuna grafica si potrebbe semplicemente calcolare la media e affiancargli una ★
-
-9) Carrello
-id (chiave primaria)
-user_id (chiave esterna verso la tabella Utenti)
-
-10) Oggetto_Carrello
-cart_id (chiave esterna verso la tabella Carrelli)
-product_id (chiave esterna verso la tabella Prodotti)
-quantità_prodotto
-
-11) Coupon
-id (chiave primaria)
-codice_coupon
-sconto_percentuale
-
-12) Promozione
+6) Promozione
 id (chiave primaria)
 nome_promozione
 descrizione
@@ -73,28 +38,64 @@ sconto_percentuale
 data_inizio
 data_fine
 
-13) Messaggio --> li possiamo usare nella pagina "blog", almeno è gia fatta..
+7) Prodotto_Preferito:
+id (chiave primaria)
+user_id (chiave esterna verso la tabella Utenti)
+product_id (chiave esterna verso la tabella Prodotti)
+
+8) Ordine
+id (chiave primaria)
+user_id (chiave esterna verso la tabella Utenti)
+data_ordine
+data_spedizione
+prezzo_ordine
+
+9) Oggetto_Ordine
+order_id (chiave esterna verso la tabella Ordini)
+product_id (chiave esterna verso la tabella Prodotti)
+quantità_prodotto
+
+10) Carrello
+id (chiave primaria)
+user_id (chiave esterna verso la tabella Utenti)
+
+11) Oggetto_Carrello
+cart_id (chiave esterna verso la tabella Carrelli)
+product_id (chiave esterna verso la tabella Prodotti)
+quantità_prodotto
+
+12) Indirizzo_Spedizione
+id (chiave primaria)
+user_id (chiave esterna verso la tabella Utenti)
+indirizzo
+città
+CAP
+
+13) Recensione
+id (chiave primaria)
+user_id (chiave esterna verso la tabella Utenti)
+product_id (chiave esterna verso la tabella Prodotti)
+testo_recensione
+valutazione "da 1 a 5" --> poi senza fare nesssuna grafica si potrebbe semplicemente calcolare la media e affiancargli una ★
+
+14) Coupon
+id (chiave primaria)
+codice_coupon
+sconto_percentuale
+
+15) Messaggio --> li possiamo usare nella pagina "blog", almeno è gia fatta..
 id (chiave primaria)
 user_id (chiave esterna verso la tabella Utenti)
 testo_messaggio
 data_messaggio
 
-14) Colore
-id (chiave primaria)
-user_id (chiave esterna verso la tabella Utenti)
-nome_colore
-codice_colore "esadecimale"
-
-15) Immagine_Prodotto:
+16) Immagine_Prodotto --> questo perché un prodotto può avere più di un immagine
 id (chiave primaria)
 product_id (chiave esterna verso la tabella Prodotti)
 url_immagine
 
-16) Prodotto_Preferito:
+17) Metodo_Pagamento
 id (chiave primaria)
-user_id (chiave esterna verso la tabella Utenti)
-product_id (chiave esterna verso la tabella Prodotti)
+tipo_pagamento
+dettagli_pagamento
 
-17) Marca:
-id (chiave primaria)
-nome_marca
