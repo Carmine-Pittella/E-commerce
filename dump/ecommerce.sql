@@ -1,3 +1,11 @@
+--
+-- Database: `ecommerce`
+--
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
 -- Drop Tabelle
 DROP TABLE IF EXISTS Utente;
 DROP TABLE IF EXISTS Prodotto;
@@ -18,7 +26,7 @@ DROP TABLE IF EXISTS Immagine_Prodotto;
 DROP TABLE IF EXISTS Metodo_Pagamento;
 
 
-----------------------------------  CREAZIONE TABELLE ----------------------------------
+-- --------------------------------  CREAZIONE TABELLE ----------------------------------
 
 CREATE TABLE IF NOT EXISTS Utente (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -157,7 +165,7 @@ CREATE TABLE IF NOT EXISTS Metodo_Pagamento (
 );
 
 
-----------------------------------  TRIGGER ----------------------------------
+-- --------------------------------  TRIGGER ----------------------------------
 
 
 
@@ -167,7 +175,7 @@ CREATE TABLE IF NOT EXISTS Metodo_Pagamento (
 
 
 
-----------------------------------  PROCEDURE ----------------------------------
+-- --------------------------------  PROCEDURE ----------------------------------
 
 
 
@@ -179,7 +187,7 @@ CREATE TABLE IF NOT EXISTS Metodo_Pagamento (
 
 
 
-----------------------------------  INSERIMENTO DATI ----------------------------------
+-- --------------------------------  INSERIMENTO DATI ----------------------------------
 
 -- Inserimento valori casuali nella tabella Utente
 INSERT INTO Utente (nome, cognome, email, password, tipologia_utente)
