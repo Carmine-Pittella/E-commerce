@@ -23,7 +23,6 @@ foreach ($res as $r) {
     $filtri->setContent("categorie", $categoria->get());
 }
 
-
 $res = $connessione->query("SELECT * FROM marca m ORDER BY m.nome_marca")->fetch_all(MYSQLI_ASSOC);
 foreach ($res as $r) {
     $marca = new Template("skins/template/dtml/dtml_items/barra laterale filtri/marcaItem.html");
@@ -38,12 +37,25 @@ foreach ($res as $r) {
     $colore->setContent("CODICE_COLORE", $r['codice_colore']);
     $filtri->setContent('colori', $colore->get());
 }
-
-
-
 $shop->setContent('sezione_filtri', $filtri->get());
 
-/********* popolamento della colonna laterale dei filtri *********/
+
+
+
+/********* popolamento dei prodotti *********/
+$res = $connessione->query("SELECT * FROM prodotto")->fetch_all(MYSQLI_ASSOC);
+foreach ($res as $r) {
+    // $marcaTmp = $connessione->query("SELECT m.nome_marca FROM Prodotto p LEFT JOIN marca m ON $r['id_marca'] = m.id;")->fetch_all(MYSQLI_ASSOC);
+
+    $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
+    $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
+    $prodotto->setContent("MARCA_PRODOTTO", $r['id_marca']);
+    $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
+    $shop->setContent('prodotti', $prodotto->get());
+}
+
+
+
 
 
 
