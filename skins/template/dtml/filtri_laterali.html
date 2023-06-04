@@ -1,0 +1,65 @@
+<div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
+   <div class="filter-widget">
+      <h4 class="fw-title">Categorie</h4>
+      <ul class="filter-catagories">
+         <[foreach]> <[categorie]> <[/foreach]>
+         <!-- è solo una prova, per vedere come funziona guardare il file "shop.php" e "categoriaItem.html" -->
+      </ul>
+   </div>
+   <div class="filter-widget">
+      <h4 class="fw-title">Brand</h4>
+      <div class="fw-brand-check"><[foreach]> <[marche]> <[/foreach]></div>
+   </div>
+   <div class="filter-widget">
+      <h4 class="fw-title">Prezzo</h4>
+      <div class="filter-range-wrap">
+         <div class="range-slider">
+            <div class="price-input">
+               <input type="text" id="minamount" />
+               <input type="text" id="maxamount" />
+            </div>
+         </div>
+         <div
+            class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+            data-min="33"
+            data-max="98"
+         >
+            <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 0%"></span>
+            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 100%"></span>
+            <div class="ui-slider-range ui-corner-all ui-widget-header" style="left: 0%; width: 100%"></div>
+         </div>
+      </div>
+
+      <a href="#" class="filter-btn">Filter</a>
+      <a href="shop.php" class="btn">RESET</a>
+   </div>
+
+   <div class="filter-widget">
+      <h4 class="fw-title">Colore</h4>
+      <div class="fw-color-choose"><[foreach]> <[colori]> <[/foreach]></div>
+   </div>
+
+   <div class="filter-widget">
+      <br />
+      <h4 class="fw-title">Size</h4>
+      <div class="fw-size-choose">
+         <div class="sc-item">
+            <input type="radio" id="s-size" />
+            <label for="s-size">s</label>
+         </div>
+         <div class="sc-item">
+            <input type="radio" id="m-size" />
+            <label for="m-size">m</label>
+         </div>
+         <div class="sc-item">
+            <input type="radio" id="l-size" />
+            <label for="l-size">l</label>
+         </div>
+         <div class="sc-item">
+            <input type="radio" id="xs-size" />
+            <label for="xs-size">xl</label>
+         </div>
+      </div>
+   </div>
+</div>
