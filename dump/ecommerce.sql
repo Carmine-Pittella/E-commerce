@@ -150,11 +150,12 @@ CREATE TABLE IF NOT EXISTS Carrello (
 CREATE TABLE IF NOT EXISTS Indirizzo_Spedizione (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_utente INT NOT NULL,
-    id_stato_italia INT NOT NULL,
     indirizzo VARCHAR(200) NOT NULL,
+    citta VARCHAR(100) NOT NULL,
+    regione VARCHAR(100) NOT NULL,
+    provincia VARCHAR(100) NOT NULL,
     CAP VARCHAR(10) NOT NULL,
-    FOREIGN KEY (id_utente) REFERENCES Utente(id),
-    FOREIGN KEY (id_stato_italia) REFERENCES stato_italia(id)
+    FOREIGN KEY (id_utente) REFERENCES Utente(id)
 );
 
 CREATE TABLE IF NOT EXISTS Recensione (
@@ -342,7 +343,13 @@ VALUES
 (5, 5, 2);
 
 -- Inserimento di valori casuali nella tabella Indirizzo_Spedizione
--- (IN FONDO ALLA PAGINA)
+INSERT INTO Indirizzo_Spedizione (id_utente, indirizzo, citta, regione, provincia, CAP)
+VALUES
+(1, 'Via Roma 1', 'Milano', 'Lombardia', 'MI', '20100'),
+(2, 'Via Verdi 10', 'Roma', 'Lazio', 'RM', '00100'),
+(3, 'Piazza Garibaldi 5', 'Napoli', 'Campania', 'NA', '80100'),
+(4, 'Rue de la Paix 3', 'Parigi', 'Ile-de-France', '75', '75001'),
+(5, 'Broadway 100', 'New York', 'New York', 'NY', '10001');
 
 -- Inserimento di valori casuali nella tabella Recensione
 INSERT INTO Recensione (id_utente, id_prodotto, testo_recensione, valutazione)
@@ -370,7 +377,6 @@ VALUES
 (3, 3, 'L'),
 (4, 8, 'M'),
 (5, 20, 'M');
-
 
 
 
@@ -8292,12 +8298,3 @@ INSERT INTO stato_italia (id, citta, regione, provincia) VALUES
 (7902, 'Villasimius', 'Sardegna', 'Sud Sardegna'),
 (7903, 'Villasor', 'Sardegna', 'Sud Sardegna'),
 (7904, 'Villaspeciosa', 'Sardegna', 'Sud Sardegna');
-
--- Inserimento di valori casuali nella tabella Indirizzo_Spedizione
-INSERT INTO Indirizzo_Spedizione (id_utente, id_stato_italia, indirizzo, CAP)
-VALUES
-(1, 1, 'Via Roma 1', '20100'),
-(2, 2, 'Via Verdi 10', '00100'),
-(3, 3, 'Piazza Garibaldi 5', '80100'),
-(4, 4, 'Rue de la Paix 3', '75001'),
-(5, 5, 'Broadway 100', '10001');
