@@ -88,8 +88,8 @@ CREATE TABLE IF NOT EXISTS Colore_Prodotto (
 
 CREATE TABLE IF NOT EXISTS Prodotto_Preferito (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    id_utente INT,
-    id_prodotto INT,
+    id_utente INT NOT NULL,
+    id_prodotto INT NOT NULL,
     FOREIGN KEY (id_utente) REFERENCES Utente(id),
     FOREIGN KEY (id_prodotto) REFERENCES Prodotto(id),
     UNIQUE (id_utente, id_prodotto)
@@ -98,13 +98,22 @@ CREATE TABLE IF NOT EXISTS Prodotto_Preferito (
 CREATE TABLE IF NOT EXISTS Ordine (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_utente INT NOT NULL,
+    id_oggetto_ordine INT NOT NULL,
+    id_corriere INT NOT NULL,
+    id_coupon INT,
+    id_metodo_pagamento INT NOT NULL,
     data_ordine DATE NOT NULL,
-    data_spedizione DATE NOT NULL,
+    data_spedizione DATE,
     prezzo_ordine DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (id_utente) REFERENCES Utente(id)
+    FOREIGN KEY (id_utente) REFERENCES Utente(id),
+    FOREIGN KEY (id_oggetto_ordine) REFERENCES Oggetto_Ordine(id),
+    FOREIGN KEY (id_corriere) REFERENCES Corriere(id),
+    FOREIGN KEY (id_coupon) REFERENCES Coupon(id),
+    FOREIGN KEY (id_metodo_pagamento) REFERENCES Metodo_Pagamento(id)
 );
 
 CREATE TABLE IF NOT EXISTS Oggetto_Ordine (
+    id INT PRIMARY KEY AUTO_INCREMENT,
     id_ordine INT NOT NULL,
     id_prodotto INT NOT NULL,
     quantita_prodotto INT NOT NULL,
@@ -113,6 +122,7 @@ CREATE TABLE IF NOT EXISTS Oggetto_Ordine (
 );
 
 CREATE TABLE IF NOT EXISTS Carrello (
+    id INT PRIMARY KEY AUTO_INCREMENT,
     id_utente INT NOT NULL,
     id_prodotto INT NOT NULL,
     quantita_prodotto INT NOT NULL,
