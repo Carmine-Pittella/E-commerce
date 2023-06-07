@@ -15,15 +15,15 @@ DROP TABLE IF EXISTS Promozione;
 DROP TABLE IF EXISTS Prodotto;
 DROP TABLE IF EXISTS Colore_Prodotto;
 DROP TABLE IF EXISTS Prodotto_Preferito;
-DROP TABLE IF EXISTS Ordine;
 DROP TABLE IF EXISTS Oggetto_Ordine;
+DROP TABLE IF EXISTS Corriere;
+DROP TABLE IF EXISTS Coupon;
+DROP TABLE IF EXISTS Metodo_Pagamento;
+DROP TABLE IF EXISTS Ordine;
 DROP TABLE IF EXISTS Carrello;
 DROP TABLE IF EXISTS Indirizzo_Spedizione;
 DROP TABLE IF EXISTS Recensione;
-DROP TABLE IF EXISTS Coupon;
-DROP TABLE IF EXISTS Corriere;
 DROP TABLE IF EXISTS Immagine_Prodotto;
-DROP TABLE IF EXISTS Metodo_Pagamento;
 DROP TABLE IF EXISTS Magazzino;
 DROP TABLE IF EXISTS stato_italia;
 
@@ -95,6 +95,34 @@ CREATE TABLE IF NOT EXISTS Prodotto_Preferito (
     UNIQUE (id_utente, id_prodotto)
 );
 
+CREATE TABLE IF NOT EXISTS Oggetto_Ordine (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_ordine INT NOT NULL,
+    id_prodotto INT NOT NULL,
+    quantita_prodotto INT NOT NULL,
+    FOREIGN KEY (id_ordine) REFERENCES Ordine(id),
+    FOREIGN KEY (id_prodotto) REFERENCES Prodotto(id)
+);
+
+CREATE TABLE IF NOT EXISTS Corriere (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    prezzo DECIMAL(10, 2) NOT NULL,
+    tipologia VARCHAR(50) NOT NULL,
+    azienda VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Coupon (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    codice_coupon VARCHAR(50) NOT NULL,
+    sconto_percentuale DECIMAL(5, 2) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Metodo_Pagamento (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    tipo_pagamento VARCHAR(100) UNIQUE,
+    url_logo VARCHAR(255)
+);
+
 CREATE TABLE IF NOT EXISTS Ordine (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_utente INT NOT NULL,
@@ -110,15 +138,6 @@ CREATE TABLE IF NOT EXISTS Ordine (
     FOREIGN KEY (id_corriere) REFERENCES Corriere(id),
     FOREIGN KEY (id_coupon) REFERENCES Coupon(id),
     FOREIGN KEY (id_metodo_pagamento) REFERENCES Metodo_Pagamento(id)
-);
-
-CREATE TABLE IF NOT EXISTS Oggetto_Ordine (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    id_ordine INT NOT NULL,
-    id_prodotto INT NOT NULL,
-    quantita_prodotto INT NOT NULL,
-    FOREIGN KEY (id_ordine) REFERENCES Ordine(id),
-    FOREIGN KEY (id_prodotto) REFERENCES Prodotto(id)
 );
 
 CREATE TABLE IF NOT EXISTS Carrello (
@@ -151,30 +170,11 @@ CREATE TABLE IF NOT EXISTS Recensione (
     FOREIGN KEY (id_prodotto) REFERENCES Prodotto(id)
 );
 
-CREATE TABLE IF NOT EXISTS Coupon (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    codice_coupon VARCHAR(50) NOT NULL,
-    sconto_percentuale DECIMAL(5, 2) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS Corriere (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    prezzo DECIMAL(10, 2) NOT NULL,
-    tipologia VARCHAR(50) NOT NULL,
-    azienda VARCHAR(50) NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS Immagine_Prodotto (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_prodotto INT NOT NULL, 
     url_immagine VARCHAR(300) NOT NULL,
     FOREIGN KEY (id_prodotto) REFERENCES Prodotto(id)
-);
-
-CREATE TABLE IF NOT EXISTS Metodo_Pagamento (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    tipo_pagamento VARCHAR(100) UNIQUE,
-    url_logo VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS Magazzino (
@@ -218,168 +218,149 @@ CREATE TABLE IF NOT EXISTS stato_italia (
 
 -- --------------------------------  INSERIMENTO DATI ----------------------------------
 
--- Inserimento valori casuali nella tabella Utente
-INSERT INTO Utente (nome, cognome, email, password, tipologia_utente)
-VALUES
-    ('Mario', 'Rossi', 'mario@example.com', 'password1', 'comune'),
-    ('Laura', 'Bianchi', 'laura@example.com', 'password2', 'admin'),
-    ('Giuseppe', 'Verdi', 'giuseppe@example.com', 'password3', 'comune'),
-    ('Anna', 'Russo', 'anna@example.com', 'password4', 'comune'),
-    ('Marco', 'Gialli', 'marco@example.com', 'password5', 'comune');
+-- Inserimento di valori casuali nella tabella Utente
+INSERT INTO Utente (nome, cognome, email, password, tipologia_utente) VALUES
+('Mario', 'Rossi', 'mario.rossi@example.com', 'password123', 'comune'),
+('Laura', 'Bianchi', 'laura.bianchi@example.com', 'securepass', 'comune'),
+('Giovanni', 'Verdi', 'giovanni.verdi@example.com', 'pass123word', 'comune'),
+('Sara', 'Neri', 'sara.neri@example.com', 'secretpass', 'admin'),
+('Marco', 'Gialli', 'marco.gialli@example.com', 'password321', 'comune');
 
--- Inserimento valori casuali nella tabella Colore
-INSERT INTO Colore (nome_colore, codice_colore)
-VALUES
-    ('Rosso', 'FF0000'),
-    ('Blu', '0000FF'),
-    ('Verde', '00FF00'),
-    ('Giallo', 'FFFF00'),
-    ('Nero', '000000');
+-- Inserimento di valori casuali nella tabella Colore
+INSERT INTO Colore (nome_colore, codice_colore) VALUES
+('Rosso', 'FF0000'),
+('Blu', '0000FF'),
+('Verde', '00FF00'),
+('Giallo', 'FFFF00'),
+('Nero', '000000');
 
--- Inserimento valori casuali nella tabella Categoria
-INSERT INTO Categoria (nome_categoria)
-VALUES
-    ('Abbigliamento'),
-    ('Scarpe'),
-    ('Accessori'),
-    ('Borse'),
-    ('Gioielli');
+-- Inserimento di valori casuali nella tabella Categoria
+INSERT INTO Categoria (nome_categoria) VALUES
+('Abbigliamento'),
+('Scarpe'),
+('Accessori'),
+('Borse'),
+('Orologi');
 
--- Inserimento valori casuali nella tabella Marca
-INSERT INTO Marca (nome_marca)
-VALUES
-    ('Nike'),
-    ('Adidas'),
-    ('Gucci'),
-    ('Prada'),
-    ('Rolex');
+-- Inserimento di valori casuali nella tabella Marca
+INSERT INTO Marca (nome_marca) VALUES
+('Nike'),
+('Adidas'),
+('Gucci'),
+('Rolex'),
+('Prada');
 
--- Inserimento valori casuali nella tabella Promozione
-INSERT INTO Promozione (nome_promozione, descrizione, sconto_percentuale, data_inizio, data_fine)
-VALUES
-    ('Saldi estivi', 'Sconti su una vasta selezione di prodotti estivi', 20.00, '2023-07-01', '2023-07-31'),
-    ('Offerta del mese', 'Sconto del 10% sui prodotti più venduti', 10.00, '2023-06-01', '2023-06-30'),
-    ('Promozione primaverile', 'Sconti su abbigliamento e accessori primaverili', 15.00, '2023-04-01', '2023-04-30'),
-    ('Black Friday', 'Grandi sconti per il Black Friday', 30.00, '2023-11-01', '2023-11-30'),
-    ('Promozione natalizia', 'Offerte speciali per i regali di Natale', 25.00, '2023-12-01', '2023-12-31');
+-- Inserimento di valori casuali nella tabella Promozione
+INSERT INTO Promozione (nome_promozione, descrizione, sconto_percentuale, data_inizio, data_fine) VALUES
+('Sconto Primavera', 'Sconto del 20% su tutti i prodotti primaverili', 20.00, '2023-03-01', '2023-03-31'),
+('Offerta Estate', 'Sconto del 15% su tutti i prodotti estivi', 15.00, '2023-06-01', '2023-06-30'),
+('Promozione Invernale', 'Sconto del 30% su tutti i prodotti invernali', 30.00, '2023-12-01', '2024-01-15'),
+('Black Friday', 'Sconti imperdibili per il Black Friday', 50.00, '2023-11-24', '2023-11-26'),
+('Offerta Natalizia', 'Sconto del 25% su tutti i regali di Natale', 25.00, '2023-12-10', '2023-12-24');
 
--- Inserimento valori casuali nella tabella Prodotto
-INSERT INTO Prodotto (nome_prodotto, descrizione, prezzo, genere, id_categoria, id_marca, id_promozione)
-VALUES
-    ('Maglia', 'Maglia estiva in cotone', 29.99, 'uomo', 1, 1, NULL),
-    ('Scarpe da ginnastica', 'Scarpe da corsa leggere e traspiranti', 79.99, 'uomo', 2, 2, 3),
-    ('Orecchini', 'Orecchini eleganti in argento', 49.99, 'donna', 3, 3, NULL),
-    ('Borsa a mano', 'Borsa in pelle con manici', 149.99, 'donna', 4, 4, 1),
-    ('Orologio', 'Orologio automatico con cinturino in acciaio', 299.99, 'unisex', 5, 5, NULL);
+-- Inserimento di valori casuali nella tabella Prodotto
+INSERT INTO Prodotto (nome_prodotto, descrizione, prezzo, genere, id_categoria, id_marca, id_promozione) VALUES
+('Maglietta Rossa', 'Maglietta rossa a maniche corte', 19.99, 'uomo', 1, 1, NULL),
+('Scarpe da Corsa', 'Scarpe da corsa leggere e comode', 99.99, 'uomo', 2, 2, 2),
+('Orologio da Polso', 'Orologio da polso elegante', 299.99, 'uomo', 3, 4, NULL),
+('Borsa a Tracolla', 'Borsa a tracolla in pelle nera', 149.99, 'donna', 4, 3, 1),
+('Giacca Invernale', 'Giacca invernale impermeabile', 129.99, 'uomo', 1, 1, 3);
 
--- Inserimento valori casuali nella tabella Colore_Prodotto
-INSERT INTO Colore_Prodotto (id_prodotto, id_colore)
-VALUES
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5);
+-- Inserimento di valori casuali nella tabella Colore_Prodotto
+INSERT INTO Colore_Prodotto (id_prodotto, id_colore) VALUES
+(1, 1),
+(1, 5),
+(2, 2),
+(3, 5),
+(4, 5);
 
--- Inserimento valori casuali nella tabella Prodotto_Preferito
-INSERT INTO Prodotto_Preferito (id_utente, id_prodotto)
-VALUES
-    (1, 3),
-    (1, 5),
-    (2, 1),
-    (3, 2),
-    (4, 4);
+-- Inserimento di valori casuali nella tabella Prodotto_Preferito
+INSERT INTO Prodotto_Preferito (id_utente, id_prodotto) VALUES
+(1, 3),
+(1, 5),
+(2, 1),
+(3, 2),
+(4, 4);
 
--- Inserimento valori casuali nella tabella Ordine
-INSERT INTO Ordine (id_utente, id_oggetto_ordine, id_corriere, id_coupon, id_metodo_pagamento, data_ordine, data_spedizione, prezzo_ordine)
-VALUES
-    (1, 1, 1, NULL, 1, '2023-06-01', '2023-06-05', 79.99),
-    (2, 2, 2, NULL, 2, '2023-06-02', '2023-06-06', 149.99),
-    (3, 3, 1, 1, 3, '2023-06-03', NULL, 49.99),
-    (4, 4, 2, NULL, 4, '2023-06-04', '2023-06-08', 299.99),
-    (5, 5, 1, NULL, 1, '2023-06-05', '2023-06-09', 29.99);
+-- Inserimento di valori casuali nella tabella Oggetto_Ordine
+INSERT INTO Oggetto_Ordine (id_ordine, id_prodotto, quantita_prodotto) VALUES
+(1, 1, 2),
+(1, 3, 1),
+(2, 2, 1),
+(2, 4, 1),
+(3, 5, 3);
 
--- Inserimento valori casuali nella tabella Oggetto_Ordine
-INSERT INTO Oggetto_Ordine (id_ordine, id_prodotto, quantita_prodotto)
-VALUES
-    (1, 1, 1),
-    (2, 2, 1),
-    (3, 3, 2),
-    (4, 4, 1),
-    (5, 5, 3);
+-- Inserimento di valori casuali nella tabella Corriere
+INSERT INTO Corriere (prezzo, tipologia, azienda) VALUES
+(5.99, 'Standard', 'DHL'),
+(8.99, 'Express', 'UPS'),
+(4.99, 'Standard', 'FedEx'),
+(6.99, 'Express', 'TNT'),
+(7.99, 'Standard', 'Poste Italiane');
 
--- Inserimento valori casuali nella tabella Carrello
-INSERT INTO Carrello (id_utente, id_prodotto, quantita_prodotto)
-VALUES
-    (1, 4, 2),
-    (1, 5, 1),
-    (2, 3, 1),
-    (3, 2, 3),
-    (4, 1, 1);
+-- Inserimento di valori casuali nella tabella Coupon
+INSERT INTO Coupon (codice_coupon, sconto_percentuale) VALUES
+('SUMMER2023', 10.00),
+('SALE50', 50.00),
+('WELCOME10', 10.00),
+('FREESHIP', 100.00),
+('HOLIDAY25', 25.00);
 
--- Inserimento valori casuali nella tabella Indirizzo_Spedizione
-INSERT INTO Indirizzo_Spedizione (id_utente, indirizzo, citta, regione, provincia, CAP)
-VALUES
-    (1, 'Via Roma 1', 'Milano', 'Lombardia', 'MI', '20121'),
-    (2, 'Via Verdi 5', 'Roma', 'Lazio', 'RM', '00100'),
-    (3, 'Piazza Garibaldi 10', 'Napoli', 'Campania', 'NA', '80132'),
-    (4, 'Rua Augusta 20', 'Lisbona', 'Lisbona', 'LIS', '1000-045'),
-    (5, 'Champs-Élysées 15', 'Parigi', 'Île-de-France', '75', '75008');
+-- Inserimento di valori casuali nella tabella Metodo_Pagamento
+INSERT INTO Metodo_Pagamento (tipo_pagamento, url_logo) VALUES
+('Carta di Credito', 'https://example.com/logo_carta.png'),
+('PayPal', 'https://example.com/logo_paypal.png'),
+('Bonifico Bancario', 'https://example.com/logo_bonifico.png'),
+('Apple Pay', 'https://example.com/logo_applepay.png'),
+('Google Pay', 'https://example.com/logo_googlepay.png');
 
--- Inserimento valori casuali nella tabella Recensione
-INSERT INTO Recensione (id_utente, id_prodotto, testo_recensione, valutazione)
-VALUES
-    (1, 1, 'Prodotto di ottima qualità', 5),
-    (2, 2, 'Scarpe comode e leggere', 4),
-    (3, 3, 'Orecchini eleganti, consigliati', 5),
-    (4, 4, 'Orologio di lusso, davvero soddisfatto', 5),
-    (5, 5, 'Maglia semplice ma di buona fattura', 4);
+-- Inserimento di valori casuali nella tabella Ordine
+INSERT INTO Ordine (id_utente, id_oggetto_ordine, id_corriere, id_coupon, id_metodo_pagamento, data_ordine, data_spedizione, prezzo_ordine) VALUES
+(1, 1, 1, NULL, 1, '2023-05-01', '2023-05-05', 39.97),
+(2, 2, 2, NULL, 2, '2023-06-02', NULL, 207.98),
+(3, 3, 3, NULL, 3, '2023-07-10', '2023-07-15', 299.99),
+(4, 4, 4, 1, 4, '2023-06-20', NULL, 149.99),
+(5, 5, 5, NULL, 5, '2023-05-15', '2023-05-18', 389.97);
 
--- Inserimento valori casuali nella tabella Coupon
-INSERT INTO Coupon (codice_coupon, sconto_percentuale)
-VALUES
-    ('SUMMER10', 10.00),
-    ('SALE20', 20.00),
-    ('OFFER15', 15.00),
-    ('BF30', 30.00),
-    ('XMAS25', 25.00);
+-- Inserimento di valori casuali nella tabella Carrello
+INSERT INTO Carrello (id_utente, id_prodotto, quantita_prodotto) VALUES
+(1, 1, 1),
+(1, 2, 2),
+(2, 3, 1),
+(3, 4, 3),
+(4, 5, 1);
 
--- Inserimento valori casuali nella tabella Corriere
-INSERT INTO Corriere (prezzo, tipologia, azienda)
-VALUES
-    (5.99, 'Standard', 'Poste Italiane'),
-    (7.99, 'Espresso', 'Bartolini'),
-    (9.99, 'Express', 'DHL'),
-    (6.99, 'Economy', 'UPS'),
-    (8.99, 'Priority', 'FedEx');
+-- Inserimento di valori casuali nella tabella Indirizzo_Spedizione
+INSERT INTO Indirizzo_Spedizione (id_utente, indirizzo, citta, regione, provincia, CAP) VALUES
+(1, 'Via Roma 123', 'Milano', 'Lombardia', 'MI', '20100'),
+(2, 'Via Verdi 456', 'Roma', 'Lazio', 'RM', '00100'),
+(3, 'Piazza Italia 789', 'Firenze', 'Toscana', 'FI', '50100'),
+(4, 'Largo Garibaldi 1', 'Napoli', 'Campania', 'NA', '80100'),
+(5, 'Boulevard Paris 234', 'Parigi', 'Ile-de-France', 'PAR', '75000');
 
--- Inserimento valori casuali nella tabella Immagine_Prodotto
-INSERT INTO Immagine_Prodotto (id_prodotto, url_immagine)
-VALUES
-    (1, 'http://example.com/images/maglia.jpg'),
-    (2, 'http://example.com/images/scarpe.jpg'),
-    (3, 'http://example.com/images/orecchini.jpg'),
-    (4, 'http://example.com/images/borsa.jpg'),
-    (5, 'http://example.com/images/orologio.jpg');
+-- Inserimento di valori casuali nella tabella Recensione
+INSERT INTO Recensione (id_utente, id_prodotto, testo_recensione, valutazione) VALUES
+(1, 1, 'Ottima maglietta, tessuto di qualità!', 5),
+(2, 2, 'Scarpe comode e leggere, consigliate per la corsa', 4),
+(3, 3, 'L''orologio è elegante e funzionale', 5),
+(4, 4, 'Borsa di ottima qualità, la consiglio', 5),
+(5, 5, 'La giacca invernale tiene caldo anche nelle giornate più fredde', 4);
 
--- Inserimento valori casuali nella tabella Metodo_Pagamento
-INSERT INTO Metodo_Pagamento (tipo_pagamento, url_logo)
-VALUES
-    ('Carta di credito', 'http://example.com/images/credit-card.png'),
-    ('PayPal', 'http://example.com/images/paypal.png'),
-    ('Bonifico bancario', 'http://example.com/images/bank-transfer.png'),
-    ('Contrassegno', 'http://example.com/images/cash-on-delivery.png'),
-    ('Buono regalo', 'http://example.com/images/gift-card.png');
+-- Inserimento di valori casuali nella tabella Immagine_Prodotto
+INSERT INTO Immagine_Prodotto (id_prodotto, url_immagine) VALUES
+(1, 'https://example.com/maglietta_rossa.jpg'),
+(2, 'https://example.com/scarpe_da_corsa.jpg'),
+(3, 'https://example.com/orologio_da_polso.jpg'),
+(4, 'https://example.com/borsa_nera.jpg'),
+(5, 'https://example.com/giacca_invernale.jpg');
 
--- Inserimento valori casuali nella tabella Magazzino
-INSERT INTO Magazzino (id_prodotto, quantita, taglia)
-VALUES
-    (1, 10, 'S'),
-    (2, 15, 'M'),
-    (3, 5, 'L'),
-    (4, 8, 'XL'),
-    (5, 20, 'M');
-
+-- Inserimento di valori casuali nella tabella Magazzino
+INSERT INTO Magazzino (id_prodotto, quantita, taglia) VALUES
+(1, 10, 'M'),
+(2, 5, 'L'),
+(3, 2, 'M'),
+(4, 8, 'S'),
+(5, 3, 'XL');
 
 
 
