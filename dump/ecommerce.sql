@@ -8294,10 +8294,10 @@ INSERT INTO stato_italia (id, citta, regione, provincia) VALUES
 (7904, 'Villaspeciosa', 'Sardegna', 'Sud Sardegna');
 
 -- Inserimento di valori casuali nella tabella Indirizzo_Spedizione
-INSERT INTO Indirizzo_Spedizione (id_utente, indirizzo, id_stato_italia, CAP)
+INSERT INTO Indirizzo_Spedizione (id_utente, id_stato_italia, indirizzo, CAP)
 VALUES
-(1, 'Via Roma 1', 1,'20100'),
-(2, 'Via Verdi 10', 2,'00100'),
-(3, 'Piazza Garibaldi 5', 3, '80100'),
-(4, 'Rue de la Paix 3', 4, '75001'),
-(5, 'Broadway 100', 5, '10001');
+(1, 1, 'Via Roma 1', '20100'),
+(2, 2, 'Via Verdi 10', '00100'),
+(3, 3, 'Piazza Garibaldi 5', '80100'),
+(4, 4, 'Rue de la Paix 3', '75001'),
+(5, 5, 'Broadway 100', '10001');
