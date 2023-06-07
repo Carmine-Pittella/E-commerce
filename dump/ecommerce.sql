@@ -15,11 +15,11 @@ DROP TABLE IF EXISTS Promozione;
 DROP TABLE IF EXISTS Prodotto;
 DROP TABLE IF EXISTS Colore_Prodotto;
 DROP TABLE IF EXISTS Prodotto_Preferito;
-DROP TABLE IF EXISTS Oggetto_Ordine;
 DROP TABLE IF EXISTS Corriere;
 DROP TABLE IF EXISTS Coupon;
 DROP TABLE IF EXISTS Metodo_Pagamento;
 DROP TABLE IF EXISTS Ordine;
+DROP TABLE IF EXISTS Oggetto_Ordine;
 DROP TABLE IF EXISTS Carrello;
 DROP TABLE IF EXISTS Indirizzo_Spedizione;
 DROP TABLE IF EXISTS Recensione;
@@ -95,15 +95,6 @@ CREATE TABLE IF NOT EXISTS Prodotto_Preferito (
     UNIQUE (id_utente, id_prodotto)
 );
 
-CREATE TABLE IF NOT EXISTS Oggetto_Ordine (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    id_ordine INT NOT NULL,
-    id_prodotto INT NOT NULL,
-    quantita_prodotto INT NOT NULL,
-    FOREIGN KEY (id_ordine) REFERENCES Ordine(id),
-    FOREIGN KEY (id_prodotto) REFERENCES Prodotto(id)
-);
-
 CREATE TABLE IF NOT EXISTS Corriere (
     id INT PRIMARY KEY AUTO_INCREMENT,
     prezzo DECIMAL(10, 2) NOT NULL,
@@ -138,6 +129,15 @@ CREATE TABLE IF NOT EXISTS Ordine (
     FOREIGN KEY (id_corriere) REFERENCES Corriere(id),
     FOREIGN KEY (id_coupon) REFERENCES Coupon(id),
     FOREIGN KEY (id_metodo_pagamento) REFERENCES Metodo_Pagamento(id)
+);
+
+CREATE TABLE IF NOT EXISTS Oggetto_Ordine (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_ordine INT NOT NULL,
+    id_prodotto INT NOT NULL,
+    quantita_prodotto INT NOT NULL,
+    FOREIGN KEY (id_ordine) REFERENCES Ordine(id),
+    FOREIGN KEY (id_prodotto) REFERENCES Prodotto(id)
 );
 
 CREATE TABLE IF NOT EXISTS Carrello (
@@ -282,14 +282,6 @@ INSERT INTO Prodotto_Preferito (id_utente, id_prodotto) VALUES
 (3, 2),
 (4, 4);
 
--- Inserimento di valori casuali nella tabella Oggetto_Ordine
-INSERT INTO Oggetto_Ordine (id_ordine, id_prodotto, quantita_prodotto) VALUES
-(1, 1, 2),
-(1, 3, 1),
-(2, 2, 1),
-(2, 4, 1),
-(3, 5, 3);
-
 -- Inserimento di valori casuali nella tabella Corriere
 INSERT INTO Corriere (prezzo, tipologia, azienda) VALUES
 (5.99, 'Standard', 'DHL'),
@@ -321,6 +313,15 @@ INSERT INTO Ordine (id_utente, id_oggetto_ordine, id_corriere, id_coupon, id_met
 (3, 3, 3, NULL, 3, '2023-07-10', '2023-07-15', 299.99),
 (4, 4, 4, 1, 4, '2023-06-20', NULL, 149.99),
 (5, 5, 5, NULL, 5, '2023-05-15', '2023-05-18', 389.97);
+
+-- Inserimento di valori casuali nella tabella Oggetto_Ordine
+INSERT INTO Oggetto_Ordine (id_ordine, id_prodotto, quantita_prodotto) VALUES
+(1, 1, 2),
+(1, 3, 1),
+(2, 2, 1),
+(2, 4, 1),
+(3, 5, 3);
+
 
 -- Inserimento di valori casuali nella tabella Carrello
 INSERT INTO Carrello (id_utente, id_prodotto, quantita_prodotto) VALUES
