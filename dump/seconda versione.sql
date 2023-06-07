@@ -23,12 +23,10 @@ CREATE TABLE IF NOT EXISTS Prodotto (
     descrizione VARCHAR(500),
     prezzo DECIMAL(10, 2) NOT NULL,
     quantità_disponibile INT NOT NULL DEFAULT 0,
-    -- id_colore INT NOT NULL,
-    -- id_categoria INT NOT NULL,
+    id_categoria INT NOT NULL,
     id_marca INT,
     id_promozione INT,
-    -- FOREIGN KEY (id_colore) REFERENCES Colore(id),
-    -- FOREIGN KEY (id_categoria) REFERENCES Categoria(id),
+    FOREIGN KEY (id_categoria) REFERENCES Categoria(id),
     FOREIGN KEY (id_marca) REFERENCES Marca(id),
     FOREIGN KEY (id_promozione) REFERENCES Promozione(id)
 );
@@ -43,13 +41,4 @@ CREATE TABLE IF NOT EXISTS Colore_Prodotto (
     FOREIGN KEY (id_prodotto) REFERENCES Prodotto(id),
     FOREIGN KEY (id_colore) REFERENCES Colore(id),
     UNIQUE (id_prodotto, id_colore),
-);
-
-CREATE TABLE IF NOT EXISTS Categoria_Prodotto (
-    id INT PRIMARY KEY AUTO_INCREMENT, -- si potrebbe fare anche a meno dell'ID
-    id_prodotto INT NOT NULL,
-    id_categoria INT NOT NULL,
-    FOREIGN KEY (id_prodotto) REFERENCES Prodotto(id),
-    FOREIGN KEY (id_categoria) REFERENCES Categoria(id),
-    UNIQUE (id_prodotto, id_categoria),
 );
