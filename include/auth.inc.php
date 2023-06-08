@@ -10,26 +10,29 @@ class Auth
 
         if (!isset($_SESSION['auth'])) {
 
-            if (!isset($_POST['username']) or !isset($_POST['password'])) {
-                Header("Location: error.php?002-username-and-password-not-entered");
+            if (!isset($_POST['email']) or !isset($_POST['password'])) {
+                // apertura schermata per fare il login
+                Header("Location: login.php");
                 exit;
             } else {
-
-                $result = $mysql->query("SELECT username, name, surname, email 
-                    FROM user 
-                    WHERE username = '{$_POST['username']}' AND password = MD5('{$_POST['password']}')");
+                $result = $mysql->query("SELECT id, nome, cognome, email, password, tipologia_utente 
+                    FROM Utente 
+                    WHERE email = '{$_POST['email']}' AND password = MD5('{$_POST['password']}')");
+                // MD5 serve per il decrypt della password tramite la password stessa
 
                 if (!$result) {
-                    Header("Location: error.php?generic");
+                    // errore durante l'esecuzione della query (creare una pagine ERRORE da visualizzare)
+                    header("Location: pagina di errore che non esiste al momento");
                     exit;
                 }
 
                 if ($result->num_rows == 0) {
-                    Header("Location: error.php?001-uknown-user");
+                    // username o password errati
+                    header("Location: login.php?error=2");
                     exit;
                 } else {
                     $data = $result->fetch_assoc();
-                    $_SESSION['auth']['user'] = $data;
+                    $_SESSION['auth']['Utente'] = $data;
 
                     $result = $mysql->query("select user.username, user_role.id_role, service.name, service.script
                         from user
