@@ -26,6 +26,10 @@ DROP TABLE IF EXISTS Recensione;
 DROP TABLE IF EXISTS Immagine_Prodotto;
 DROP TABLE IF EXISTS Magazzino;
 DROP TABLE IF EXISTS stato_italia;
+DROP TABLE IF EXISTS Service;
+DROP TABLE IF EXISTS Ugroup;
+DROP TABLE IF EXISTS Ugroup_has_service;
+DROP TABLE IF EXISTS User_has_ugroup;
 
 -- --------------------------------  CREAZIONE TABELLE ----------------------------------
 
@@ -189,6 +193,62 @@ CREATE TABLE IF NOT EXISTS stato_italia (
     regione varchar(64) NOT NULL,
     provincia varchar(64) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS Service (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    script VARCHAR(100) DEFAULT NULL,
+    description TEXT DEFAULT NULL,
+);
+
+CREATE TABLE IF NOT EXISTS Ugroup (
+  id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  name varchar(50) DEFAULT NULL,
+  description text DEFAULT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS Ugroup_has_service (
+  ugroup_id int(10) UNSIGNED DEFAULT NULL,
+  service_id int(10) UNSIGNED DEFAULT NULL,
+  KEY id_group_assoc_1 (ugroup_id),
+  KEY ìd_service_assoc (service_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dump dei dati per la tabella ugroup_has_service
+--
+
+INSERT INTO Ugroup_has_service (ugroup_id, service_id) VALUES
+(1, 1),
+(2, 2),
+(3, 1),
+(3, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella user_has_ugroup
+--
+
+
+CREATE TABLE IF NOT EXISTS User_has_ugroup (
+  id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  id_utente int(10) UNSIGNED NOT NULL,
+  id_ugroup int(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (id),
+  KEY id_utente_assoc (id_utente),
+  KEY id_ugroup_assoc (id_ugroup)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dump dei dati per la tabella user_has_ugroup
+--
+
+INSERT INTO User_has_ugroup (id, id_utente, id_ugroup) VALUES
+(1, 15, 1),
+(2, 22, 2);
+
+
 
 
 
@@ -378,9 +438,16 @@ VALUES
 (4, 8, 'M'),
 (5, 20, 'M');
 
+-- Inserimento di valori casuali nella tabella Service
+INSERT INTO Service (id, script, description) VALUES
+(1, 'dashboard.php', NULL),
+(2, 'index.php', NULL);
 
-
-
+-- Inserimento di valori casuali nella tabella Ugroup
+INSERT INTO Ugroup (id, name, description) VALUES
+(1, 'Administrator', NULL),
+(2, 'User', NULL),
+(3, 'WebMaster', 'All the services');
 
 
 -- --------------------------------  STATI ITALIANI ----------------------------------
