@@ -6,6 +6,22 @@ require "include/template2.inc.php";
 require "include/dbms.inc.php";
 
 
+<<<<<<< HEAD
+/* distinguo due casi 
+1) quando viene chiamata per eseguire l'autenticazine
+2) quando login.php viene chiamata per il display della pagina
+*/
+if(isset($_POST['username'])){
+    /* eseguo l'autenticazione */
+
+}
+else{
+    $main = new Template("skins/template/login.html");
+    $main->close();
+/* non so perché non mi prende i css */
+}
+
+=======
 $main = new Template("skins/template/dtml/index_v2.html");
 $login = new Template("skins/template/login.html");
 
@@ -51,3 +67,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 $main->close();
+>>>>>>> 9223f275dbcfbdd1d4ffa198dce927dbbb70d0e9
