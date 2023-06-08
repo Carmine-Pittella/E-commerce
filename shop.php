@@ -9,7 +9,6 @@ $main = new Template("skins/template/dtml/index_v2.html");
 $shop = new Template("skins/template/shop.html");
 $filtri = new Template("skins/template/dtml/filtri_laterali.html");
 
-
 // tiene aggiornato il numero di oggetti presenti nei preferiti e nel carrello
 require "include/php-utils/preferiti_carrello.php";
 
