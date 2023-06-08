@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS Utente (
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Categoria (
@@ -238,7 +238,7 @@ INSERT INTO Utente (nome, cognome, email, password)
 VALUES
 ('Mario', 'Rossi', 'mario.rossi@example.com', 'password123'),
 ('Giulia', 'Bianchi', 'giulia.bianchi@example.com', 'pass1234'),
-('Luca', 'Verdi', 'luca.verdi@example.com', 'securepass', 'admin'),
+('Luca', 'Verdi', 'luca.verdi@example.com', 'securepass'),
 ('Martina', 'Gialli', 'martina.gialli@example.com', '123456'),
 ('Simone', 'Neri', 'simone.neri@example.com', 'password456');
 
