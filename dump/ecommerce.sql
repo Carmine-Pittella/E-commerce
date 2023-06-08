@@ -8,12 +8,10 @@ SET time_zone = "+00:00";
 
 -- Drop Tabelle
 DROP TABLE IF EXISTS Utente;
-DROP TABLE IF EXISTS Colore;
 DROP TABLE IF EXISTS Categoria;
 DROP TABLE IF EXISTS Marca;
 DROP TABLE IF EXISTS Promozione;
 DROP TABLE IF EXISTS Prodotto;
-DROP TABLE IF EXISTS Colore_Prodotto;
 DROP TABLE IF EXISTS Prodotto_Preferito;
 DROP TABLE IF EXISTS Corriere;
 DROP TABLE IF EXISTS Coupon;
@@ -40,12 +38,6 @@ CREATE TABLE IF NOT EXISTS Utente (
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(100) NOT NULL,
     tipologia_utente ENUM('admin', 'comune') DEFAULT 'comune'
-);
-
-CREATE TABLE IF NOT EXISTS Colore (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nome_colore VARCHAR(50) NOT NULL,
-    codice_colore VARCHAR(6) UNIQUE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Categoria (
@@ -79,15 +71,6 @@ CREATE TABLE IF NOT EXISTS Prodotto (
     FOREIGN KEY (id_categoria) REFERENCES Categoria(id),
     FOREIGN KEY (id_marca) REFERENCES Marca(id),
     FOREIGN KEY (id_promozione) REFERENCES Promozione(id)
-);
-
-CREATE TABLE IF NOT EXISTS Colore_Prodotto (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    id_prodotto INT NOT NULL,
-    id_colore INT NOT NULL,
-    FOREIGN KEY (id_prodotto) REFERENCES Prodotto(id),
-    FOREIGN KEY (id_colore) REFERENCES Colore(id),
-    UNIQUE (id_prodotto, id_colore)
 );
 
 CREATE TABLE IF NOT EXISTS Prodotto_Preferito (
@@ -197,58 +180,33 @@ CREATE TABLE IF NOT EXISTS stato_italia (
 CREATE TABLE IF NOT EXISTS Service (
     id INT PRIMARY KEY AUTO_INCREMENT,
     script VARCHAR(100) DEFAULT NULL,
-    description TEXT DEFAULT NULL,
+    description TEXT DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Ugroup (
-  id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  name varchar(50) DEFAULT NULL,
-  description text DEFAULT NULL,
-  PRIMARY KEY (id)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) DEFAULT NULL,
+    description TEXT DEFAULT NULL
+);
 
 CREATE TABLE IF NOT EXISTS Ugroup_has_service (
-  ugroup_id int(10) UNSIGNED DEFAULT NULL,
-  service_id int(10) UNSIGNED DEFAULT NULL,
-  KEY id_group_assoc_1 (ugroup_id),
-  KEY ìd_service_assoc (service_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dump dei dati per la tabella ugroup_has_service
---
-
-INSERT INTO Ugroup_has_service (ugroup_id, service_id) VALUES
-(1, 1),
-(2, 2),
-(3, 1),
-(3, 2);
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella user_has_ugroup
---
-
+    ugroup_id INT DEFAULT NULL,
+    service_id INT DEFAULT NULL,
+    FOREIGN KEY (ugroup_id) REFERENCES ugroup(id) 
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (service_id) REFERENCES service(id) 
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 CREATE TABLE IF NOT EXISTS User_has_ugroup (
-  id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  id_utente int(10) UNSIGNED NOT NULL,
-  id_ugroup int(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (id),
-  KEY id_utente_assoc (id_utente),
-  KEY id_ugroup_assoc (id_ugroup)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
-
---
--- Dump dei dati per la tabella user_has_ugroup
---
-
-INSERT INTO User_has_ugroup (id, id_utente, id_ugroup) VALUES
-(1, 15, 1),
-(2, 22, 2);
-
-
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_utente INT NOT NULL,
+    id_ugroup INT NOT NULL,
+    FOREIGN KEY (id_utente) REFERENCES utente(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_ugroup) REFERENCES ugroup(id)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 
 
@@ -284,15 +242,6 @@ VALUES
 ('Luca', 'Verdi', 'luca.verdi@example.com', 'securepass', 'admin'),
 ('Martina', 'Gialli', 'martina.gialli@example.com', '123456', 'comune'),
 ('Simone', 'Neri', 'simone.neri@example.com', 'password456', 'comune');
-
--- Inserimento di valori casuali nella tabella Colore
-INSERT INTO Colore (nome_colore, codice_colore)
-VALUES
-('Rosso', 'FF0000'),
-('Verde', '00FF00'),
-('Blu', '0000FF'),
-('Giallo', 'FFFF00'),
-('Nero', '000000');
 
 -- Inserimento di valori casuali nella tabella Categoria
 INSERT INTO Categoria (nome_categoria)
@@ -334,16 +283,6 @@ VALUES
 ('felpa', 'descrizione bla bla', 999.99, 'uomo', 2, 6, NULL),
 ('pantalone', 'descrizione bla bla', 999.99, 'uomo', 2, 6, NULL),
 ('pantalone', 'descrizione bla bla', 999.99, 'uomo', 2, 6, NULL);
-
-
--- Inserimento di valori casuali nella tabella Colore_Prodotto
-INSERT INTO Colore_Prodotto (id_prodotto, id_colore)
-VALUES
-(1, 1),
-(2, 2),
-(3, 5),
-(4, 1),
-(5, 1);
 
 -- Inserimento di valori casuali nella tabella Prodotto_Preferito
 INSERT INTO Prodotto_Preferito (id_utente, id_prodotto)
@@ -454,6 +393,20 @@ INSERT INTO Ugroup (id, name, description) VALUES
 (1, 'Administrator', NULL),
 (2, 'User', NULL),
 (3, 'WebMaster', 'All the services');
+
+-- Inserimento di valori casuali nella tabella Ugroup_has_service
+INSERT INTO Ugroup_has_service (ugroup_id, service_id) VALUES
+(1, 1),
+(2, 2),
+(3, 1),
+(3, 2);
+
+-- Inserimento di valori casuali nella tabella User_has_ugroup
+INSERT INTO User_has_ugroup (id, id_utente, id_ugroup) VALUES
+(1, 1, 1),
+(2, 2, 2);
+
+
 
 
 -- --------------------------------  STATI ITALIANI ----------------------------------

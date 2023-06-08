@@ -29,15 +29,7 @@ foreach ($res as $r) {
     $filtri->setContent('marche', $marca->get());
 }
 
-$res = $connessione->query("SELECT * FROM colore")->fetch_all(MYSQLI_ASSOC);
-foreach ($res as $r) {
-    $colore = new Template("skins/template/dtml/dtml_items/barra laterale filtri/coloreItem.html");
-    $colore->setContent("NOME_COLORE", $r['nome_colore']);
-    $colore->setContent("CODICE_COLORE", $r['codice_colore']);
-    $filtri->setContent('colori', $colore->get());
-}
 $shop->setContent('sezione_filtri', $filtri->get());
-
 
 
 
