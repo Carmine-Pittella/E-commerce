@@ -297,11 +297,11 @@ VALUES
 -- Inserimento di valori casuali nella tabella Categoria
 INSERT INTO Categoria (nome_categoria)
 VALUES
-('Abbigliamento'),
-('Scarpe'),
-('Accessori'),
-('Elettronica'),
-('Bellezza');
+('T-shirt'),
+('felpe'),
+('pantaloni'),
+('maglioni'),
+('gonne');
 
 -- Inserimento di valori casuali nella tabella Marca
 INSERT INTO Marca (nome_marca)
@@ -309,8 +309,11 @@ VALUES
 ('Nike'),
 ('Adidas'),
 ('Gucci'),
-('Apple'),
-('L''Oréal');
+('Element'),
+('Levi''s'),
+('H&H'),
+('Puma');
+
 
 -- Inserimento di valori casuali nella tabella Promozione
 INSERT INTO Promozione (nome_promozione, descrizione, sconto_percentuale, data_inizio, data_fine)
@@ -324,11 +327,14 @@ VALUES
 -- Inserimento di valori casuali nella tabella Prodotto
 INSERT INTO Prodotto (nome_prodotto, descrizione, prezzo, genere, id_categoria, id_marca, id_promozione)
 VALUES
-('Maglia a Righe', 'Maglia a righe bianche e blu', 29.99, 'uomo', 1, 1, 1),
-('Scarpe da Ginnastica', 'Scarpe da ginnastica leggere e comode', 79.99, 'donna', 2, 2, NULL),
-('Borsa a Tracolla', 'Borsa a tracolla in pelle nera', 149.99, 'donna', 3, 3, 5),
-('iPhone 12', 'Smartphone Apple iPhone 12', 999.99, 'uomo', 4, 4, 3),
-('Rossetto Rosso', 'Rossetto rosso a lunga durata', 19.99, 'donna', 5, 5, NULL);
+('T-shirt', 'descrizione bla bla', 29.99, 'uomo', 1, 4, NULL),
+('T-shirt', 'descrizione bla bla', 79.99, 'uomo', 1, 4, NULL),
+('T-shirt', 'descrizione bla blaa', 19.99, 'uomo', 1, 4, NULL),
+('felpa', 'descrizione bla bla', 149.99, 'uomo', 2, 2, NULL),
+('felpa', 'descrizione bla bla', 999.99, 'uomo', 2, 6, NULL),
+('pantalone', 'descrizione bla bla', 999.99, 'uomo', 2, 6, NULL),
+('pantalone', 'descrizione bla bla', 999.99, 'uomo', 2, 6, NULL);
+
 
 -- Inserimento di valori casuali nella tabella Colore_Prodotto
 INSERT INTO Colore_Prodotto (id_prodotto, id_colore)
