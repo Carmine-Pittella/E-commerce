@@ -37,7 +37,6 @@ CREATE TABLE IF NOT EXISTS Utente (
     cognome VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(100) NOT NULL,
-    tipologia_utente ENUM('admin', 'comune') DEFAULT 'comune'
 );
 
 CREATE TABLE IF NOT EXISTS Categoria (
@@ -235,13 +234,13 @@ CREATE TABLE IF NOT EXISTS User_has_ugroup (
 -- --------------------------------  INSERIMENTO DATI ----------------------------------
 
 -- Inserimento di valori casuali nella tabella Utente
-INSERT INTO Utente (nome, cognome, email, password, tipologia_utente)
+INSERT INTO Utente (nome, cognome, email, password)
 VALUES
-('Mario', 'Rossi', 'mario.rossi@example.com', 'password123', 'comune'),
-('Giulia', 'Bianchi', 'giulia.bianchi@example.com', 'pass1234', 'comune'),
+('Mario', 'Rossi', 'mario.rossi@example.com', 'password123'),
+('Giulia', 'Bianchi', 'giulia.bianchi@example.com', 'pass1234'),
 ('Luca', 'Verdi', 'luca.verdi@example.com', 'securepass', 'admin'),
-('Martina', 'Gialli', 'martina.gialli@example.com', '123456', 'comune'),
-('Simone', 'Neri', 'simone.neri@example.com', 'password456', 'comune');
+('Martina', 'Gialli', 'martina.gialli@example.com', '123456'),
+('Simone', 'Neri', 'simone.neri@example.com', 'password456');
 
 -- Inserimento di valori casuali nella tabella Categoria
 INSERT INTO Categoria (nome_categoria)

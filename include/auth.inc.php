@@ -1,5 +1,7 @@
 <?php
 
+require "include/php-utils/utility.php";
+
 
 class Auth
 {
@@ -14,9 +16,11 @@ class Auth
                 Header("Location: login.php");
                 exit;
             } else {
+                $pass = utility::cryptify($_POST['password']);
                 $result = $connessione->query("SELECT id, nome, cognome, email, password, tipologia_utente 
                     FROM Utente 
-                    WHERE email = '{$_POST['email']}' AND password = '{$_POST['password']}'");
+                    WHERE email = '{$_POST['email']}' AND password = $pass");
+                // WHERE email = '{$_POST['email']}' AND password = '{$_POST['password']}'");
                 /* WHERE email = '{$_POST['email']}' AND password = MD5('{$_POST['password']}')"); ORIGINALE*/
                 // MD5 serve per il decrypt della password tramite la password stessa
 
