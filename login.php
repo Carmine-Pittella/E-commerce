@@ -42,10 +42,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ) {
         header("Location: login.php?error=1");
     } else {
-        // Auth::check($_POST['email'],  $_POST['password']);
+        require_once('include/auth.inc.php');
+        // questo file ha le funzioni per gestire l'accesso in generale
     }
 }
-
 
 
 

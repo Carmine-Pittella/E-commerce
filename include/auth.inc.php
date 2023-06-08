@@ -3,10 +3,9 @@
 
 class Auth
 {
-
     static function check()
     {
-        global $mysql;
+        global $connessione;
 
         if (!isset($_SESSION['auth'])) {
 
@@ -15,14 +14,15 @@ class Auth
                 Header("Location: login.php");
                 exit;
             } else {
-                $result = $mysql->query("SELECT id, nome, cognome, email, password, tipologia_utente 
+                $result = $connessione->query("SELECT id, nome, cognome, email, password, tipologia_utente 
                     FROM Utente 
-                    WHERE email = '{$_POST['email']}' AND password = MD5('{$_POST['password']}')");
+                    WHERE email = '{$_POST['email']}' AND password = '{$_POST['password']}'");
+                /* WHERE email = '{$_POST['email']}' AND password = MD5('{$_POST['password']}')"); ORIGINALE*/
                 // MD5 serve per il decrypt della password tramite la password stessa
 
                 if (!$result) {
                     // errore durante l'esecuzione della query (creare una pagine ERRORE da visualizzare)
-                    header("Location: pagina di errore che non esiste al momento");
+                    /* header("Location: pagina di errore che non esiste al momento"); */
                     exit;
                 }
 
@@ -31,31 +31,34 @@ class Auth
                     header("Location: login.php?error=2");
                     exit;
                 } else {
+                    echo "utente trovato";
                     $data = $result->fetch_assoc();
                     $_SESSION['auth']['Utente'] = $data;
 
-                    $result = $mysql->query("select user.username, user_role.id_role, service.name, service.script
-                        from user
-                        left join user_role
-                        on user_role.username = user.username
-                        left join role_service
-                        on role_service.id_role = user_role.id_role
-                        left join service
-                        on service.id = role_service.id_service
-                        where user.username = '{$_POST['username']}'");
+                    // // qui "carica i servizi di cui dispone l'utente che ha fatto l'accesso"
+                    // $result = $connessione->query("select user.username, user_role.id_role, service.name, service.script
+                    //     from user
+                    //     left join user_role
+                    //     on user_role.username = user.username
+                    //     left join role_service
+                    //     on role_service.id_role = user_role.id_role
+                    //     left join service
+                    //     on service.id = role_service.id_service
+                    //     where user.username = '{$_POST['username']}'");
+
 
                     if (!$result) {
-                        // error
+                        // errore durante l'esecuzione della query (creare una pagine ERRORE da visualizzare)
+                        /* header("Location: pagina di errore che non esiste al momento"); */
+                        exit;
                     }
-                    $service = array();
+                    // $service = array();
 
-                    while ($data = $result->fetch_assoc()) {
-                        $service[$data['script']] = true;
-                    }
-
-                    $_SESSION['auth']['service'] = $service;
-
-                    return true;
+                    // while ($data = $result->fetch_assoc()) {
+                    //     $service[$data['script']] = true;
+                    // }
+                    // $_SESSION['auth']['service'] = $service;
+                    // return true;
                 }
             }
         } else {
@@ -64,10 +67,11 @@ class Auth
 
         }
 
-        if (!isset($_SESSION['auth']['service'][basename($_SERVER['SCRIPT_FILENAME'])])) {
-            Header("Location: error.php?003-permission-denied");
-            exit;
-        }
+        // // controlla se l'utente ha l'autorizzazione per accedere alla pagina corrente del sito web.
+        // if (!isset($_SESSION['auth']['service'][basename($_SERVER['SCRIPT_FILENAME'])])) {
+        //     Header("Location: error.php?003-permission-denied");
+        //     exit;
+        // }
     }
 }
 
