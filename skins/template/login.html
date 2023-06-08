@@ -5,8 +5,6 @@
          <div class="loader" style="display: none"></div>
       </div>
 
-      <!-- Breadcrumb Section Begin -->
-
       <!-- Register Section Begin -->
       <div class="register-login-section spad">
          <div class="container">
@@ -14,14 +12,14 @@
                <div class="col-lg-6 offset-lg-3">
                   <div class="login-form">
                      <h2>Login</h2>
-                     <form action="#">
+                     <form action="../../include/auth.inc.php" method="post">
                         <div class="group-input">
-                           <label for="username">Indirizzo e-mail *</label>
-                           <input type="text" id="username" />
+                           <label for="email">Indirizzo e-mail *</label>
+                           <input type="text" id="email" name="email" />
                         </div>
                         <div class="group-input">
-                           <label for="pass">Password *</label>
-                           <input type="text" id="pass" />
+                           <label for="password">Password *</label>
+                           <input type="password" id="password" name="password" />
                         </div>
 
                         <button type="submit" class="site-btn login-btn">accedi</button>
