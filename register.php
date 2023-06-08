@@ -3,8 +3,8 @@
 const BLANK_T = "";
 
 require "include/template2.inc.php";
-require "include/dbms.inc.php";
-require "include/php-utils/utility.php";
+// require "include/dbms.inc.php"; tanto questo viene chiamato in register.inc.php
+require "include/register.inc.php";
 
 
 $main = new Template("skins/template/dtml/index_v2.html");
@@ -32,6 +32,7 @@ if (isset($_GET['error'])) {
 $main->setContent('body', $register->get());
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    echo "<script> console.log('POST') </script>";
     if (
         isset($_POST['nome']) ||
         isset($_POST['cognome']) ||

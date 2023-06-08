@@ -18,7 +18,6 @@ $res = $connessione->query("SELECT * FROM categoria c ORDER BY c.nome_categoria"
 foreach ($res as $r) {
     $categoria = new Template("skins/template/dtml/dtml_items/barra laterale filtri/categoriaItem.html");
     $categoria->setContent("NOME_CATEGORIA", $r['nome_categoria']);
-    $categoria->setContent("lallero", $r['id']);
     $filtri->setContent("categorie", $categoria->get());
 }
 
