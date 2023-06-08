@@ -38,8 +38,7 @@ function register($credenziali)
             $_SESSION['auth'] = true;
 
 
-            echo "<script> console.log('Registrazione avvenuta con successo') </script>";
-            // header("location: register.php?error=");
+            header("location: register.php?error=3");
             // bisogna fare un sistema di alert che dice se la registrazione è avvenuta con successo
         }
     }

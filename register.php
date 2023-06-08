@@ -19,9 +19,21 @@ if (isset($_GET['error'])) {
     switch ($_GET['error']) {
         case 1:
             $error = "Utente già esistente!";
+            echo "<script>alert(`$error`); window.setTimeout(function() {
+                    window.location.href = 'register.php';
+                    }, 0);</script>";
             break;
         case 2:
-            $error = "Ops! qualcosa è andato storto";
+            $error = "Ops! qualcosa è andato storto :(";
+            echo "<script>alert($error'); window.setTimeout(function() {
+                    window.location.href = 'register.php';
+                    }, 0);</script>";
+            break;
+        case 3:
+            $error = "Registrazione avvenuta con successo";
+            echo "<script>alert($error); window.setTimeout(function() {
+                    window.location.href = 'register.php';
+                    }, 0);</script>";
             break;
     }
     $register->setContent("error", $error);
