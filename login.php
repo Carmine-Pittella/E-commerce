@@ -13,8 +13,7 @@ $login = new Template("skins/template/login.html");
 require "include/php-utils/preferiti_carrello.php";
 
 
-// molto bello questo metodo, nel caso c'è un errore in autenticazione, l'URL si
-// modifica e la "variabile" 'error' viene presa da lì
+//in caso di errore in autenticazione, l'URL si modifica e la "variabile" 'error' viene presa da lì
 if (isset($_GET['error'])) {
     switch ($_GET['error']) {
         case 1:
