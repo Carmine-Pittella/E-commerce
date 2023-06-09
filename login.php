@@ -20,8 +20,10 @@ if (isset($_GET['error'])) {
             $error = "Compila tutti i campi!";
             break;
         case 2:
-            $error = "Username e/o password sbagliati!";
-            echo $error;
+            $error = "Username e/o password errati !";
+            echo "<script>alert(`$error`); window.setTimeout(function() {
+                    window.location.href = 'login.php';
+                    }, 0);</script>";
             break;
     }
     session_abort();
