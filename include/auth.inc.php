@@ -17,12 +17,9 @@ class Auth
                 exit;
             } else {
                 $pass = utility::cryptify($_POST['password']);
-                $result = $connessione->query("SELECT id, nome, cognome, email, password, tipologia_utente 
-                    FROM Utente 
-                    WHERE email = '{$_POST['email']}' AND password = $pass");
-                // WHERE email = '{$_POST['email']}' AND password = '{$_POST['password']}'");
-                /* WHERE email = '{$_POST['email']}' AND password = MD5('{$_POST['password']}')"); ORIGINALE*/
-                // MD5 serve per il decrypt della password tramite la password stessa
+                $result = $connessione->query("SELECT `id`, `nome`, `cognome`, `email`, `password`
+                    FROM `Utente` 
+                    WHERE `email` = '{$_POST['email']}' AND `password` = $pass");
 
                 if (!$result) {
                     // errore durante l'esecuzione della query (creare una pagine ERRORE da visualizzare)
