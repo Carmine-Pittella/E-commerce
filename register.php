@@ -44,15 +44,13 @@ if (isset($_GET['error'])) {
 $main->setContent('body', $register->get());
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // if (isset($_POST['nome'])) {
-    echo "<script> console.log('POST') </script>";
     if (
         isset($_POST['nome']) ||
         isset($_POST['cognome']) ||
         isset($_POST['email']) ||
         isset($_POST['password'])
     ) {
-        register([$_POST['nome'], $_POST['cognome'], $_POST['email'], $_POST['password']]);
+        register([$_POST['nome'], $_POST['cognome'], $_POST['email'], $_POST['password'], 2]); // 2 è il tipo di utente User
     }
 }
 

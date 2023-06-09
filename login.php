@@ -22,6 +22,7 @@ if (isset($_GET['error'])) {
             break;
         case 2:
             $error = "Username e/o password sbagliati!";
+            echo $error;
             break;
     }
     session_abort();

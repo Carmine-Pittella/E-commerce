@@ -19,7 +19,7 @@ class Auth
                 $pass = utility::cryptify($_POST['password']);
                 $result = $connessione->query("SELECT `id`, `nome`, `cognome`, `email`, `password`
                     FROM `Utente` 
-                    WHERE `email` = '{$_POST['email']}' AND `password` = $pass");
+                    WHERE `email` = '{$_POST['email']}' AND `password` = '{$pass}'");
 
                 if (!$result) {
                     // errore durante l'esecuzione della query (creare una pagine ERRORE da visualizzare)
@@ -35,6 +35,7 @@ class Auth
                     echo "utente trovato";
                     $data = $result->fetch_assoc();
                     $_SESSION['auth']['Utente'] = $data;
+                    // header("Location: PROFILO");
 
                     // // qui "carica i servizi di cui dispone l'utente che ha fatto l'accesso"
                     // $result = $connessione->query("select user.username, user_role.id_role, service.name, service.script
@@ -46,6 +47,8 @@ class Auth
                     //     left join service
                     //     on service.id = role_service.id_service
                     //     where user.username = '{$_POST['username']}'");
+
+
 
 
                     if (!$result) {

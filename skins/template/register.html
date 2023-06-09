@@ -25,6 +25,7 @@
 
                         <div class="group-input">
                            <label for="username">Indirizzo e-mail *</label>
+                           <div class="email-error"></div>
                            <input type="text" id="email" name="email" required />
                         </div>
 
@@ -43,6 +44,10 @@
                            registrati
                         </button>
                      </form>
+
+                     <div class="switch-login">
+                        <a href="login.php" class="or-login">vai a login</a>
+                     </div>
                   </div>
                </div>
             </div>
@@ -56,17 +61,30 @@
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<!-- <script>
+<script>
    $(document).ready(function () {
       var err = '<div class="error"><p style="color: #f64e4e !important;">* Le password non corrispondono</p></div>';
+      var err2 = '<div class="error"><p style="color: #f64e4e !important;">* Inserisci una mail valida</p></div>';
+      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
       $("#conferma_registrazione").on("click", function (event) {
          event.preventDefault();
+
+         // controllo email
+         if (!emailPattern.test($("#email").val())) {
+            $(".email-error").html(err2);
+            return false;
+         } else {
+            $(".email-error").html("");
+         }
+
+         // controllo password
          if ($("#password").val() !== $("#conferma_password").val()) {
             $(".password-error").html(err);
          } else {
             $(".password-error").html("");
+            $("#form_registrazione").submit();
          }
       });
    });
-</script> -->
+</script>
