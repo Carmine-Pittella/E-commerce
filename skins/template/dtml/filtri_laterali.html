@@ -117,7 +117,6 @@
                }
             });
             $(".radio-size").each(function(){
-               console.log("dio porcone",$(this).val())
                if ($(this).is(':checked')) {
                size= $(this).val();
                
@@ -125,26 +124,11 @@
             });
             arrPrezzo.push($("#minamount").val());
             arrPrezzo.push($("#maxamount").val());
-            console.log(arrCategoria);
-            console.log(arrGenere);
-            console.log(arrMarca);
-            console.log(arrPrezzo);
-            console.log(size);
+
+           inviaRichiestaFil(...arrCategoria,...arrGenere,...arrMarca,...arrPrezzo,...size);
 
          })
       })
-      /*
-      $(document).ready(function() {
-        $(".checkbox-categoria").on('click', function() {
-           if ($(this).is(':checked')) {
-              var valore = $(this).val();
-              console.log("ciao");
-              inviaRichiestaCat(valore);
-           }
-        });
-     });
-     */
-
   </script>
 
 

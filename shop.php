@@ -11,54 +11,103 @@ require "include/dbms.inc.php";
 /******* caso chiamata POST per filtri  *******/
 if (isset($_POST['valore'])) {
     $v = $_POST['valore'];
+
+    $escape="'";
+    $arrCategoria = $v['arrCategoria'];
+    $arrGenere = $v['arrGenere'];
+    $arrMarca = $v['arrMarca'];
+    $arrPrezzo = $v['arrPrezzo'];
+    $min = strval($arrPrezzo[0]);
+    $max = strval($arrPrezzo[1]);
+    $size = $v['size'];
     
-    /****  caso filtri per categoria****/
-    if($v['tipo']==="categoria"){
-        $categoria_selezionata = $v['valore'];
-        $res = $connessione->query("SELECT *FROM Prodotto WHERE id_categoria = (SELECT id FROM Categoria WHERE nome_categoria = '$categoria_selezionata');")->fetch_all(MYSQLI_ASSOC);
-        foreach ($res as $r) {
-            $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
-            $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
-            $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
-            $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
+    $strquery =" SELECT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto JOIN Categoria c ON p.id_categoria = c.id JOIN Marca ma ON p.id_marca = ma.id ";
+    $strquery =$strquery. "WHERE p.prezzo >= ".$min." AND p.prezzo <= ".$max;
 
-            if ($r['id_promozione']) {
-                // devo impostare il vecchio prezzo e calcolare il nuovo
-                $prodotto->setContent("PREZZO_PRODOTTO_PRECEDENTE", $r['prezzo']);
-                $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
-                $sconto = intval($promo[0]['sconto_percentuale']);
-                $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
-
-                $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
-            } else {
-                $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
-            }
-            echo $prodotto->get();
+    if(count($arrCategoria)!==0){
+        $strquerytmp=" SELECT id FROM Categoria WHERE nome_categoria IN (";
+        $arrIDCategoriatmp = array();
+        foreach($arrCategoria as $cat){
+            $strquerytmp=$strquerytmp.$escape.$cat.$escape.",";
         }
-    }else{
-        $res = $connessione->query("SELECT * FROM prodotto")->fetch_all(MYSQLI_ASSOC);
-        foreach ($res as $r) {
-            $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
-            $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
-            $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
-            $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
+        $strquerytmp= substr($strquerytmp, 0, -1);
+        $strquerytmp=$strquerytmp.")";
 
-            if ($r['id_promozione']) {
-                // devo impostare il vecchio prezzo e calcolare il nuovo
-                $prodotto->setContent("PREZZO_PRODOTTO_PRECEDENTE", $r['prezzo']);
-                $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
-                $sconto = intval($promo[0]['sconto_percentuale']);
-                $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
+        $strquery=$strquery." AND c.nome_categoria IN (";
+        foreach ($arrCategoria as $cat){
 
-                $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
-            } else {
-                $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
-            }
-            echo $prodotto->get();
+            $strquery=$strquery.$escape.$cat.$escape.",";
         }
-        
+        $strquery= substr($strquery, 0, -1);
+        $strquery=$strquery.")";
+
+        $qProva = $connessione->query($strquerytmp)->fetch_all(MYSQLI_ASSOC);
+        $strquery=$strquery." AND p.id_categoria IN (";
+        foreach ($qProva as $q){
+            $wtmp = (int) $q['id'];
+            $wtmp = strval($wtmp);
+            $strquery=$strquery.$wtmp.",";
+        }
+        $strquery= substr($strquery, 0, -1);
+        $strquery=$strquery.")";
+    }
+    if(count($arrGenere)!==0){
+        $strquery=$strquery." AND p.genere IN (";
+        foreach ($arrGenere as $gen){
+            $strquery=$strquery.$escape.$gen.$escape.",";
+        }
+        $strquery= substr($strquery, 0, -1);
+        $strquery=$strquery.")";
+    }
+    if(count($arrMarca)!==0){
+        $strquery=$strquery." AND ma.nome_marca IN (";
+        foreach ($arrMarca as $mar){
+            $strquery=$strquery.$escape.$mar.$escape.",";
+        }
+        $strquery= substr($strquery, 0, -1);
+        $strquery=$strquery.")";
+    }
+    if($size !== "U"){
+        $strquery = $strquery." AND m.tagalia =".$escape.$size.$escape;
     }
 
+    echo $strquery;
+
+    /*
+    SELECT p.*
+FROM Prodotto p
+JOIN Magazzino m ON p.id = m.id_prodotto
+JOIN Categoria c ON p.id_categoria = c.id
+JOIN Marca ma ON p.id_marca = ma.id
+WHERE c.nome_categoria IN ('categoria1', 'categoria2', ...)
+  AND p.genere IN ('genere1', 'genere2', ...)
+  AND p.prezzo >= min_prezzo
+  AND p.prezzo <= max_prezzo
+  AND ma.nome_marca IN ('marca1', 'marca2', ...)
+  AND p.id_categoria IN (categoria1_id, categoria2_id, ...)
+  AND m.taglia = 'taglia'
+    
+    $res = $connessione->query("SELECT *FROM Prodotto WHERE id_categoria = (SELECT id FROM Categoria WHERE nome_categoria = '$categoria_selezionata');")->fetch_all(MYSQLI_ASSOC);
+    foreach ($res as $r) {
+        $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
+        $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
+        $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
+        $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
+
+        if ($r['id_promozione']) {
+            // devo impostare il vecchio prezzo e calcolare il nuovo
+            $prodotto->setContent("PREZZO_PRODOTTO_PRECEDENTE", $r['prezzo']);
+            $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
+            $sconto = intval($promo[0]['sconto_percentuale']);
+            $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
+
+            $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
+        } else {
+            $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
+        }
+        echo $prodotto->get();
+    }
+    */
 
 }else{
     global $connessione;
