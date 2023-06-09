@@ -16,10 +16,10 @@ DROP TABLE IF EXISTS Prodotto_Preferito;
 DROP TABLE IF EXISTS Corriere;
 DROP TABLE IF EXISTS Coupon;
 DROP TABLE IF EXISTS Metodo_Pagamento;
+DROP TABLE IF EXISTS Indirizzo_Spedizione;
 DROP TABLE IF EXISTS Ordine;
 DROP TABLE IF EXISTS Oggetto_Ordine;
 DROP TABLE IF EXISTS Carrello;
-DROP TABLE IF EXISTS Indirizzo_Spedizione;
 DROP TABLE IF EXISTS Recensione;
 DROP TABLE IF EXISTS Immagine_Prodotto;
 DROP TABLE IF EXISTS Magazzino;
@@ -100,19 +100,32 @@ CREATE TABLE IF NOT EXISTS Metodo_Pagamento (
     url_logo VARCHAR(255)
 );
 
+CREATE TABLE IF NOT EXISTS Indirizzo_Spedizione (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_utente INT NOT NULL,
+    indirizzo VARCHAR(200) NOT NULL,
+    citta VARCHAR(100) NOT NULL,
+    regione VARCHAR(100) NOT NULL,
+    provincia VARCHAR(100) NOT NULL,
+    CAP VARCHAR(10) NOT NULL,
+    FOREIGN KEY (id_utente) REFERENCES Utente(id)
+);
+
 CREATE TABLE IF NOT EXISTS Ordine (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_utente INT NOT NULL,
     id_corriere INT NOT NULL,
     id_coupon INT,
     id_metodo_pagamento INT NOT NULL,
+    id_indirizzo_spedizione INT NOT NULL,
     data_ordine DATE NOT NULL,
     data_spedizione DATE,
     prezzo_ordine DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (id_utente) REFERENCES Utente(id),
     FOREIGN KEY (id_corriere) REFERENCES Corriere(id),
     FOREIGN KEY (id_coupon) REFERENCES Coupon(id),
-    FOREIGN KEY (id_metodo_pagamento) REFERENCES Metodo_Pagamento(id)
+    FOREIGN KEY (id_metodo_pagamento) REFERENCES Metodo_Pagamento(id),
+    FOREIGN KEY (id_indirizzo_spedizione) REFERENCES Indirizzo_Spedizione(id)
 );
 
 CREATE TABLE IF NOT EXISTS Oggetto_Ordine (
@@ -131,17 +144,6 @@ CREATE TABLE IF NOT EXISTS Carrello (
     quantita_prodotto INT NOT NULL,
     FOREIGN KEY (id_utente) REFERENCES Utente(id),
     FOREIGN KEY (id_prodotto) REFERENCES Prodotto(id)
-);
-
-CREATE TABLE IF NOT EXISTS Indirizzo_Spedizione (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    id_utente INT NOT NULL,
-    indirizzo VARCHAR(200) NOT NULL,
-    citta VARCHAR(100) NOT NULL,
-    regione VARCHAR(100) NOT NULL,
-    provincia VARCHAR(100) NOT NULL,
-    CAP VARCHAR(10) NOT NULL,
-    FOREIGN KEY (id_utente) REFERENCES Utente(id)
 );
 
 CREATE TABLE IF NOT EXISTS Recensione (
@@ -323,14 +325,23 @@ VALUES
 ('Google Pay', 'https://example.com/googlepay-logo.png'),
 ('Bonifico Bancario', 'https://example.com/banktransfer-logo.png');
 
--- Inserimento di valori casuali nella tabella Ordine
-INSERT INTO Ordine (id_utente, id_corriere, id_coupon, id_metodo_pagamento, data_ordine, data_spedizione, prezzo_ordine)
+-- Inserimento di valori casuali nella tabella Indirizzo_Spedizione
+INSERT INTO Indirizzo_Spedizione (id_utente, indirizzo, citta, regione, provincia, CAP)
 VALUES
-(1, 1, NULL, 1, '2023-06-05', '2023-06-07', 49.99),
-(2, 3, 2, 3, '2023-06-06', '2023-06-08', 69.99),
-(3, 2, NULL, 4, '2023-06-06', NULL, 119.99),
-(4, 4, 3, 2, '2023-06-07', NULL, 999.99),
-(5, 1, NULL, 5, '2023-06-07', '2023-06-09', 29.99);
+(1, 'Via Roma 1', 'Milano', 'Lombardia', 'MI', '20100'),
+(2, 'Via Verdi 10', 'Roma', 'Lazio', 'RM', '00100'),
+(3, 'Piazza Garibaldi 5', 'Napoli', 'Campania', 'NA', '80100'),
+(4, 'Rue de la Paix 3', 'Parigi', 'Ile-de-France', '75', '75001'),
+(5, 'Broadway 100', 'New York', 'New York', 'NY', '10001');
+
+-- Inserimento di valori casuali nella tabella Ordine
+INSERT INTO Ordine (id_utente, id_corriere, id_coupon, id_metodo_pagamento, id_indirizzo_spedizione, data_ordine, data_spedizione, prezzo_ordine)
+VALUES
+(1, 1, NULL, 1, 1, '2023-06-05', '2023-06-07', 49.99),
+(2, 3, 2, 3, 2, '2023-06-06', '2023-06-08', 69.99),
+(3, 2, NULL, 4, 1, '2023-06-06', NULL, 119.99),
+(4, 4, 3, 2, 1, '2023-06-07', NULL, 999.99),
+(5, 1, NULL, 5, 1, '2023-06-07', '2023-06-09', 29.99);
 
 -- Inserimento di valori casuali nella tabella Oggetto_Ordine
 INSERT INTO Oggetto_Ordine (id_ordine, id_prodotto, quantita_prodotto)
@@ -349,15 +360,6 @@ VALUES
 (3, 3, 1),
 (4, 4, 1),
 (5, 5, 2);
-
--- Inserimento di valori casuali nella tabella Indirizzo_Spedizione
-INSERT INTO Indirizzo_Spedizione (id_utente, indirizzo, citta, regione, provincia, CAP)
-VALUES
-(1, 'Via Roma 1', 'Milano', 'Lombardia', 'MI', '20100'),
-(2, 'Via Verdi 10', 'Roma', 'Lazio', 'RM', '00100'),
-(3, 'Piazza Garibaldi 5', 'Napoli', 'Campania', 'NA', '80100'),
-(4, 'Rue de la Paix 3', 'Parigi', 'Ile-de-France', '75', '75001'),
-(5, 'Broadway 100', 'New York', 'New York', 'NY', '10001');
 
 -- Inserimento di valori casuali nella tabella Recensione
 INSERT INTO Recensione (id_utente, id_prodotto, testo_recensione, valutazione)
