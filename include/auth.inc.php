@@ -32,10 +32,10 @@ class Auth
                     header("Location: login.php?error=2");
                     exit;
                 } else {
-                    echo "utente trovato";
+                    // utente trovato
                     $data = $result->fetch_assoc();
                     $_SESSION['auth']['Utente'] = $data;
-                    // header("Location: PROFILO");
+                    header("Location: profile.php");
 
                     // // qui "carica i servizi di cui dispone l'utente che ha fatto l'accesso"
                     // $result = $connessione->query("select user.username, user_role.id_role, service.name, service.script
@@ -66,9 +66,9 @@ class Auth
                 }
             }
         } else {
-
-            // user already logged
-
+            // utente già loggato
+            header("Location: profile.php");
+            echo "si loggato";
         }
 
         // // controlla se l'utente ha l'autorizzazione per accedere alla pagina corrente del sito web.
