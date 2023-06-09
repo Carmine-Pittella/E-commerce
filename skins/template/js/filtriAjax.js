@@ -9,6 +9,9 @@
       if(arrMarca.length===0){
         arrMarca.push(-1);
       }
+      if(size===undefined){
+        size='U';
+      }
       dataT = {arrCategoria:arrCategoria,
               arrGenere:arrGenere,
               arrMarca:arrMarca,

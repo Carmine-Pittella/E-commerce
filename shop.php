@@ -18,7 +18,9 @@ if (isset($_POST['valore'])) {
     $arrMarca = $v['arrMarca'];
     $arrPrezzo = $v['arrPrezzo'];
     $min = strval($arrPrezzo[0]);
+    $min = substr($min,1);
     $max = strval($arrPrezzo[1]);
+    $max = substr($max,1);
     $size = $v['size'];
     
     $strquery =" SELECT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto JOIN Categoria c ON p.id_categoria = c.id JOIN Marca ma ON p.id_marca = ma.id ";
@@ -71,10 +73,11 @@ if (isset($_POST['valore'])) {
         $strquery=$strquery.")";
     }
     if($size !== "U"){
-        $strquery = $strquery." AND m.tagalia =".$escape.$size.$escape;
+        $strquery = $strquery." AND m.taglia =".$escape.$size.$escape;
     }
-
-
+    //echo $strquery;
+    
+    
     $res = $connessione->query("$strquery")->fetch_all(MYSQLI_ASSOC);
     foreach ($res as $r) {
         $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
@@ -95,6 +98,7 @@ if (isset($_POST['valore'])) {
         }
         echo $prodotto->get();
     }
+    
     
 
 }else{
