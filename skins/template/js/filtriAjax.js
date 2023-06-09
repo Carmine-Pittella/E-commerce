@@ -1,16 +1,13 @@
 
     function inviaRichiestaFil(arrCategoria,arrGenere,arrMarca,arrPrezzo,size){
-      if(size===undefined){
-        size='U';
+      if(arrCategoria.length===0){
+        arrCategoria.push(-1);
       }
-      if(arrCategoria===undefined){
-        console.log("categoria non definita");
+      if(arrGenere.length===0){
+        arrGenere.push(-1);
       }
-      if(arrGenere===undefined){
-        console.log("genere non definito");
-      }
-      if(arrMarca===undefined){
-        console.log("marca non definita");
+      if(arrMarca.length===0){
+        arrMarca.push(-1);
       }
       dataT = {arrCategoria:arrCategoria,
               arrGenere:arrGenere,
