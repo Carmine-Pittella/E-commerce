@@ -10,7 +10,6 @@ require "include/dbms.inc.php";
 // }
 
 
-
 $main = new Template("skins/template/dtml/index_v2.html");
 $login = new Template("skins/template/login.html");
 

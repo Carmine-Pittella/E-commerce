@@ -10,3 +10,26 @@ require_once('include/auth.inc.php');
 // se ti chiedi perché fare un file cos' inutile, perché se da Index_v2 al posto di mettere "autenticazione.php" metto il 
 // percorso di "include/auth.inc.php" non mi trova la pagina.
 // nell'URL non ci mette localhost/ecommerce/...    ma ci mette localhost/auth.inc.php che non esiste !!!
+
+
+
+
+// function autenticazione()
+// {
+//     session_start();
+
+//     if (isset($_SESSION['auth']) && $_SESSION['auth']) {
+//         // header("location: profile.php");
+//     } else {
+//         header("location: login.php");
+//     }
+// }
+
+
+// function check_auth()
+// {
+//     if (!$_SESSION['auth']) {
+//         header("location: login.php");
+//         exit();
+//     }
+// }
