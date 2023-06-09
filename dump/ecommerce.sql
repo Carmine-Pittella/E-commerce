@@ -279,9 +279,13 @@ VALUES
 ('T-shirt', 'descrizione bla bla', 79.99, 'uomo', 1, 4, NULL),
 ('T-shirt', 'descrizione bla blaa', 19.99, 'uomo', 1, 4, NULL),
 ('felpa', 'descrizione bla bla', 149.99, 'uomo', 2, 2, NULL),
-('felpa', 'descrizione bla bla', 999.99, 'uomo', 2, 6, NULL),
-('pantalone', 'descrizione bla bla', 999.99, 'uomo', 2, 6, NULL),
-('pantalone', 'descrizione bla bla', 999.99, 'uomo', 2, 6, NULL);
+('felpa', 'descrizione bla bla', 59.99, 'uomo', 2, 2, NULL),
+('felpa', 'descrizione bla bla', 299.99, 'uomo', 2, 6, NULL),
+('felpa', 'descrizione bla bla', 949.99, 'uomo', 2, 6, NULL),
+('jeans', 'descrizione bla bla', 199.99, 'uomo', 3, 5, NULL),
+('jeans', 'descrizione bla bla', 99.99, 'uomo', 3, 5, NULL),
+('pantalone', 'descrizione bla bla', 199.99, 'uomo', 3, 5, NULL),
+('pantalone', 'descrizione bla bla', 199.99, 'uomo', 3, 5, NULL);
 
 -- Inserimento di valori casuali nella tabella Prodotto_Preferito
 INSERT INTO Prodotto_Preferito (id_utente, id_prodotto)

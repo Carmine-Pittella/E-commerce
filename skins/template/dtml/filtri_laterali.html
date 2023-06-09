@@ -5,21 +5,21 @@
          <div class="bc-item">
             <label>
                Uomo
-               <input type="checkbox" />
+               <input class="checkbox-genere" type="checkbox" value="uomo" />
                <span class="checkmark"></span>
             </label>
          </div>
          <div class="bc-item">
             <label>
                Donna
-               <input type="checkbox" />
+               <input class="checkbox-genere" type="checkbox" value="donna" />
                <span class="checkmark"></span>
             </label>
          </div>
          <div class="bc-item">
             <label>
                Bambino
-               <input type="checkbox" />
+               <input class="checkbox-genere" type="checkbox" value="bambino" />
                <span class="checkmark"></span>
             </label>
          </div>
@@ -59,7 +59,7 @@
          </div>
       </div>
 
-      <a href="#" class="filter-btn">Filter</a>
+      <a href="#" id="a-filter-items" class="filter-btn">Filter</a>
       <a href="shop.php" class="btn">RESET</a>
    </div>
 
@@ -69,28 +69,71 @@
       <h4 class="fw-title">Size</h4>
       <div class="fw-size-choose">
          <div class="sc-item">
-            <input type="radio" id="s-size" />
+            <input class="radio-size" type="radio" id="s-size" value="S" name="radioSize"/>
             <label for="s-size">s</label>
          </div>
          <div class="sc-item">
-            <input type="radio" id="m-size" />
+            <input class="radio-size" type="radio" id="m-size" value="M" name="radioSize"/>
             <label for="m-size">m</label>
          </div>
          <div class="sc-item">
-            <input type="radio" id="l-size" />
+            <input class="radio-size" type="radio" id="l-size" value="L" name="radioSize"/>
             <label for="l-size">l</label>
          </div>
          <div class="sc-item">
-            <input type="radio" id="xs-size" />
+            <input class="radio-size" type="radio" id="xs-size" value="XL"name="radioSizea" />
             <label for="xs-size">xl</label>
          </div>
       </div>
    </div>
+
    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
    <script src="./skins/template/js/filtriAjax.js"></script>
    <script>
-      console.log("dio")
+      $(document).ready(function(){
+         $("#a-filter-items").on('click',function(){
+            var arrCategoria = [];
+            var arrGenere = [];
+            var arrMarca = [];
+            var arrPrezzo = [];
+            var size;
+            $(".checkbox-categoria").each(function(){
+               if ($(this).is(':checked')) {
+               var valoreCheckbox = $(this).val();
+               arrCategoria.push(valoreCheckbox);
+               }
+            });
+            $(".checkbox-genere").each(function(){
+               if ($(this).is(':checked')) {
+               var valoreCheckbox = $(this).val();
+               arrGenere.push(valoreCheckbox);
+               }
+            });
+            $(".checkbox-marca").each(function(){
+               if ($(this).is(':checked')) {
+               var valoreCheckbox = $(this).val();
+               arrMarca.push(valoreCheckbox);
+               }
+            });
+            $(".radio-size").each(function(){
+               console.log("dio porcone",$(this).val())
+               if ($(this).is(':checked')) {
+               size= $(this).val();
+               
+               }
+            });
+            arrPrezzo.push($("#minamount").val());
+            arrPrezzo.push($("#maxamount").val());
+            console.log(arrCategoria);
+            console.log(arrGenere);
+            console.log(arrMarca);
+            console.log(arrPrezzo);
+            console.log(size);
+
+         })
+      })
+      /*
       $(document).ready(function() {
         $(".checkbox-categoria").on('click', function() {
            if ($(this).is(':checked')) {
@@ -100,6 +143,7 @@
            }
         });
      });
+     */
 
   </script>
 
