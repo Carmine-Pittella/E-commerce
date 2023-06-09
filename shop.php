@@ -24,7 +24,10 @@ if (isset($_POST['valore'])) {
     $strquery =" SELECT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto JOIN Categoria c ON p.id_categoria = c.id JOIN Marca ma ON p.id_marca = ma.id ";
     $strquery =$strquery. "WHERE p.prezzo >= ".$min." AND p.prezzo <= ".$max;
 
-    if(count($arrCategoria)!==0){
+    
+
+    if($arrCategoria[0] !== '-1'){
+       
         $strquerytmp=" SELECT id FROM Categoria WHERE nome_categoria IN (";
         $arrIDCategoriatmp = array();
         foreach($arrCategoria as $cat){
@@ -51,7 +54,7 @@ if (isset($_POST['valore'])) {
         $strquery= substr($strquery, 0, -1);
         $strquery=$strquery.")";
     }
-    if(count($arrGenere)!==0){
+    if($arrGenere[0] !== '-1'){
         $strquery=$strquery." AND p.genere IN (";
         foreach ($arrGenere as $gen){
             $strquery=$strquery.$escape.$gen.$escape.",";
@@ -59,7 +62,7 @@ if (isset($_POST['valore'])) {
         $strquery= substr($strquery, 0, -1);
         $strquery=$strquery.")";
     }
-    if(count($arrMarca)!==0){
+    if($arrMarca[0] !== '-1'){
         $strquery=$strquery." AND ma.nome_marca IN (";
         foreach ($arrMarca as $mar){
             $strquery=$strquery.$escape.$mar.$escape.",";
@@ -71,23 +74,8 @@ if (isset($_POST['valore'])) {
         $strquery = $strquery." AND m.tagalia =".$escape.$size.$escape;
     }
 
-    echo $strquery;
 
-    /*
-    SELECT p.*
-FROM Prodotto p
-JOIN Magazzino m ON p.id = m.id_prodotto
-JOIN Categoria c ON p.id_categoria = c.id
-JOIN Marca ma ON p.id_marca = ma.id
-WHERE c.nome_categoria IN ('categoria1', 'categoria2', ...)
-  AND p.genere IN ('genere1', 'genere2', ...)
-  AND p.prezzo >= min_prezzo
-  AND p.prezzo <= max_prezzo
-  AND ma.nome_marca IN ('marca1', 'marca2', ...)
-  AND p.id_categoria IN (categoria1_id, categoria2_id, ...)
-  AND m.taglia = 'taglia'
-    
-    $res = $connessione->query("SELECT *FROM Prodotto WHERE id_categoria = (SELECT id FROM Categoria WHERE nome_categoria = '$categoria_selezionata');")->fetch_all(MYSQLI_ASSOC);
+    $res = $connessione->query($strquery)->fetch_all(MYSQLI_ASSOC);
     foreach ($res as $r) {
         $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
         $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
@@ -107,7 +95,7 @@ WHERE c.nome_categoria IN ('categoria1', 'categoria2', ...)
         }
         echo $prodotto->get();
     }
-    */
+    
 
 }else{
     global $connessione;
