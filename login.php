@@ -5,6 +5,11 @@ const BLANK_T = "";
 require "include/template2.inc.php";
 require "include/dbms.inc.php";
 
+// if (isset($_SESSION['auth']) && $_SESSION['auth']) {
+//     header('location: profile.php');
+// }
+
+
 
 $main = new Template("skins/template/dtml/index_v2.html");
 $login = new Template("skins/template/login.html");
@@ -20,8 +25,10 @@ if (isset($_GET['error'])) {
             $error = "Compila tutti i campi!";
             break;
         case 2:
-            $error = "Username e/o password sbagliati!";
-            echo $error;
+            $error = "Username e/o password errati !";
+            echo "<script>alert(`$error`); window.setTimeout(function() {
+                    window.location.href = 'login.php';
+                    }, 0);</script>";
             break;
     }
     session_abort();
