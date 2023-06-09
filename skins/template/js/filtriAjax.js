@@ -21,11 +21,9 @@
         data: { valore: dataT},
         success: function(response) {
           console.log('successo:',response,'fine');
-          /*
           $(document).ready(function(){
               $("#divItems").html(response)
           })
-          */
         },
         error: function(xhr, status, error) {
           console.log('Si è verificato un errore durante l\'invio della richiesta.');

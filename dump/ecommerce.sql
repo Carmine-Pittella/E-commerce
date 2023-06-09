@@ -382,11 +382,28 @@ VALUES
 -- Inserimento di valori casuali nella tabella Magazzino
 INSERT INTO Magazzino (id_prodotto, quantita, taglia)
 VALUES
+(1, 10, 'S'),
 (1, 10, 'M'),
-(2, 5, 'S'),
+(2, 5, 'M'),
+(2, 5, 'M'),
+(3, 3, 'M'),
 (3, 3, 'L'),
+(4, 8, 'S'),
 (4, 8, 'M'),
-(5, 20, 'M');
+(5, 20, 'S'),
+(5, 20, 'M'),
+(5, 20, 'XL'),
+(6, 20, 'S'),
+(6, 20, 'M'),
+(7, 20, 'M'),
+(8, 20, 'M'),
+(8, 20, 'L'),
+(9, 20, 'M'),
+(9, 20, 'L'),
+(9, 20, 'XL'),
+(10, 20, 'M'),
+(10, 20, 'L'),
+(11, 30, 'M');
 
 -- Inserimento di valori casuali nella tabella Service
 INSERT INTO Service (id, script, description) VALUES

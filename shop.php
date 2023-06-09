@@ -75,7 +75,7 @@ if (isset($_POST['valore'])) {
     }
 
 
-    $res = $connessione->query($strquery)->fetch_all(MYSQLI_ASSOC);
+    $res = $connessione->query("$strquery")->fetch_all(MYSQLI_ASSOC);
     foreach ($res as $r) {
         $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
         $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
