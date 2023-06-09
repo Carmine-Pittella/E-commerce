@@ -14,7 +14,27 @@ if (isset($_POST['valore'])) {
     
     /****  caso filtri per categoria****/
     if($v['tipo']==="categoria"){
-        echo "funziona dio porcone";
+        $categoria_selezionata = $v['valore'];
+        $res = $connessione->query("SELECT *FROM Prodotto WHERE id_categoria = (SELECT id FROM Categoria WHERE nome_categoria = '$categoria_selezionata');")->fetch_all(MYSQLI_ASSOC);
+        foreach ($res as $r) {
+            $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
+            $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
+            $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
+            $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
+
+            if ($r['id_promozione']) {
+                // devo impostare il vecchio prezzo e calcolare il nuovo
+                $prodotto->setContent("PREZZO_PRODOTTO_PRECEDENTE", $r['prezzo']);
+                $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
+                $sconto = intval($promo[0]['sconto_percentuale']);
+                $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
+
+                $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
+            } else {
+                $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
+            }
+            echo $prodotto->get();
+        }
     }else{
         $res = $connessione->query("SELECT * FROM prodotto")->fetch_all(MYSQLI_ASSOC);
         foreach ($res as $r) {
@@ -38,11 +58,7 @@ if (isset($_POST['valore'])) {
         }
         
     }
-    
 
-
-
-    echo json_encode($v);
 
 }else{
     global $connessione;
