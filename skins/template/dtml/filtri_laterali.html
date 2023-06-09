@@ -86,4 +86,22 @@
          </div>
       </div>
    </div>
+   <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   <script>
+      console.log("dio")
+      $(document).ready(function() {
+        $(".checkbox-categoria").on('click', function() {
+           if ($(this).is(':checked')) {
+              var valore = $(this).val();
+              console.log("ciao")
+              //inviaRichiesta(valore);
+           }
+        });
+     });
+
+  </script>
+
+
+
 </div>
