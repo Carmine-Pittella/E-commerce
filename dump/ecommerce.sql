@@ -251,7 +251,8 @@ VALUES
 ('felpe'),
 ('pantaloni'),
 ('maglioni'),
-('gonne');
+('gonne'),
+('camice');
 
 -- Inserimento di valori casuali nella tabella Marca
 INSERT INTO Marca (nome_marca)
@@ -287,7 +288,8 @@ VALUES
 ('jeans', 'descrizione bla bla', 199.99, 'uomo', 3, 5, NULL),
 ('jeans', 'descrizione bla bla', 99.99, 'uomo', 3, 5, NULL),
 ('pantalone', 'descrizione bla bla', 199.99, 'uomo', 3, 5, NULL),
-('pantalone', 'descrizione bla bla', 199.99, 'uomo', 3, 5, NULL);
+('pantalone', 'descrizione bla bla', 199.99, 'uomo', 3, 5, NULL),
+('camicia', 'descrizione bla bla', 44.99, 'uomo', 6, 5, NULL);
 
 -- Inserimento di valori casuali nella tabella Prodotto_Preferito
 INSERT INTO Prodotto_Preferito (id_utente, id_prodotto)
@@ -373,11 +375,23 @@ VALUES
 -- Inserimento di valori casuali nella tabella Immagine_Prodotto
 INSERT INTO Immagine_Prodotto (id_prodotto, url_immagine)
 VALUES
-(1, 'https://example.com/maglia.jpg'),
-(2, 'https://example.com/scarpe.jpg'),
-(3, 'https://example.com/borsa.jpg'),
-(4, 'https://example.com/iphone.jpg'),
-(5, 'https://example.com/rossetto.jpg');
+(1, 'product-single/product-1.jpg'),
+(1, 'product-single/product-2.jpg'),
+(1, 'product-single/product-3.jpg'),
+(2, 'product-single/product-4.jpg'),
+(2, 'product-single/product-5.jpg'),
+(2, 'product-single/product-6.jpg'),
+(2, 'product-single/product-7.jpg'),
+(10, 'product-single/product-8.jpg'),
+(10, 'product-single/product-9.jpg'),
+(10, 'product-single/product-10.jpg'),
+(12, 'product-single/product-11.jpg'),
+(12, 'product-single/product-12.jpg'),
+(12, 'product-single/product-13.jpg'),
+(8, 'product-single/product-14.jpg'),
+(8, 'product-single/product-15.jpg'),
+(8, 'product-single/product-16.jpg'),
+(8, 'product-single/product-17.jpg');
 
 -- Inserimento di valori casuali nella tabella Magazzino
 INSERT INTO Magazzino (id_prodotto, quantita, taglia)
