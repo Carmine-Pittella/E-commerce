@@ -11,6 +11,13 @@ if(isset($_GET['page'])){
 
 /******* caso chiamata POST per filtri  *******/
 if (isset($_POST['valore'])) {
+
+    $shop = new Template("skins/template/shop.html");
+    $filtri = new Template("skins/template/dtml/filtri_laterali.html");
+    require "include/php-utils/preferiti_carrello.php";
+    BarraFiltri($shop, $filtri);
+
+
     $v = $_POST['valore'];
 
     $escape = "'";
@@ -24,59 +31,7 @@ if (isset($_POST['valore'])) {
     $max = substr($max, 1);
     $size = $v['size'];
 
-    $strquery = " SELECT DISTINCT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto JOIN Categoria c ON p.id_categoria = c.id JOIN Marca ma ON p.id_marca = ma.id ";
-    $strquery = $strquery . "WHERE p.prezzo >= " . $min . " AND p.prezzo <= " . $max;
-
-
-
-    if ($arrCategoria[0] !== '-1') {
-
-        $strquerytmp = " SELECT id FROM Categoria WHERE nome_categoria IN (";
-        $arrIDCategoriatmp = array();
-        foreach ($arrCategoria as $cat) {
-            $strquerytmp = $strquerytmp . $escape . $cat . $escape . ",";
-        }
-        $strquerytmp = substr($strquerytmp, 0, -1);
-        $strquerytmp = $strquerytmp . ")";
-
-        $strquery = $strquery . " AND c.nome_categoria IN (";
-        foreach ($arrCategoria as $cat) {
-
-            $strquery = $strquery . $escape . $cat . $escape . ",";
-        }
-        $strquery = substr($strquery, 0, -1);
-        $strquery = $strquery . ")";
-
-        $qProva = $connessione->query($strquerytmp)->fetch_all(MYSQLI_ASSOC);
-        $strquery = $strquery . " AND p.id_categoria IN (";
-        foreach ($qProva as $q) {
-            $wtmp = (int) $q['id'];
-            $wtmp = strval($wtmp);
-            $strquery = $strquery . $wtmp . ",";
-        }
-        $strquery = substr($strquery, 0, -1);
-        $strquery = $strquery . ")";
-    }
-    if ($arrGenere[0] !== '-1') {
-        $strquery = $strquery . " AND p.genere IN (";
-        foreach ($arrGenere as $gen) {
-            $strquery = $strquery . $escape . $gen . $escape . ",";
-        }
-        $strquery = substr($strquery, 0, -1);
-        $strquery = $strquery . ")";
-    }
-    if ($arrMarca[0] !== '-1') {
-        $strquery = $strquery . " AND ma.nome_marca IN (";
-        foreach ($arrMarca as $mar) {
-            $strquery = $strquery . $escape . $mar . $escape . ",";
-        }
-        $strquery = substr($strquery, 0, -1);
-        $strquery = $strquery . ")";
-    }
-    if ($size !== "U") {
-        $strquery = $strquery . " AND m.taglia =" . $escape . $size . $escape;
-    }
-    //echo $strquery;
+    $strquery = generaQuerry($arrCategoria,$arrGenere,$arrMarca,$arrPrezzo,$min,$max,$size);
 
 
     $res = $connessione->query("$strquery")->fetch_all(MYSQLI_ASSOC);
@@ -112,6 +67,15 @@ if (isset($_POST['valore'])) {
                 $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
             }
             echo $prodotto->get();
+            /*
+            $scrollbtn = new Template("skins/template/dtml/dtml_items/shop_scroll_button.html");
+            $scrollbtn_slideLeft = '';
+            $scrollbtn_slideRight = '';
+            $scrollbtn_page = '<li class="page-item"><a style="font-size: 16px; color: black;" class="page-link pagerno">1</a></li>';
+            $scrollbtn = setScrollbtn($scrollbtn,$scrollbtn_slideLeft,$scrollbtn_page,$scrollbtn_slideRight);
+            $shop->setContent('prodotti', $prodotto->get());
+            echo $shop->get();
+            */
         }
     }   
 } 
@@ -176,10 +140,7 @@ else {
         $scrollbtn_slideLeft = '';
         $scrollbtn_slideRight = '<li class="page-item"><a style="font-size: 16px; color: black;" class="page-link pagerno" href="shop.php?slideRight=1&page=1">&gt</a></li>';
         $scrollbtn_page = '<li class="page-item"><a style="font-size: 16px; color: black;" class="page-link pagerno">1</a></li>';
-        $scrollbtn->setContent('slideLeft',$scrollbtn_slideLeft);
-        $scrollbtn->setContent('pageNumber',$scrollbtn_page);
-        $scrollbtn->setContent('slideRight', $scrollbtn_slideRight);
-        
+        $scrollbtn = setScrollbtn($scrollbtn,$scrollbtn_slideLeft,$scrollbtn_page,$scrollbtn_slideRight);    
         $shop->setContent('scrb',$scrollbtn->get());
         $main->setContent('body', $shop->get());
         $main->close();
@@ -223,10 +184,7 @@ else {
         $scrollbtn_slideLeft = '';
         $scrollbtn_slideRight = '';
         $scrollbtn_page = '<li class="page-item"><a style="font-size: 16px; color: black;" class="page-link pagerno">1</a></li>';
-        $scrollbtn->setContent('slideLeft',$scrollbtn_slideLeft);
-        $scrollbtn->setContent('pageNumber',$scrollbtn_page);
-        $scrollbtn->setContent('slideRight', $scrollbtn_slideRight);
-        
+        $scrollbtn = setScrollbtn($scrollbtn,$scrollbtn_slideLeft,$scrollbtn_page,$scrollbtn_slideRight);
         $shop->setContent('scrb',$scrollbtn->get());
         $main->setContent('body', $shop->get());
         $main->close();
@@ -255,4 +213,64 @@ function BarraFiltri($shop, $filtri)
         $filtri->setContent('marche', $marca->get());
     } 
     $shop->setContent('sezione_filtri', $filtri->get());
+}
+function generaQuerry($arrCategoria,$arrGenere,$arrMarca,$arrPrezzo,$min,$max,$size){
+    $escape = "'";
+    $strquery = " SELECT DISTINCT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto JOIN Categoria c ON p.id_categoria = c.id JOIN Marca ma ON p.id_marca = ma.id ";
+    $strquery = $strquery . "WHERE p.prezzo >= " . $min . " AND p.prezzo <= " . $max;
+    if ($arrCategoria[0] !== '-1') {
+
+        $strquerytmp = " SELECT id FROM Categoria WHERE nome_categoria IN (";
+        $arrIDCategoriatmp = array();
+        foreach ($arrCategoria as $cat) {
+            $strquerytmp = $strquerytmp . $escape . $cat . $escape . ",";
+        }
+        $strquerytmp = substr($strquerytmp, 0, -1);
+        $strquerytmp = $strquerytmp . ")";
+
+        $strquery = $strquery . " AND c.nome_categoria IN (";
+        foreach ($arrCategoria as $cat) {
+
+            $strquery = $strquery . $escape . $cat . $escape . ",";
+        }
+        $strquery = substr($strquery, 0, -1);
+        $strquery = $strquery . ")";
+
+        $qProva = $connessione->query($strquerytmp)->fetch_all(MYSQLI_ASSOC);
+        $strquery = $strquery . " AND p.id_categoria IN (";
+        foreach ($qProva as $q) {
+            $wtmp = (int) $q['id'];
+            $wtmp = strval($wtmp);
+            $strquery = $strquery . $wtmp . ",";
+        }
+        $strquery = substr($strquery, 0, -1);
+        $strquery = $strquery . ")";
+    }
+    if ($arrGenere[0] !== '-1') {
+        $strquery = $strquery . " AND p.genere IN (";
+        foreach ($arrGenere as $gen) {
+            $strquery = $strquery . $escape . $gen . $escape . ",";
+        }
+        $strquery = substr($strquery, 0, -1);
+        $strquery = $strquery . ")";
+    }
+    if ($arrMarca[0] !== '-1') {
+        $strquery = $strquery . " AND ma.nome_marca IN (";
+        foreach ($arrMarca as $mar) {
+            $strquery = $strquery . $escape . $mar . $escape . ",";
+        }
+        $strquery = substr($strquery, 0, -1);
+        $strquery = $strquery . ")";
+    }
+    if ($size !== "U") {
+        $strquery = $strquery . " AND m.taglia =" . $escape . $size . $escape;
+    }
+    return $strquery;
+    
+}
+function setScrollbtn($scrollbtn,$scrollbtn_slideLeft,$scrollbtn_page,$scrollbtn_slideRight){
+    $scrollbtn->setContent('slideLeft',$scrollbtn_slideLeft);
+    $scrollbtn->setContent('pageNumber',$scrollbtn_page);
+    $scrollbtn->setContent('slideRight',$scrollbtn_slideRight);
+    return $scrollbtn;
 }
