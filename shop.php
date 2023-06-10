@@ -12,72 +12,72 @@ require "include/dbms.inc.php";
 if (isset($_POST['valore'])) {
     $v = $_POST['valore'];
 
-    $escape="'";
+    $escape = "'";
     $arrCategoria = $v['arrCategoria'];
     $arrGenere = $v['arrGenere'];
     $arrMarca = $v['arrMarca'];
     $arrPrezzo = $v['arrPrezzo'];
     $min = strval($arrPrezzo[0]);
-    $min = substr($min,1);
+    $min = substr($min, 1);
     $max = strval($arrPrezzo[1]);
-    $max = substr($max,1);
+    $max = substr($max, 1);
     $size = $v['size'];
-    
-    $strquery =" SELECT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto JOIN Categoria c ON p.id_categoria = c.id JOIN Marca ma ON p.id_marca = ma.id ";
-    $strquery =$strquery. "WHERE p.prezzo >= ".$min." AND p.prezzo <= ".$max;
 
-    
+    $strquery = " SELECT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto JOIN Categoria c ON p.id_categoria = c.id JOIN Marca ma ON p.id_marca = ma.id ";
+    $strquery = $strquery . "WHERE p.prezzo >= " . $min . " AND p.prezzo <= " . $max;
 
-    if($arrCategoria[0] !== '-1'){
-       
-        $strquerytmp=" SELECT id FROM Categoria WHERE nome_categoria IN (";
+
+
+    if ($arrCategoria[0] !== '-1') {
+
+        $strquerytmp = " SELECT id FROM Categoria WHERE nome_categoria IN (";
         $arrIDCategoriatmp = array();
-        foreach($arrCategoria as $cat){
-            $strquerytmp=$strquerytmp.$escape.$cat.$escape.",";
+        foreach ($arrCategoria as $cat) {
+            $strquerytmp = $strquerytmp . $escape . $cat . $escape . ",";
         }
-        $strquerytmp= substr($strquerytmp, 0, -1);
-        $strquerytmp=$strquerytmp.")";
+        $strquerytmp = substr($strquerytmp, 0, -1);
+        $strquerytmp = $strquerytmp . ")";
 
-        $strquery=$strquery." AND c.nome_categoria IN (";
-        foreach ($arrCategoria as $cat){
+        $strquery = $strquery . " AND c.nome_categoria IN (";
+        foreach ($arrCategoria as $cat) {
 
-            $strquery=$strquery.$escape.$cat.$escape.",";
+            $strquery = $strquery . $escape . $cat . $escape . ",";
         }
-        $strquery= substr($strquery, 0, -1);
-        $strquery=$strquery.")";
+        $strquery = substr($strquery, 0, -1);
+        $strquery = $strquery . ")";
 
         $qProva = $connessione->query($strquerytmp)->fetch_all(MYSQLI_ASSOC);
-        $strquery=$strquery." AND p.id_categoria IN (";
-        foreach ($qProva as $q){
+        $strquery = $strquery . " AND p.id_categoria IN (";
+        foreach ($qProva as $q) {
             $wtmp = (int) $q['id'];
             $wtmp = strval($wtmp);
-            $strquery=$strquery.$wtmp.",";
+            $strquery = $strquery . $wtmp . ",";
         }
-        $strquery= substr($strquery, 0, -1);
-        $strquery=$strquery.")";
+        $strquery = substr($strquery, 0, -1);
+        $strquery = $strquery . ")";
     }
-    if($arrGenere[0] !== '-1'){
-        $strquery=$strquery." AND p.genere IN (";
-        foreach ($arrGenere as $gen){
-            $strquery=$strquery.$escape.$gen.$escape.",";
+    if ($arrGenere[0] !== '-1') {
+        $strquery = $strquery . " AND p.genere IN (";
+        foreach ($arrGenere as $gen) {
+            $strquery = $strquery . $escape . $gen . $escape . ",";
         }
-        $strquery= substr($strquery, 0, -1);
-        $strquery=$strquery.")";
+        $strquery = substr($strquery, 0, -1);
+        $strquery = $strquery . ")";
     }
-    if($arrMarca[0] !== '-1'){
-        $strquery=$strquery." AND ma.nome_marca IN (";
-        foreach ($arrMarca as $mar){
-            $strquery=$strquery.$escape.$mar.$escape.",";
+    if ($arrMarca[0] !== '-1') {
+        $strquery = $strquery . " AND ma.nome_marca IN (";
+        foreach ($arrMarca as $mar) {
+            $strquery = $strquery . $escape . $mar . $escape . ",";
         }
-        $strquery= substr($strquery, 0, -1);
-        $strquery=$strquery.")";
+        $strquery = substr($strquery, 0, -1);
+        $strquery = $strquery . ")";
     }
-    if($size !== "U"){
-        $strquery = $strquery." AND m.taglia =".$escape.$size.$escape;
+    if ($size !== "U") {
+        $strquery = $strquery . " AND m.taglia =" . $escape . $size . $escape;
     }
     //echo $strquery;
-    
-    
+
+
     $res = $connessione->query("$strquery")->fetch_all(MYSQLI_ASSOC);
     foreach ($res as $r) {
         $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
@@ -98,10 +98,7 @@ if (isset($_POST['valore'])) {
         }
         echo $prodotto->get();
     }
-    
-    
-
-}else{
+} else {
     global $connessione;
 
     $main = new Template("skins/template/dtml/index_v2.html");
@@ -135,6 +132,8 @@ if (isset($_POST['valore'])) {
         $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
 
         $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
+
+        $prodotto->setContent("ID_PRODOTTO", $r['id']);
         $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
         $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
 
@@ -155,14 +154,4 @@ if (isset($_POST['valore'])) {
 
     $main->setContent('body', $shop->get());
     $main->close();
-
 }
-
-
-
-
-
-
-
-
-
