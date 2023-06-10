@@ -174,6 +174,6 @@ function BarraFiltri($shop, $filtri)
         $marca = new Template("skins/template/dtml/dtml_items/barra laterale filtri/marcaItem.html");
         $marca->setContent("NOME_MARCA", $r['nome_marca']);
         $filtri->setContent('marche', $marca->get());
-    }
+    } 
     $shop->setContent('sezione_filtri', $filtri->get());
 }

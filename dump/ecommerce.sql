@@ -375,37 +375,19 @@ VALUES
 -- Inserimento di valori casuali nella tabella Immagine_Prodotto
 INSERT INTO Immagine_Prodotto (id_prodotto, url_immagine)
 VALUES
-<<<<<<< HEAD
-(1, 'skins/template/img/products/M-element-Tshirt-front-blu.jpg'),
-(2, 'skins/template/img/products/M-element-Tshirt2-front-grey.jpg'),
-(3, 'skins/template/img/products/M-element-Tshirt3-front-yellow.jpg'),
-(4, 'skins/template/img/products/M-adidas-sweatshirt-front-black.jpg'),
-(5, 'skins/template/img/products/M-adidas-sweatshirt-front-white.jpg'),
-(6, 'skins/template/img/products/M-H&H-sweatshirt-front-grey.jpg'),
-(7, 'skins/template/img/products/M-H&H-sweatshirt-front-white.jpg'),
-(8, 'skins/template/img/products/M-levis-jeans-front-blu.jpg'),
-(9, 'skins/template/img/products/M-levis-jeans-front-darkblu.jpg'),
-(10, 'skins/template/img/products/M-levis-pants-front-beige.jpg'),
-(11, 'skins/template/img/products/M-levis-pants-front-red.jpg');
-=======
-(1, 'product-single/product-1.jpg'),
-(1, 'product-single/product-2.jpg'),
-(1, 'product-single/product-3.jpg'),
-(2, 'product-single/product-4.jpg'),
-(2, 'product-single/product-5.jpg'),
-(2, 'product-single/product-6.jpg'),
-(2, 'product-single/product-7.jpg'),
-(10, 'product-single/product-8.jpg'),
-(10, 'product-single/product-9.jpg'),
-(10, 'product-single/product-10.jpg'),
-(12, 'product-single/product-11.jpg'),
-(12, 'product-single/product-12.jpg'),
-(12, 'product-single/product-13.jpg'),
-(8, 'product-single/product-14.jpg'),
-(8, 'product-single/product-15.jpg'),
-(8, 'product-single/product-16.jpg'),
-(8, 'product-single/product-17.jpg');
->>>>>>> cafde350f6c4a96a641910d620f082746a6630ce
+(1, 'products/M-element-Tshirt-front-blu.jpg'),
+(2, 'products/M-element-Tshirt2-front-grey.jpg'),
+(3, 'products/M-element-Tshirt3-front-yellow.jpg'),
+(4, 'products/M-adidas-sweatshirt-front-black.jpg'),
+(5, 'products/M-adidas-sweatshirt-front-white.jpg'),
+(6, 'products/M-H&H-sweatshirt-front-grey.jpg'),
+(7, 'products/M-H&H-sweatshirt-front-white.jpg'),
+(8, 'products/M-levis-jeans-front-blu.jpg'),
+(9, 'products/M-levis-jeans-front-darkblu.jpg'),
+(10, 'products/M-levis-pants-front-beige.jpg'),
+(11, 'products/M-levis-pants-front-red.jpg');
+
+
 
 -- Inserimento di valori casuali nella tabella Magazzino
 INSERT INTO Magazzino (id_prodotto, quantita, taglia)
