@@ -3,6 +3,88 @@
    <[pageNumber]>
    <[slideRight]>
 </ul>
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="./skins/template/js/filtriAjax.js"></script>
+
+<script>
+   $(document).ready(function(){
+      $("#swipeRight").on('click',function(){
+         console.log("swipeRightClicked oleee");
+         var arrCategoria = [];
+         var arrGenere = [];
+         var arrMarca = [];
+         var arrPrezzo = [];
+         var size;
+         var pageNumber = $("#pageNumber").text();
+            $(".checkbox-categoria").each(function(){
+               if ($(this).is(':checked')) {
+               var valoreCheckbox = $(this).val();
+               arrCategoria.push(valoreCheckbox);
+               }
+            });
+            $(".checkbox-genere").each(function(){
+               if ($(this).is(':checked')) {
+               var valoreCheckbox = $(this).val();
+               arrGenere.push(valoreCheckbox);
+               }
+            });
+            $(".checkbox-marca").each(function(){
+               if ($(this).is(':checked')) {
+               var valoreCheckbox = $(this).val();
+               arrMarca.push(valoreCheckbox);
+               }
+            });
+            $(".radio-size").each(function(){
+               if ($(this).is(':checked')) {
+               size= $(this).val();
+               
+               }
+            });
+            arrPrezzo.push($("#minamount").val());
+            arrPrezzo.push($("#maxamount").val());
+            swipeRight(arrCategoria,arrGenere,arrMarca,arrPrezzo,size,pageNumber);
+      });
+   })
+   $(document).ready(function(){
+      $("#swipeLeft").on('click',function(){
+         console.log("swipeLeftClicked oleee");
+         var arrCategoria = [];
+         var arrGenere = [];
+         var arrMarca = [];
+         var arrPrezzo = [];
+         var size;
+         var pageNumber = $("#pageNumber").text();
+            $(".checkbox-categoria").each(function(){
+               if ($(this).is(':checked')) {
+               var valoreCheckbox = $(this).val();
+               arrCategoria.push(valoreCheckbox);
+               }
+            });
+            $(".checkbox-genere").each(function(){
+               if ($(this).is(':checked')) {
+               var valoreCheckbox = $(this).val();
+               arrGenere.push(valoreCheckbox);
+               }
+            });
+            $(".checkbox-marca").each(function(){
+               if ($(this).is(':checked')) {
+               var valoreCheckbox = $(this).val();
+               arrMarca.push(valoreCheckbox);
+               }
+            });
+            $(".radio-size").each(function(){
+               if ($(this).is(':checked')) {
+               size= $(this).val();
+               
+               }
+            });
+            arrPrezzo.push($("#minamount").val());
+            arrPrezzo.push($("#maxamount").val());
+            swipeLeft(arrCategoria,arrGenere,arrMarca,arrPrezzo,size,pageNumber);
+      });
+   })
+</script>
 
 
 

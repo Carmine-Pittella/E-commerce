@@ -138,8 +138,8 @@ else {
         
         $scrollbtn = new Template("skins/template/dtml/dtml_items/shop_scroll_button.html");
         $scrollbtn_slideLeft = '';
-        $scrollbtn_slideRight = '<li class="page-item"><a style="font-size: 16px; color: black;" class="page-link pagerno" href="shop.php?slideRight=1&page=1">&gt</a></li>';
-        $scrollbtn_page = '<li class="page-item"><a style="font-size: 16px; color: black;" class="page-link pagerno">1</a></li>';
+        $scrollbtn_slideRight = '<li class="page-item"><a id="swipeRight" style="font-size: 16px; color: black;" class="page-link pagerno">&gt</a></li>';
+        $scrollbtn_page = '<li class="page-item"><a id="pageNumber" style="font-size: 16px; color: black;" class="page-link pagerno">1</a></li>';
         $scrollbtn = setScrollbtn($scrollbtn,$scrollbtn_slideLeft,$scrollbtn_page,$scrollbtn_slideRight);    
         $shop->setContent('scrb',$scrollbtn->get());
         $main->setContent('body', $shop->get());
@@ -183,7 +183,7 @@ else {
         $scrollbtn = new Template("skins/template/dtml/dtml_items/shop_scroll_button.html");
         $scrollbtn_slideLeft = '';
         $scrollbtn_slideRight = '';
-        $scrollbtn_page = '<li class="page-item"><a style="font-size: 16px; color: black;" class="page-link pagerno">1</a></li>';
+        $scrollbtn_page = '<li class="page-item"><a id="pageNumber" style="font-size: 16px; color: black;" class="page-link pagerno">1</a></li>';
         $scrollbtn = setScrollbtn($scrollbtn,$scrollbtn_slideLeft,$scrollbtn_page,$scrollbtn_slideRight);
         $shop->setContent('scrb',$scrollbtn->get());
         $main->setContent('body', $shop->get());
