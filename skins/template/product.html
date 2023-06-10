@@ -28,37 +28,8 @@
                      <div class="product-thumbs">
                         <div class="product-thumbs-track ps-slider owl-carousel owl-loaded owl-drag">
                            <div class="owl-stage-outer">
-                              <div
-                                 class="owl-stage"
-                                 style="
-                                    transform: translate3d(-113px, 0px, 0px);
-                                    transition: all 0s ease 0s;
-                                    width: 454px;
-                                 "
-                              >
-                                 <div class="owl-item" style="width: 103.333px; margin-right: 10px">
-                                    <div
-                                       class="pt active"
-                                       data-imgbigurl="skins/template/img/product-single/product-1.jpg"
-                                    >
-                                       <img src="skins/template/img/product-single/product-1.jpg" alt="" />
-                                    </div>
-                                 </div>
-                                 <div class="owl-item active" style="width: 103.333px; margin-right: 10px">
-                                    <div class="pt" data-imgbigurl="skins/template/img/product-single/product-2.jpg">
-                                       <img src="skins/template/img/product-single/product-2.jpg" alt="" />
-                                    </div>
-                                 </div>
-                                 <div class="owl-item active" style="width: 103.333px; margin-right: 10px">
-                                    <div class="pt" data-imgbigurl="skins/template/img/product-single/product-3.jpg">
-                                       <img src="skins/template/img/product-single/product-3.jpg" alt="" />
-                                    </div>
-                                 </div>
-                                 <div class="owl-item active" style="width: 103.333px; margin-right: 10px">
-                                    <div class="pt" data-imgbigurl="skins/template/img/product-single/product-3.jpg">
-                                       <img src="skins/template/img/product-single/product-3.jpg" alt="" />
-                                    </div>
-                                 </div>
+                              <div class="owl-stage">
+                                 <!-- LISTA FOTO -->
                               </div>
                            </div>
                            <div class="owl-nav">
@@ -80,10 +51,9 @@
                         </div>
                         <div class="pd-desc">
                            <p>
-                              Lorem ipsum dolor sit amet, consectetur ing elit, sed do eiusmod tempor sum dolor sit
-                              amet, consectetur adipisicing elit, sed do mod tempor
+                              <[DESCRIZIONE_PRODOTTO]>
                            </p>
-                           <h4>495.00€<span>629.99</span></h4>
+                           <h4><[PREZZO_PRODOTTO]>€<span><[PREZZO_PRODOTTO_PRECEDENTE]></span></h4>
                         </div>
                         <div class="pd-size-choose">
                            <div class="sc-item">
@@ -102,7 +72,7 @@
                               <input type="radio" id="xl-size" />
                               <label for="xl-size">xl</label>
                            </div>
-                           <div class="sc-item"><h6 class="pd-desc" style="margin-left: 20px">disponibile: 10</h6></div>
+                           <div class="sc-item"><h6 class="pd-desc" style="margin-left: 20px">disponibile: <[TAGLIA_DISPONIBILITA_PRODOTTO]></h6></div>
                         </div>
                         <div class="quantity">
                            <div class="pro-qty">
@@ -114,7 +84,7 @@
                            <a href="#" class="primary-btn pd-cart">Add To Cart</a>
                         </div>
                         <ul class="pd-tags">
-                           <li><span>CATEGORIA</span>: lallero</li>
+                           <li><span>CATEGORIA</span>: <[CATEGORIA_PRODOTTO]></li>
                         </ul>
                      </div>
                   </div>
@@ -130,7 +100,7 @@
                         </li>
                         <li>
                            <a data-toggle="tab" href="#tab-3" role="tab" class="active" aria-selected="true"
-                              >recensioni (5)</a
+                              >recensioni (<[N_RECENSIONI_PRODOTTO]>)</a
                            >
                         </li>
                      </ul>
@@ -141,24 +111,10 @@
                            <div class="product-content">
                               <div class="row">
                                  <div class="col-lg-7">
-                                    <h5>Introduction</h5>
-                                    <p>
-                                       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                       incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                                       nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                       Duis aute irure dolor in
-                                    </p>
-                                    <h5>Features</h5>
-                                    <p>
-                                       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                       incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                                       nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                       Duis aute irure dolor in
-                                    </p>
+                                    <h5>Descrizione prodotto:</h5>
+                                    <p><[DESCRIZIONE_PRODOTTO]></p>
                                  </div>
-                                 <div class="col-lg-5">
-                                    <img src="skins/template/img/product-single/tab-desc.jpg" alt="" />
-                                 </div>
+                                 <div class="col-lg-5"></div>
                               </div>
                            </div>
                         </div>
@@ -167,56 +123,30 @@
                               <table>
                                  <tbody>
                                     <tr>
-                                       <td class="p-catagory">Customer Rating</td>
+                                       <td class="p-catagory">Valutazione</td>
+                                       <td><[VALUTAZIONE_PRODOTTO]></td>
+                                    </tr>
+                                    <tr>
+                                       <td class="p-catagory">Prezzo</td>
                                        <td>
-                                          <div class="pd-rating">
-                                             <i class="fa fa-star"></i>
-                                             <i class="fa fa-star"></i>
-                                             <i class="fa fa-star"></i>
-                                             <i class="fa fa-star"></i>
-                                             <i class="fa fa-star-o"></i>
-                                             <span>(5)</span>
-                                          </div>
+                                          <div class="p-price"><[PREZZO_PRODOTTO]>€</div>
                                        </td>
                                     </tr>
                                     <tr>
-                                       <td class="p-catagory">Price</td>
+                                       <td class="p-catagory">disponibilità</td>
                                        <td>
-                                          <div class="p-price">$495.00</div>
+                                          <div class="p-stock"><[TOT_DISPONIBILITA_PRODOTTO]> in magazzino</div>
                                        </td>
                                     </tr>
                                     <tr>
-                                       <td class="p-catagory">Add To Cart</td>
+                                       <td class="p-catagory">taglia</td>
                                        <td>
-                                          <div class="cart-add">+ add to cart</div>
+                                          <div class="p-size"><[TAGLIA_PRODOTTO]></div>
                                        </td>
                                     </tr>
-                                    <tr>
-                                       <td class="p-catagory">Availability</td>
+                                       <td class="p-catagory">CODICE</td>
                                        <td>
-                                          <div class="p-stock">22 in stock</div>
-                                       </td>
-                                    </tr>
-                                    <tr>
-                                       <td class="p-catagory">Weight</td>
-                                       <td>
-                                          <div class="p-weight">1,3kg</div>
-                                       </td>
-                                    </tr>
-                                    <tr>
-                                       <td class="p-catagory">Size</td>
-                                       <td>
-                                          <div class="p-size">Xxl</div>
-                                       </td>
-                                    </tr>
-                                    <tr>
-                                       <td class="p-catagory">Color</td>
-                                       <td><span class="cs-color"></span></td>
-                                    </tr>
-                                    <tr>
-                                       <td class="p-catagory">Sku</td>
-                                       <td>
-                                          <div class="p-code">00012</div>
+                                          <div class="p-code"><[ID_PRODOTTO]></div>
                                        </td>
                                     </tr>
                                  </tbody>
@@ -225,7 +155,7 @@
                         </div>
                         <div class="tab-pane fade active show" id="tab-3" role="tabpanel">
                            <div class="customer-review-option">
-                              <h4>2 Recensioni</h4>
+                              <h4><[N_RECENSIONI_PRODOTTO]> Recensioni</h4>
                               <div class="comment-option">
                                  <div class="co-item">
                                     <div class="avatar-pic">
