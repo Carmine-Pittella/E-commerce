@@ -23,7 +23,7 @@ if (isset($_POST['valore'])) {
     $max = substr($max, 1);
     $size = $v['size'];
 
-    $strquery = " SELECT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto JOIN Categoria c ON p.id_categoria = c.id JOIN Marca ma ON p.id_marca = ma.id ";
+    $strquery = " SELECT DISTINCT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto JOIN Categoria c ON p.id_categoria = c.id JOIN Marca ma ON p.id_marca = ma.id ";
     $strquery = $strquery . "WHERE p.prezzo >= " . $min . " AND p.prezzo <= " . $max;
 
 
@@ -119,7 +119,7 @@ if (isset($_POST['valore'])) {
     BarraFiltri($shop, $filtri);
 
     /********* popolamento dei prodotti *********/
-    $res = $connessione->query("SELECT * FROM prodotto")->fetch_all(MYSQLI_ASSOC);
+    $res = $connessione->query("SELECT DISTINCT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto")->fetch_all(MYSQLI_ASSOC);
     foreach ($res as $r) {
         $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
         $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
