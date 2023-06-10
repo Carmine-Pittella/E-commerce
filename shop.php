@@ -176,4 +176,37 @@ function BarraFiltri($shop, $filtri)
         $filtri->setContent('marche', $marca->get());
     }
     $shop->setContent('sezione_filtri', $filtri->get());
+<<<<<<< HEAD
+
+    /********* popolamento dei prodotti *********/
+
+    $res = $connessione->query("SELECT * FROM prodotto")->fetch_all(MYSQLI_ASSOC);
+    $numeroElementi = count($res);
+    foreach ($res as $r) {
+        $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
+
+        $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
+        $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
+        $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
+
+        if ($r['id_promozione']) {
+            // devo impostare il vecchio prezzo e calcolare il nuovo
+            $prodotto->setContent("PREZZO_PRODOTTO_PRECEDENTE", $r['prezzo']);
+            $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
+            $sconto = intval($promo[0]['sconto_percentuale']);
+            $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
+
+            $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
+        } else {
+            $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
+        }
+
+        $shop->setContent('prodotti', $prodotto->get());
+    }
+
+    $main->setContent('body', $shop->get());
+    $main->close();
+
+=======
+>>>>>>> cafde350f6c4a96a641910d620f082746a6630ce
 }
