@@ -40,6 +40,7 @@ $body->setContent("RULLINO_FOTO", $rullino_foto->get());
 /********* popolamento dati Prodotto *********/
 $res = $connessione->query("SELECT * FROM Prodotto p WHERE p.id = {$product_id}")->fetch_all(MYSQLI_ASSOC);
 foreach ($res as $r) {
+    $body->setContent("ID_PRODOTTO", $r['id']);
     $body->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
     $body->setContent("DESCRIZIONE_PRODOTTO", $r['descrizione']);
 
@@ -54,12 +55,26 @@ foreach ($res as $r) {
         $body->setContent("PREZZO_PRODOTTO", $r['prezzo']);
     }
 
-    $categoria = $connessione->query("SELECT c.nome_categoria FROM Prodotto p JOIN Categoria c ON {$r['id_categoria']} = c.id")->fetch_all(MYSQLI_ASSOC);
-    $body->setContent("CATEGORIA_PRODOTTO", $categoria[0]['nome_categoria']);
+    // categoria
+    $tmp = $connessione->query("SELECT c.nome_categoria FROM Prodotto p JOIN Categoria c ON {$r['id_categoria']} = c.id")->fetch_all(MYSQLI_ASSOC);
+    $body->setContent("CATEGORIA_PRODOTTO", $tmp[0]['nome_categoria']);
 
-    $marca = $connessione->query("SELECT m.nome_marca FROM Prodotto p JOIN Marca m ON {$r['id_marca']} = m.id")->fetch_all(MYSQLI_ASSOC);
-    $body->setContent("MARCA_PRODOTTO", $marca[0]['nome_marca']);
+    // marca
+    $tmp = $connessione->query("SELECT m.nome_marca FROM Prodotto p JOIN Marca m ON {$r['id_marca']} = m.id")->fetch_all(MYSQLI_ASSOC);
+    $body->setContent("MARCA_PRODOTTO", $tmp[0]['nome_marca']);
+
+    // recensioni
+    $tmp = $connessione->query("SELECT * FROM Recensione WHERE id_prodotto = 1;");
+    $body->setContent("N_RECENSIONI_PRODOTTO", $tmp->num_rows);
+    $tmp->fetch_all(MYSQLI_ASSOC);
+
+
+
+    // rating
+    $tmp = $connessione->query("SELECT ROUND(AVG(valutazione), 1) AS media_valutazione FROM Recensione WHERE id_prodotto = {$product_id}")->fetch_all(MYSQLI_ASSOC);
+    $body->setContent("VALUTAZIONE_PRODOTTO", $tmp[0]['media_valutazione']);
 }
+
 
 
 
