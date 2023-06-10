@@ -3,6 +3,8 @@
 require "include/template2.inc.php";
 require "include/dbms.inc.php";
 require_once "include/php-utils/global.php";
+global $connessione;
+
 
 
 if(isset($_GET['page'])){
@@ -14,8 +16,8 @@ if (isset($_POST['valore'])) {
 
     $shop = new Template("skins/template/shop.html");
     $filtri = new Template("skins/template/dtml/filtri_laterali.html");
-    require "include/php-utils/preferiti_carrello.php";
-    BarraFiltri($shop, $filtri);
+    
+    $shop=BarraFiltri($shop, $filtri,$connessione);
 
 
     $v = $_POST['valore'];
@@ -31,20 +33,24 @@ if (isset($_POST['valore'])) {
     $max = substr($max, 1);
     $size = $v['size'];
 
-    $strquery = generaQuerry($arrCategoria,$arrGenere,$arrMarca,$arrPrezzo,$min,$max,$size);
-
-
+    $strquery = generaQuerry($arrCategoria,$arrGenere,$arrMarca,$arrPrezzo,$min,$max,$size,$connessione);
+    //echo $strquery;
+    
     $res = $connessione->query("$strquery")->fetch_all(MYSQLI_ASSOC);
     $resLength = count($res);
     if($resLength > 9){
-        //caso in cui ci sono più di 9 oggetti
+        $strquery = $strquery." LIMIT 9";
+        echo $strquery;
+        /********************************** caso in cui ci sono più di 9 oggetti ****/ 
     }
     else{
-        // caso in cui ci sono meno di 9 oggetti
+        /********************************** caso in cui ci sono meno di 9 oggetti ****/ 
         foreach ($res as $r) {
             $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
             $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
             $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
+
+            $prodotto->setContent("ID_PRODOTTO", $r['id']);
             $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
             $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
     
@@ -61,23 +67,33 @@ if (isset($_POST['valore'])) {
                 $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
                 $sconto = intval($promo[0]['sconto_percentuale']);
                 $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
-    
                 $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
             } else {
                 $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
             }
-            echo $prodotto->get();
-            /*
-            $scrollbtn = new Template("skins/template/dtml/dtml_items/shop_scroll_button.html");
-            $scrollbtn_slideLeft = '';
-            $scrollbtn_slideRight = '';
-            $scrollbtn_page = '<li class="page-item"><a style="font-size: 16px; color: black;" class="page-link pagerno">1</a></li>';
-            $scrollbtn = setScrollbtn($scrollbtn,$scrollbtn_slideLeft,$scrollbtn_page,$scrollbtn_slideRight);
+            if ($r['id_promozione']) {
+                // devo impostare il vecchio prezzo e calcolare il nuovo
+                $prodotto->setContent("PREZZO_PRODOTTO_PRECEDENTE", $r['prezzo']);
+                $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
+                $sconto = intval($promo[0]['sconto_percentuale']);
+                $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
+                $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
+            } else {
+                $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
+            }
+            //echo $prodotto->get();
             $shop->setContent('prodotti', $prodotto->get());
-            echo $shop->get();
-            */
         }
-    }   
+        $scrollbtn = new Template("skins/template/dtml/dtml_items/shop_scroll_button.html");
+        $scrollbtn_slideLeft = '';
+        $scrollbtn_slideRight = '';
+        $scrollbtn_page = '<li class="page-item"><a style="font-size: 16px; color: black;" class="page-link pagerno">1</a></li>';
+        $scrollbtn = setScrollbtn($scrollbtn,$scrollbtn_slideLeft,$scrollbtn_page,$scrollbtn_slideRight);
+        $shop->setContent('scrb',$scrollbtn->get());
+        echo $shop->get();
+    }
+    
+     
 } 
 
 
@@ -85,7 +101,8 @@ if (isset($_POST['valore'])) {
 /************ PRIMO ACCESSO ALLA PAGINA   *************/
 
 else {
-    global $connessione;
+
+    //global $connessione;
 
     $main = new Template("skins/template/dtml/index_v2.html");
     $shop = new Template("skins/template/shop.html");
@@ -94,7 +111,7 @@ else {
     // tiene aggiornato il numero di oggetti presenti nei preferiti e nel carrello
     require "include/php-utils/preferiti_carrello.php";
 
-    BarraFiltri($shop, $filtri);
+    $shop=BarraFiltri($shop, $filtri,$connessione);
 
     /********* popolamento dei prodotti *********/
     $res = $connessione->query("SELECT DISTINCT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto")->fetch_all(MYSQLI_ASSOC);
@@ -195,9 +212,8 @@ else {
 
 
 
-function BarraFiltri($shop, $filtri)
+function BarraFiltri($shop, $filtri,$connessione)
 {
-    global $connessione;
     /********* popolamento della colonna laterale dei filtri *********/
     $res = $connessione->query("SELECT * FROM categoria c ORDER BY c.nome_categoria")->fetch_all(MYSQLI_ASSOC);
     foreach ($res as $r) {
@@ -213,8 +229,9 @@ function BarraFiltri($shop, $filtri)
         $filtri->setContent('marche', $marca->get());
     } 
     $shop->setContent('sezione_filtri', $filtri->get());
+    return $shop;
 }
-function generaQuerry($arrCategoria,$arrGenere,$arrMarca,$arrPrezzo,$min,$max,$size){
+function generaQuerry($arrCategoria,$arrGenere,$arrMarca,$arrPrezzo,$min,$max,$size,$connessione){
     $escape = "'";
     $strquery = " SELECT DISTINCT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto JOIN Categoria c ON p.id_categoria = c.id JOIN Marca ma ON p.id_marca = ma.id ";
     $strquery = $strquery . "WHERE p.prezzo >= " . $min . " AND p.prezzo <= " . $max;

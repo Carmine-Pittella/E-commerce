@@ -23,9 +23,10 @@
         type: 'POST',
         data: { valore: dataT},
         success: function(response) {
-          console.log('successo:',response,'fine');
           $(document).ready(function(){
-              $("#divItems").html(response)
+             // $("#divItems").html(response)
+             //console.log(response)
+             $("#divBodyShop").html(response);
           })
         },
         error: function(xhr, status, error) {
