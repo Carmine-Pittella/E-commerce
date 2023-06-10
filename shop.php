@@ -131,6 +131,7 @@ if (isset($_POST['valore'])) {
     /********* popolamento dei prodotti *********/
 
     $res = $connessione->query("SELECT * FROM prodotto")->fetch_all(MYSQLI_ASSOC);
+    $numeroElementi = count($res);
     foreach ($res as $r) {
         $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
 

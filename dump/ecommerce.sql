@@ -260,7 +260,7 @@ VALUES
 ('Adidas'),
 ('Gucci'),
 ('Element'),
-('Levi''s'),
+('Levis'),
 ('H&H'),
 ('Puma');
 
@@ -373,11 +373,17 @@ VALUES
 -- Inserimento di valori casuali nella tabella Immagine_Prodotto
 INSERT INTO Immagine_Prodotto (id_prodotto, url_immagine)
 VALUES
-(1, 'https://example.com/maglia.jpg'),
-(2, 'https://example.com/scarpe.jpg'),
-(3, 'https://example.com/borsa.jpg'),
-(4, 'https://example.com/iphone.jpg'),
-(5, 'https://example.com/rossetto.jpg');
+(1, 'skins/template/img/products/M-element-Tshirt-front-blu.jpg'),
+(2, 'skins/template/img/products/M-element-Tshirt2-front-grey.jpg'),
+(3, 'skins/template/img/products/M-element-Tshirt3-front-yellow.jpg'),
+(4, 'skins/template/img/products/M-adidas-sweatshirt-front-black.jpg'),
+(5, 'skins/template/img/products/M-adidas-sweatshirt-front-white.jpg'),
+(6, 'skins/template/img/products/M-H&H-sweatshirt-front-grey.jpg'),
+(7, 'skins/template/img/products/M-H&H-sweatshirt-front-white.jpg'),
+(8, 'skins/template/img/products/M-levis-jeans-front-blu.jpg'),
+(9, 'skins/template/img/products/M-levis-jeans-front-darkblu.jpg'),
+(10, 'skins/template/img/products/M-levis-pants-front-beige.jpg'),
+(11, 'skins/template/img/products/M-levis-pants-front-red.jpg');
 
 -- Inserimento di valori casuali nella tabella Magazzino
 INSERT INTO Magazzino (id_prodotto, quantita, taglia)
