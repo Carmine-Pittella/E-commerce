@@ -3,7 +3,7 @@
 require "include/template2.inc.php";
 require "include/dbms.inc.php";
 
-
+$IMG_PATH = "skins/template/img/";
 
 
 
@@ -122,14 +122,13 @@ if (isset($_POST['valore'])) {
         $marca->setContent("NOME_MARCA", $r['nome_marca']);
         $filtri->setContent('marche', $marca->get());
     }
-
     $shop->setContent('sezione_filtri', $filtri->get());
 
     /********* popolamento dei prodotti *********/
-
     $res = $connessione->query("SELECT * FROM prodotto")->fetch_all(MYSQLI_ASSOC);
     foreach ($res as $r) {
         $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
+        $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
 
         $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
 
@@ -137,13 +136,22 @@ if (isset($_POST['valore'])) {
         $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
         $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
 
+        // immagine prodotto
+        if (empty($url_img)) {
+            echo "noimage";
+            $prodotto->setContent("URL_IMMAGINE", $IMG_PATH . "product-single/noimage.png");
+        } else {
+            echo "{$url_img[0]['url_immagine']}";
+            $prodotto->setContent("URL_IMMAGINE", $IMG_PATH . $url_img[0]['url_immagine']);
+        }
+
+        // prezzo in promozione
         if ($r['id_promozione']) {
             // devo impostare il vecchio prezzo e calcolare il nuovo
             $prodotto->setContent("PREZZO_PRODOTTO_PRECEDENTE", $r['prezzo']);
             $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
             $sconto = intval($promo[0]['sconto_percentuale']);
             $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
-
             $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
         } else {
             $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
