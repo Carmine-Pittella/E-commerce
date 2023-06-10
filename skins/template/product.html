@@ -29,7 +29,7 @@
                         <div class="product-thumbs-track ps-slider owl-carousel owl-loaded owl-drag">
                            <div class="owl-stage-outer">
                               <div class="owl-stage">
-                                 <!-- LISTA FOTO -->
+                                 <[foreach]> <[RULLINO_FOTO]> <[/foreach]>
                               </div>
                            </div>
                            <div class="owl-nav">
@@ -81,10 +81,13 @@
                               <span></span>
                            </div>
 
-                           <a href="#" class="primary-btn pd-cart">Add To Cart</a>
+                           <a href="#" class="primary-btn pd-cart">aggiungi a carrello</a>
                         </div>
                         <ul class="pd-tags">
                            <li><span>CATEGORIA</span>: <[CATEGORIA_PRODOTTO]></li>
+                        </ul>
+                        <ul class="pd-tags">
+                           <li><span>MARCA</span>: <[MARCA_PRODOTTO]></li>
                         </ul>
                      </div>
                   </div>

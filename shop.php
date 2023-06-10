@@ -2,9 +2,7 @@
 
 require "include/template2.inc.php";
 require "include/dbms.inc.php";
-
-define("_IMG_PATH", "skins/template/img/");
-
+require_once "include/php-utils/global.php";
 
 
 
@@ -88,9 +86,9 @@ if (isset($_POST['valore'])) {
 
         // immagine prodotto
         if (empty($url_img)) {
-            $prodotto->setContent("URL_IMMAGINE", _IMG_PATH . "product-single/noimage.png");
+            $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . "product-single/noimage.png");
         } else {
-            $prodotto->setContent("URL_IMMAGINE", _IMG_PATH . $url_img[0]['url_immagine']);
+            $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . $url_img[0]['url_immagine']);
         }
 
         if ($r['id_promozione']) {
@@ -132,9 +130,9 @@ if (isset($_POST['valore'])) {
 
         // immagine prodotto
         if (empty($url_img)) {
-            $prodotto->setContent("URL_IMMAGINE", _IMG_PATH . "product-single/noimage.png");
+            $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . "product-single/noimage.png");
         } else {
-            $prodotto->setContent("URL_IMMAGINE", _IMG_PATH . $url_img[0]['url_immagine']);
+            $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . $url_img[0]['url_immagine']);
         }
 
         // prezzo in promozione
