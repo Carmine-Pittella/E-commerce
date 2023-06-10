@@ -6,6 +6,7 @@ require_once "include/php-utils/global.php";
 
 global $connessione;
 $product_id;
+$taglia_sel;
 
 $main = new Template("skins/template/dtml/index_v2.html");
 $body = new Template("skins/template/product.html");
@@ -19,6 +20,12 @@ if (isset($_GET['product_id'])) {
     $product_id = $_GET['product_id'];
 } else {
     header('location: shop.php');
+}
+// recupero la taglia dall'URL
+if (isset($_GET['taglia'])) {
+    $taglia_sel = $_GET['taglia'];
+} else {
+    $body->setContent("TAGLIA_DISPONIBILITA_PRODOTTO", "seleziona taglia");
 }
 
 
@@ -64,23 +71,31 @@ foreach ($res as $r) {
     $body->setContent("MARCA_PRODOTTO", $tmp[0]['nome_marca']);
 
     // recensioni
-    $tmp = $connessione->query("SELECT * FROM Recensione WHERE id_prodotto = 1;");
+    $tmp = $connessione->query("SELECT * FROM Recensione WHERE id_prodotto = {$product_id};");
     $body->setContent("N_RECENSIONI_PRODOTTO", $tmp->num_rows);
     $tmp->fetch_all(MYSQLI_ASSOC);
     foreach ($tmp as $t) {
         $recensione = new Template("skins/template/dtml/dtml_items/RecensioniProdottoItem.html");
         $tmp2 = $connessione->query("SELECT u.nome, u.cognome FROM Utente u JOIN Recensione r ON u.id = {$t['id_utente']}")->fetch_all(MYSQLI_ASSOC);
         $recensione->setContent("NOME_COGNOME_UTENTE", $tmp2[0]['nome'] . " " . $tmp2[0]['cognome']);
-        $recensione->setContent("DATA_RECENSIONE", $tmp2[0]['nome'] . " " . $tmp2[0]['cognome']);
+        $recensione->setContent("DATA_RECENSIONE", $t['data_recensione']);
+        $recensione->setContent("TESTO_RECENSIONE", $t['testo_recensione']);
 
         $recensione->setContent("VALUTAZIONE", $t['valutazione']);
     }
     $body->setContent("RECENSIONI_UTENTI", $recensione->get());
 
-
     // rating
     $tmp = $connessione->query("SELECT ROUND(AVG(valutazione), 1) AS media_valutazione FROM Recensione WHERE id_prodotto = {$product_id}")->fetch_all(MYSQLI_ASSOC);
     $body->setContent("VALUTAZIONE_PRODOTTO", $tmp[0]['media_valutazione']);
+
+    // quantità magazzino
+    $tmp = $connessione->query("SELECT SUM(quantita) AS tot_quantita FROM Magazzino WHERE id_prodotto = {$product_id}")->fetch_all(MYSQLI_ASSOC);
+    $body->setContent("TOT_DISPONIBILITA_PRODOTTO", $tmp[0]['tot_quantita']);
+
+    // numero ordinazioni
+    $tmp = $connessione->query("SELECT SUM(quantita_prodotto) AS tot_ordini FROM Oggetto_Ordine WHERE id_prodotto = {$product_id}")->fetch_all(MYSQLI_ASSOC);
+    $body->setContent("N_ORDINAZIONI", $tmp[0]['tot_ordini']);
 }
 
 
