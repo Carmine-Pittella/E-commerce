@@ -149,7 +149,10 @@ if (isset($_POST['valore'])) {
 
         $shop->setContent('prodotti', $prodotto->get());
     }
-
+    
+    $scrollbtn = new Template("skins/template/dtml/dtml_items/shop_scroll_button.html");
+    $shop->setContent('scrb',$scrollbtn->get());
+    
     $main->setContent('body', $shop->get());
     $main->close();
 }
@@ -172,6 +175,6 @@ function BarraFiltri($shop, $filtri)
         $marca = new Template("skins/template/dtml/dtml_items/barra laterale filtri/marcaItem.html");
         $marca->setContent("NOME_MARCA", $r['nome_marca']);
         $filtri->setContent('marche', $marca->get());
-    }
+    } 
     $shop->setContent('sezione_filtri', $filtri->get());
 }
