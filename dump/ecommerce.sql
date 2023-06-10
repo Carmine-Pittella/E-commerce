@@ -152,6 +152,7 @@ CREATE TABLE IF NOT EXISTS Recensione (
     id_prodotto INT NOT NULL,
     testo_recensione TEXT(500),
     valutazione INT NOT NULL,
+    data_recensione DATE NOT NULL,
     FOREIGN KEY (id_utente) REFERENCES Utente(id),
     FOREIGN KEY (id_prodotto) REFERENCES Prodotto(id)
 );
@@ -364,13 +365,13 @@ VALUES
 (5, 5, 2);
 
 -- Inserimento di valori casuali nella tabella Recensione
-INSERT INTO Recensione (id_utente, id_prodotto, testo_recensione, valutazione)
+INSERT INTO Recensione (id_utente, id_prodotto, testo_recensione, valutazione, data_recensione)
 VALUES
-(1, 1, 'Ottima maglia, tessuto di alta qualità', 5),
-(2, 3, 'La borsa è perfetta per ogni occasione', 4),
-(3, 2, 'Scarpe comode e di ottima fattura', 4),
-(4, 4, 'iPhone 12 è uno smartphone eccezionale', 5),
-(5, 5, 'Il rossetto ha una lunga durata', 4);
+(1, 1, 'Ottima maglia, tessuto di alta qualità', 5, '2023-06-07'),
+(2, 3, 'La borsa è perfetta per ogni occasione', 4, '2023-06-01'),
+(3, 2, 'Scarpe comode e di ottima fattura', 4, '2023-05-11'),
+(4, 4, 'iPhone 12 è uno smartphone eccezionale', 5. '2023-06-04'),
+(5, 5, 'Il rossetto ha una lunga durata', 4, '2023-04-12');
 
 -- Inserimento di valori casuali nella tabella Immagine_Prodotto
 INSERT INTO Immagine_Prodotto (id_prodotto, url_immagine)
