@@ -386,11 +386,7 @@ VALUES
 (9, 'products/M-levis-jeans-front-darkblu.jpg'),
 (10, 'products/M-levis-pants-front-beige.jpg'),
 (11, 'products/M-levis-pants-front-red.jpg');
-<<<<<<< HEAD
 
-
-=======
->>>>>>> b275da29d9969f5ef93469f181837cc23f976179
 
 -- Inserimento di valori casuali nella tabella Magazzino
 INSERT INTO Magazzino (id_prodotto, quantita, taglia)
