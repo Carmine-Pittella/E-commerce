@@ -6,6 +6,7 @@ require_once "include/php-utils/global.php";
 
 global $connessione;
 $product_id;
+$taglia_sel;
 
 $main = new Template("skins/template/dtml/index_v2.html");
 $body = new Template("skins/template/product.html");
@@ -19,6 +20,12 @@ if (isset($_GET['product_id'])) {
     $product_id = $_GET['product_id'];
 } else {
     header('location: shop.php');
+}
+// recupero la taglia dall'URL
+if (isset($_GET['taglia'])) {
+    $taglia_sel = $_GET['taglia'];
+} else {
+    $body->setContent("TAGLIA_DISPONIBILITA_PRODOTTO", "seleziona taglia");
 }
 
 
@@ -78,10 +85,17 @@ foreach ($res as $r) {
     }
     $body->setContent("RECENSIONI_UTENTI", $recensione->get());
 
-
     // rating
     $tmp = $connessione->query("SELECT ROUND(AVG(valutazione), 1) AS media_valutazione FROM Recensione WHERE id_prodotto = {$product_id}")->fetch_all(MYSQLI_ASSOC);
     $body->setContent("VALUTAZIONE_PRODOTTO", $tmp[0]['media_valutazione']);
+
+    // quantità magazzino
+    $tmp = $connessione->query("SELECT SUM(quantita) AS tot_quantita FROM Magazzino WHERE id_prodotto = {$product_id}")->fetch_all(MYSQLI_ASSOC);
+    $body->setContent("TOT_DISPONIBILITA_PRODOTTO", $tmp[0]['tot_quantita']);
+
+    // numero ordinazioni
+    $tmp = $connessione->query("SELECT SUM(quantita_prodotto) AS tot_ordini FROM Oggetto_Ordine WHERE id_prodotto = {$product_id}")->fetch_all(MYSQLI_ASSOC);
+    $body->setContent("N_ORDINAZIONI", $tmp[0]['tot_ordini']);
 }
 
 
