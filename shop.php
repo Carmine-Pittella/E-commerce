@@ -81,9 +81,17 @@ if (isset($_POST['valore'])) {
     $res = $connessione->query("$strquery")->fetch_all(MYSQLI_ASSOC);
     foreach ($res as $r) {
         $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
+        $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
         $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
         $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
         $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
+
+        // immagine prodotto
+        if (empty($url_img)) {
+            $prodotto->setContent("URL_IMMAGINE", $IMG_PATH . "product-single/noimage.png");
+        } else {
+            $prodotto->setContent("URL_IMMAGINE", $IMG_PATH . $url_img[0]['url_immagine']);
+        }
 
         if ($r['id_promozione']) {
             // devo impostare il vecchio prezzo e calcolare il nuovo
@@ -108,21 +116,7 @@ if (isset($_POST['valore'])) {
     // tiene aggiornato il numero di oggetti presenti nei preferiti e nel carrello
     require "include/php-utils/preferiti_carrello.php";
 
-    /********* popolamento della colonna laterale dei filtri *********/
-    $res = $connessione->query("SELECT * FROM categoria c ORDER BY c.nome_categoria")->fetch_all(MYSQLI_ASSOC);
-    foreach ($res as $r) {
-        $categoria = new Template("skins/template/dtml/dtml_items/barra laterale filtri/categoriaItem.html");
-        $categoria->setContent("NOME_CATEGORIA", $r['nome_categoria']);
-        $filtri->setContent("categorie", $categoria->get());
-    }
-
-    $res = $connessione->query("SELECT * FROM marca m ORDER BY m.nome_marca")->fetch_all(MYSQLI_ASSOC);
-    foreach ($res as $r) {
-        $marca = new Template("skins/template/dtml/dtml_items/barra laterale filtri/marcaItem.html");
-        $marca->setContent("NOME_MARCA", $r['nome_marca']);
-        $filtri->setContent('marche', $marca->get());
-    }
-    $shop->setContent('sezione_filtri', $filtri->get());
+    BarraFiltri($shop, $filtri);
 
     /********* popolamento dei prodotti *********/
     $res = $connessione->query("SELECT * FROM prodotto")->fetch_all(MYSQLI_ASSOC);
@@ -160,4 +154,26 @@ if (isset($_POST['valore'])) {
 
     $main->setContent('body', $shop->get());
     $main->close();
+}
+
+
+
+function BarraFiltri($shop, $filtri)
+{
+    global $connessione;
+    /********* popolamento della colonna laterale dei filtri *********/
+    $res = $connessione->query("SELECT * FROM categoria c ORDER BY c.nome_categoria")->fetch_all(MYSQLI_ASSOC);
+    foreach ($res as $r) {
+        $categoria = new Template("skins/template/dtml/dtml_items/barra laterale filtri/categoriaItem.html");
+        $categoria->setContent("NOME_CATEGORIA", $r['nome_categoria']);
+        $filtri->setContent("categorie", $categoria->get());
+    }
+
+    $res = $connessione->query("SELECT * FROM marca m ORDER BY m.nome_marca")->fetch_all(MYSQLI_ASSOC);
+    foreach ($res as $r) {
+        $marca = new Template("skins/template/dtml/dtml_items/barra laterale filtri/marcaItem.html");
+        $marca->setContent("NOME_MARCA", $r['nome_marca']);
+        $filtri->setContent('marche', $marca->get());
+    }
+    $shop->setContent('sezione_filtri', $filtri->get());
 }
