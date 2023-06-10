@@ -64,14 +64,15 @@ foreach ($res as $r) {
     $body->setContent("MARCA_PRODOTTO", $tmp[0]['nome_marca']);
 
     // recensioni
-    $tmp = $connessione->query("SELECT * FROM Recensione WHERE id_prodotto = 1;");
+    $tmp = $connessione->query("SELECT * FROM Recensione WHERE id_prodotto = {$product_id};");
     $body->setContent("N_RECENSIONI_PRODOTTO", $tmp->num_rows);
     $tmp->fetch_all(MYSQLI_ASSOC);
     foreach ($tmp as $t) {
         $recensione = new Template("skins/template/dtml/dtml_items/RecensioniProdottoItem.html");
         $tmp2 = $connessione->query("SELECT u.nome, u.cognome FROM Utente u JOIN Recensione r ON u.id = {$t['id_utente']}")->fetch_all(MYSQLI_ASSOC);
         $recensione->setContent("NOME_COGNOME_UTENTE", $tmp2[0]['nome'] . " " . $tmp2[0]['cognome']);
-        $recensione->setContent("DATA_RECENSIONE", $tmp2[0]['nome'] . " " . $tmp2[0]['cognome']);
+        $recensione->setContent("DATA_RECENSIONE", $t['data_recensione']);
+        $recensione->setContent("TESTO_RECENSIONE", $t['testo_recensione']);
 
         $recensione->setContent("VALUTAZIONE", $t['valutazione']);
     }
