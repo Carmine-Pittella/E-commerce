@@ -5,9 +5,11 @@ const BLANK_T = "";
 require "include/template2.inc.php";
 require "include/register.inc.php";
 
-// if (isset($_SESSION['auth']) && $_SESSION['auth']) {
-//     header('location: profile.php');
-// }
+session_start();
+
+if (isset($_SESSION['auth']) && $_SESSION['auth']) {
+    header('location: profile.php');
+}
 
 
 $main = new Template("skins/template/dtml/index_v2.html");

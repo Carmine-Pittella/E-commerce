@@ -2,6 +2,7 @@
 
 require "include/php-utils/utility.php";
 
+session_start();
 
 class Auth
 {
@@ -34,7 +35,8 @@ class Auth
                 } else {
                     // utente trovato
                     $data = $result->fetch_assoc();
-                    $_SESSION['auth']['Utente'] = $data;
+                    $_SESSION['utente'] = $data;
+                    $_SESSION['auth'] = true;
                     header("Location: profile.php");
 
                     // // qui "carica i servizi di cui dispone l'utente che ha fatto l'accesso"
@@ -68,7 +70,6 @@ class Auth
         } else {
             // utente già loggato
             header("Location: profile.php");
-            echo "si loggato";
         }
 
         // // controlla se l'utente ha l'autorizzazione per accedere alla pagina corrente del sito web.
