@@ -138,10 +138,8 @@ if (isset($_POST['valore'])) {
 
         // immagine prodotto
         if (empty($url_img)) {
-            echo "noimage";
             $prodotto->setContent("URL_IMMAGINE", $IMG_PATH . "product-single/noimage.png");
         } else {
-            echo "{$url_img[0]['url_immagine']}";
             $prodotto->setContent("URL_IMMAGINE", $IMG_PATH . $url_img[0]['url_immagine']);
         }
 
