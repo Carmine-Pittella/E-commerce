@@ -3,7 +3,7 @@
 require "include/template2.inc.php";
 require "include/dbms.inc.php";
 
-$IMG_PATH = "skins/template/img/";
+define("_IMG_PATH", "skins/template/img/");
 
 
 
@@ -23,7 +23,7 @@ if (isset($_POST['valore'])) {
     $max = substr($max, 1);
     $size = $v['size'];
 
-    $strquery = " SELECT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto JOIN Categoria c ON p.id_categoria = c.id JOIN Marca ma ON p.id_marca = ma.id ";
+    $strquery = " SELECT DISTINCT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto JOIN Categoria c ON p.id_categoria = c.id JOIN Marca ma ON p.id_marca = ma.id ";
     $strquery = $strquery . "WHERE p.prezzo >= " . $min . " AND p.prezzo <= " . $max;
 
 
@@ -88,9 +88,9 @@ if (isset($_POST['valore'])) {
 
         // immagine prodotto
         if (empty($url_img)) {
-            $prodotto->setContent("URL_IMMAGINE", $IMG_PATH . "product-single/noimage.png");
+            $prodotto->setContent("URL_IMMAGINE", _IMG_PATH . "product-single/noimage.png");
         } else {
-            $prodotto->setContent("URL_IMMAGINE", $IMG_PATH . $url_img[0]['url_immagine']);
+            $prodotto->setContent("URL_IMMAGINE", _IMG_PATH . $url_img[0]['url_immagine']);
         }
 
         if ($r['id_promozione']) {
@@ -119,7 +119,7 @@ if (isset($_POST['valore'])) {
     BarraFiltri($shop, $filtri);
 
     /********* popolamento dei prodotti *********/
-    $res = $connessione->query("SELECT * FROM prodotto")->fetch_all(MYSQLI_ASSOC);
+    $res = $connessione->query("SELECT DISTINCT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto")->fetch_all(MYSQLI_ASSOC);
     foreach ($res as $r) {
         $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
         $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
@@ -132,9 +132,9 @@ if (isset($_POST['valore'])) {
 
         // immagine prodotto
         if (empty($url_img)) {
-            $prodotto->setContent("URL_IMMAGINE", $IMG_PATH . "product-single/noimage.png");
+            $prodotto->setContent("URL_IMMAGINE", _IMG_PATH . "product-single/noimage.png");
         } else {
-            $prodotto->setContent("URL_IMMAGINE", $IMG_PATH . $url_img[0]['url_immagine']);
+            $prodotto->setContent("URL_IMMAGINE", _IMG_PATH . $url_img[0]['url_immagine']);
         }
 
         // prezzo in promozione
