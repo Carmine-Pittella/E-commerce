@@ -151,7 +151,10 @@ if (isset($_POST['valore'])) {
 
         $shop->setContent('prodotti', $prodotto->get());
     }
-
+    
+    $scrollbtn = new Template("skins/template/dtml/dtml_items/shop_scroll_button.html");
+    $shop->setContent('scrb',$scrollbtn->get());
+    
     $main->setContent('body', $shop->get());
     $main->close();
 }
