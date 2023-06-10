@@ -5,6 +5,9 @@ require "include/dbms.inc.php";
 require_once "include/php-utils/global.php";
 
 
+if(isset($_GET['page'])){
+    echo "<script>console.log('ciao');</script>";
+}
 
 /******* caso chiamata POST per filtri  *******/
 if (isset($_POST['valore'])) {
@@ -77,34 +80,47 @@ if (isset($_POST['valore'])) {
 
 
     $res = $connessione->query("$strquery")->fetch_all(MYSQLI_ASSOC);
-    foreach ($res as $r) {
-        $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
-        $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
-        $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
-        $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
-        $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
-
-        // immagine prodotto
-        if (empty($url_img)) {
-            $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . "product-single/noimage.png");
-        } else {
-            $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . $url_img[0]['url_immagine']);
-        }
-
-        if ($r['id_promozione']) {
-            // devo impostare il vecchio prezzo e calcolare il nuovo
-            $prodotto->setContent("PREZZO_PRODOTTO_PRECEDENTE", $r['prezzo']);
-            $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
-            $sconto = intval($promo[0]['sconto_percentuale']);
-            $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
-
-            $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
-        } else {
-            $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
-        }
-        echo $prodotto->get();
+    $resLength = count($res);
+    if($resLength > 9){
+        //caso in cui ci sono più di 9 oggetti
     }
-} else {
+    else{
+        // caso in cui ci sono meno di 9 oggetti
+        foreach ($res as $r) {
+            $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
+            $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
+            $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
+            $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
+            $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
+    
+            // immagine prodotto
+            if (empty($url_img)) {
+                $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . "product-single/noimage.png");
+            } else {
+                $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . $url_img[0]['url_immagine']);
+            }
+    
+            if ($r['id_promozione']) {
+                // devo impostare il vecchio prezzo e calcolare il nuovo
+                $prodotto->setContent("PREZZO_PRODOTTO_PRECEDENTE", $r['prezzo']);
+                $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
+                $sconto = intval($promo[0]['sconto_percentuale']);
+                $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
+    
+                $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
+            } else {
+                $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
+            }
+            echo $prodotto->get();
+        }
+    }   
+} 
+
+
+
+/************ PRIMO ACCESSO ALLA PAGINA   *************/
+
+else {
     global $connessione;
 
     $main = new Template("skins/template/dtml/index_v2.html");
@@ -118,43 +134,105 @@ if (isset($_POST['valore'])) {
 
     /********* popolamento dei prodotti *********/
     $res = $connessione->query("SELECT DISTINCT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto")->fetch_all(MYSQLI_ASSOC);
-    foreach ($res as $r) {
-        $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
-        $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
+    $resLength = count($res);
 
-        $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
-
-        $prodotto->setContent("ID_PRODOTTO", $r['id']);
-        $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
-        $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
-
-        // immagine prodotto
-        if (empty($url_img)) {
-            $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . "product-single/noimage.png");
-        } else {
-            $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . $url_img[0]['url_immagine']);
+        //caso in cui ci sono più di 9 oggetti
+    if($resLength > 9){
+        $res = $connessione->query("SELECT DISTINCT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto  LIMIT 9")->fetch_all(MYSQLI_ASSOC);
+        foreach ($res as $r) {
+            $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
+            $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
+    
+            $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
+    
+            $prodotto->setContent("ID_PRODOTTO", $r['id']);
+            $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
+            $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
+    
+            // immagine prodotto
+            if (empty($url_img)) {
+                $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . "product-single/noimage.png");
+            } else {
+                $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . $url_img[0]['url_immagine']);
+            }
+    
+            // prezzo in promozione
+            if ($r['id_promozione']) {
+                // devo impostare il vecchio prezzo e calcolare il nuovo
+                $prodotto->setContent("PREZZO_PRODOTTO_PRECEDENTE", $r['prezzo']);
+                $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
+                $sconto = intval($promo[0]['sconto_percentuale']);
+                $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
+                $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
+            } else {
+                $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
+            }
+    
+            $shop->setContent('prodotti', $prodotto->get());
         }
 
-        // prezzo in promozione
-        if ($r['id_promozione']) {
-            // devo impostare il vecchio prezzo e calcolare il nuovo
-            $prodotto->setContent("PREZZO_PRODOTTO_PRECEDENTE", $r['prezzo']);
-            $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
-            $sconto = intval($promo[0]['sconto_percentuale']);
-            $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
-            $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
-        } else {
-            $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
-        }
+        
+        $scrollbtn = new Template("skins/template/dtml/dtml_items/shop_scroll_button.html");
+        $scrollbtn_slideLeft = '';
+        $scrollbtn_slideRight = '<li class="page-item"><a style="font-size: 16px; color: black;" class="page-link pagerno" href="shop.php?slideRight=1&page=1">&gt</a></li>';
+        $scrollbtn_page = '<li class="page-item"><a style="font-size: 16px; color: black;" class="page-link pagerno">1</a></li>';
+        $scrollbtn->setContent('slideLeft',$scrollbtn_slideLeft);
+        $scrollbtn->setContent('pageNumber',$scrollbtn_page);
+        $scrollbtn->setContent('slideRight', $scrollbtn_slideRight);
+        
+        $shop->setContent('scrb',$scrollbtn->get());
+        $main->setContent('body', $shop->get());
+        $main->close();
 
-        $shop->setContent('prodotti', $prodotto->get());
+         
+    }else{
+        //caso in cui ci sono meno di 9 oggetti
+        foreach ($res as $r) {
+            $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
+            $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
+    
+            $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
+    
+            $prodotto->setContent("ID_PRODOTTO", $r['id']);
+            $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
+            $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
+    
+            // immagine prodotto
+            if (empty($url_img)) {
+                $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . "product-single/noimage.png");
+            } else {
+                $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . $url_img[0]['url_immagine']);
+            }
+    
+            // prezzo in promozione
+            if ($r['id_promozione']) {
+                // devo impostare il vecchio prezzo e calcolare il nuovo
+                $prodotto->setContent("PREZZO_PRODOTTO_PRECEDENTE", $r['prezzo']);
+                $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
+                $sconto = intval($promo[0]['sconto_percentuale']);
+                $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
+                $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
+            } else {
+                $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
+            }
+    
+            $shop->setContent('prodotti', $prodotto->get());
+        }
+        
+        $scrollbtn = new Template("skins/template/dtml/dtml_items/shop_scroll_button.html");
+        $scrollbtn_slideLeft = '';
+        $scrollbtn_slideRight = '';
+        $scrollbtn_page = '<li class="page-item"><a style="font-size: 16px; color: black;" class="page-link pagerno">1</a></li>';
+        $scrollbtn->setContent('slideLeft',$scrollbtn_slideLeft);
+        $scrollbtn->setContent('pageNumber',$scrollbtn_page);
+        $scrollbtn->setContent('slideRight', $scrollbtn_slideRight);
+        
+        $shop->setContent('scrb',$scrollbtn->get());
+        $main->setContent('body', $shop->get());
+        $main->close();
+
     }
     
-    $scrollbtn = new Template("skins/template/dtml/dtml_items/shop_scroll_button.html");
-    $shop->setContent('scrb',$scrollbtn->get());
-    
-    $main->setContent('body', $shop->get());
-    $main->close();
 }
 
 
