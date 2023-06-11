@@ -59,7 +59,7 @@
          </div>
       </div>
 
-      <a href="#" id="a-filter-items" class="filter-btn">Filter</a>
+      <button id="a-filter-items" class="filter-btn">Filter</button>
       <a href="shop.php" class="btn">RESET</a>
       <!--<a href="shop.php" class="btn">RESET</a> -->
    </div>
@@ -70,19 +70,19 @@
       <h4 class="fw-title">Size</h4>
       <div class="fw-size-choose">
          <div class="sc-item">
-            <input class="radio-size" type="radio" id="s-size" value="S" name="radioSize"/>
+            <input class="radio-size" type="radio" id="s-size" value="S" name="radioSize" />
             <label for="s-size">s</label>
          </div>
          <div class="sc-item">
-            <input class="radio-size" type="radio" id="m-size" value="M" name="radioSize"/>
+            <input class="radio-size" type="radio" id="m-size" value="M" name="radioSize" />
             <label for="m-size">m</label>
          </div>
          <div class="sc-item">
-            <input class="radio-size" type="radio" id="l-size" value="L" name="radioSize"/>
+            <input class="radio-size" type="radio" id="l-size" value="L" name="radioSize" />
             <label for="l-size">l</label>
          </div>
          <div class="sc-item">
-            <input class="radio-size" type="radio" id="xs-size" value="XL"name="radioSizea" />
+            <input class="radio-size" type="radio" id="xs-size" value="XL" name="radioSizea" />
             <label for="xs-size">xl</label>
          </div>
       </div>
@@ -92,47 +92,42 @@
    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
    <script src="./skins/template/js/filtriAjax.js"></script>
    <script>
-      $(document).ready(function(){
-         $("#a-filter-items").on('click',function(){
+      $(document).ready(function () {
+         $("#a-filter-items").on("click", function () {
             var arrCategoria = [];
             var arrGenere = [];
             var arrMarca = [];
             var arrPrezzo = [];
             var size;
-            $(".checkbox-categoria").each(function(){
-               if ($(this).is(':checked')) {
-               var valoreCheckbox = $(this).val();
-               arrCategoria.push(valoreCheckbox);
+            $(".checkbox-categoria").each(function () {
+               if ($(this).is(":checked")) {
+                  var valoreCheckbox = $(this).val();
+                  arrCategoria.push(valoreCheckbox);
                }
             });
-            $(".checkbox-genere").each(function(){
-               if ($(this).is(':checked')) {
-               var valoreCheckbox = $(this).val();
-               arrGenere.push(valoreCheckbox);
+            $(".checkbox-genere").each(function () {
+               if ($(this).is(":checked")) {
+                  var valoreCheckbox = $(this).val();
+                  arrGenere.push(valoreCheckbox);
                }
             });
-            $(".checkbox-marca").each(function(){
-               if ($(this).is(':checked')) {
-               var valoreCheckbox = $(this).val();
-               arrMarca.push(valoreCheckbox);
+            $(".checkbox-marca").each(function () {
+               if ($(this).is(":checked")) {
+                  var valoreCheckbox = $(this).val();
+                  arrMarca.push(valoreCheckbox);
                }
             });
-            $(".radio-size").each(function(){
-               if ($(this).is(':checked')) {
-               size= $(this).val();
-               
+            $(".radio-size").each(function () {
+               if ($(this).is(":checked")) {
+                  size = $(this).val();
                }
             });
             arrPrezzo.push($("#minamount").val());
             arrPrezzo.push($("#maxamount").val());
 
-           inviaRichiestaFil(arrCategoria,arrGenere,arrMarca,arrPrezzo,size);
-           inviaRichiestaFilAdmint(arrCategoria, arrGenere, arrMarca, arrPrezzo, size);
-
-         })
-      })
-  </script>
-
-
-
+            inviaRichiestaFil(arrCategoria, arrGenere, arrMarca, arrPrezzo, size);
+            inviaRichiestaFilAdmint(arrCategoria, arrGenere, arrMarca, arrPrezzo, size);
+         });
+      });
+   </script>
 </div>
