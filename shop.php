@@ -83,6 +83,8 @@ if (isset($_POST['valore'])) {
         $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
         $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
         $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
+
+        $prodotto->setContent("ID_PRODOTTO", $r['id']);
         $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
         $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
 
