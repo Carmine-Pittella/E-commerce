@@ -15,8 +15,16 @@ $totale_cart = 0.0;
 
 if (isset($_SESSION['auth']) && $_SESSION['auth']) {
     // utente autenticato -- contare dalla query
+    $res = $connessione->query("SELECT * FROM Carrello WHERE id_utente = {$_SESSION['utente']['id']}")->fetch_all(MYSQLI_ASSOC);
+
+    foreach ($res as $r) {
+        // quantita prodotto
+
+        // nome prodotto
 
 
+
+    }
 } else {
     // utente non autenticato -- contare dalla sessione
     if (isset($_SESSION['carrello'])) {
@@ -34,6 +42,8 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
             $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$res[0]['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
             $lista_carrello->setContent('IMMAGINE_PROD', _IMG_PATH . $url_img[0]['url_immagine']);
+
+
             $cart->setContent('lista_prodotti', $lista_carrello->get());
 
             // IO NON CAPISCO PERCHE COMPARE SEMPRE LO STESSO PRODOTTO NELLA GRAFICA PORCAMADONNA
