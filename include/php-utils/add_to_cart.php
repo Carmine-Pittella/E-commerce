@@ -7,36 +7,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Esempio di aggiunta dei dati a una sessione
     session_start();
+    // session_unset();
+    // session_destroy();
 
     if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         // utente autenticato
         echo json_encode("autenticato");
+        // fare il travaso, distruggere la sessione SOLO di carrello
     } else {
         // aggiungere tutto in sessione
-        if (isset($_SESSION['carrello'])) {
-            echo json_encode("carrello stettato");
-            $a = $_SESSION['carrello'][0];
-            echo json_encode($a);
-        } else {
+        echo json_encode("non autenticato");
+        if (!isset($_SESSION['carrello'])) {
+            // setto il carrello in sessione
             echo json_encode("carrello non stettato");
+            $_SESSION['carrello'][] = array();
         }
 
+        $a = $_SESSION['carrello'];
+        echo json_encode($a);
 
-        echo json_encode("non autenticato");
+
+
         $_SESSION['carrello'][] = array(
             'id_prodotto' => $id_prodotto,
             'quantita' => $quantita
         );
+        $a = $_SESSION['carrello'];
+        echo json_encode($a);
     }
-
-
-
-
-
-    // Esempio di risposta JSON
-    $response = array(
-        'success' => true,
-        'message' => $id_prodotto
-    );
-    echo json_encode($response);
 }
