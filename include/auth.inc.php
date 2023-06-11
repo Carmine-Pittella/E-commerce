@@ -2,7 +2,6 @@
 
 require "include/php-utils/utility.php";
 
-session_start();
 
 class Auth
 {
@@ -37,6 +36,9 @@ class Auth
                     $data = $result->fetch_assoc();
                     $_SESSION['utente'] = $data;
                     $_SESSION['auth'] = true;
+
+                    require "include/php-utils/trasferimento_dati_sessione.php";
+
                     header("Location: profile.php");
 
                     // // qui "carica i servizi di cui dispone l'utente che ha fatto l'accesso"
@@ -79,6 +81,8 @@ class Auth
         // }
     }
 }
+
+
 
 
 Auth::check();
