@@ -29,7 +29,6 @@ if (isset($_SESSION['carrello'])) {
         }
         if (!$prod_gia_presente) {
             // aggiungo
-
             $add = $connessione->prepare("INSERT INTO Carrello (id_utente, id_prodotto, quantita_prodotto) VALUES (?, ?, ?)");
             $add->bind_param("iii", $_SESSION['utente']['id'], $cart_elem['id_prodotto'], $cart_elem['quantita']);
             if ($add->execute()) {

@@ -16,14 +16,22 @@ $totale_cart = 0.0;
 if (isset($_SESSION['auth']) && $_SESSION['auth']) {
     // utente autenticato -- contare dalla query
     $res = $connessione->query("SELECT * FROM Carrello WHERE id_utente = {$_SESSION['utente']['id']}")->fetch_all(MYSQLI_ASSOC);
+    $cart_items = count($res);
 
     foreach ($res as $r) {
-        // quantita prodotto
+        $lista_carrello->setContent('QUANTITA_PROD', $r['quantita_prodotto']);
 
-        // nome prodotto
+        $tmp = $connessione->query("SELECT * FROM Prodotto WHERE id = {$r['id_prodotto']}")->fetch_all(MYSQLI_ASSOC);
+        $lista_carrello->setContent('NOME_PROD', $tmp[0]['nome_prodotto']);
+        $lista_carrello->setContent('PREZZO_PROD', $tmp[0]['prezzo']);
 
+        $prezzo_cart_elem = floatval($tmp[0]['prezzo']) * intval($r['quantita_prodotto']);
+        $totale_cart += $prezzo_cart_elem;
 
+        $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$tmp[0]['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
+        $lista_carrello->setContent('IMMAGINE_PROD', _IMG_PATH . $url_img[0]['url_immagine']);
 
+        $cart->setContent('lista_prodotti', $lista_carrello->get());
     }
 } else {
     // utente non autenticato -- contare dalla sessione
@@ -42,7 +50,6 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
             $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$res[0]['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
             $lista_carrello->setContent('IMMAGINE_PROD', _IMG_PATH . $url_img[0]['url_immagine']);
-
 
             $cart->setContent('lista_prodotti', $lista_carrello->get());
 

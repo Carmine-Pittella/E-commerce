@@ -12,6 +12,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // fare il travaso, distruggere la sessione SOLO di carrello
         // ATTENTO CARMINE, IL TRAVASO VA FATTO APPENA SI LOGGA
         // quindi qui devi gestire solo la parte di aggiungere le cose nel suo carrello
+
+
+
+
+
+
+
+
+
+
+
+
+        // fine
     } else {
         // aggiungere tutto in sessione
         $prod_gia_presente = false;
