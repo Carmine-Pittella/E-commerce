@@ -2,24 +2,14 @@
 
 require "include/template2.inc.php";
 require "include/dbms.inc.php";
-require_once "include/php-utils/global.php";
-global $connessione;
+
+define("_IMG_PATH", "skins/template/img/");
 
 
 
-if(isset($_GET['page'])){
-    echo "<script>console.log('ciao');</script>";
-}
 
 /******* caso chiamata POST per filtri  *******/
 if (isset($_POST['valore'])) {
-
-    $shop = new Template("skins/template/shop.html");
-    $filtri = new Template("skins/template/dtml/filtri_laterali.html");
-    
-    $shop=BarraFiltri($shop, $filtri,$connessione);
-
-
     $v = $_POST['valore'];
 
     $escape = "'";
@@ -33,208 +23,11 @@ if (isset($_POST['valore'])) {
     $max = substr($max, 1);
     $size = $v['size'];
 
-    $strquery = generaQuerry($arrCategoria,$arrGenere,$arrMarca,$arrPrezzo,$min,$max,$size,$connessione);
-    //echo $strquery;
-    
-    $res = $connessione->query("$strquery")->fetch_all(MYSQLI_ASSOC);
-    $resLength = count($res);
-    if($resLength > 9){
-        $strquery = $strquery." LIMIT 9";
-        echo $strquery;
-        /********************************** caso in cui ci sono più di 9 oggetti ****/ 
-    }
-    else{
-        /********************************** caso in cui ci sono meno di 9 oggetti ****/ 
-        foreach ($res as $r) {
-            $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
-            $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
-            $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
-
-            $prodotto->setContent("ID_PRODOTTO", $r['id']);
-            $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
-            $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
-    
-            // immagine prodotto
-            if (empty($url_img)) {
-                $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . "product-single/noimage.png");
-            } else {
-                $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . $url_img[0]['url_immagine']);
-            }
-    
-            if ($r['id_promozione']) {
-                // devo impostare il vecchio prezzo e calcolare il nuovo
-                $prodotto->setContent("PREZZO_PRODOTTO_PRECEDENTE", $r['prezzo']);
-                $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
-                $sconto = intval($promo[0]['sconto_percentuale']);
-                $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
-                $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
-            } else {
-                $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
-            }
-            if ($r['id_promozione']) {
-                // devo impostare il vecchio prezzo e calcolare il nuovo
-                $prodotto->setContent("PREZZO_PRODOTTO_PRECEDENTE", $r['prezzo']);
-                $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
-                $sconto = intval($promo[0]['sconto_percentuale']);
-                $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
-                $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
-            } else {
-                $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
-            }
-            //echo $prodotto->get();
-            $shop->setContent('prodotti', $prodotto->get());
-        }
-        $scrollbtn = new Template("skins/template/dtml/dtml_items/shop_scroll_button.html");
-        $scrollbtn_slideLeft = '';
-        $scrollbtn_slideRight = '';
-        $scrollbtn_page = '<li class="page-item"><a style="font-size: 16px; color: black;" class="page-link pagerno">1</a></li>';
-        $scrollbtn = setScrollbtn($scrollbtn,$scrollbtn_slideLeft,$scrollbtn_page,$scrollbtn_slideRight);
-        $shop->setContent('scrb',$scrollbtn->get());
-        echo $shop->get();
-    }
-    
-     
-} 
-
-
-
-/************ PRIMO ACCESSO ALLA PAGINA   *************/
-
-else {
-
-    //global $connessione;
-
-    $main = new Template("skins/template/dtml/index_v2.html");
-    $shop = new Template("skins/template/shop.html");
-    $filtri = new Template("skins/template/dtml/filtri_laterali.html");
-
-    // tiene aggiornato il numero di oggetti presenti nei preferiti e nel carrello
-    require "include/php-utils/preferiti_carrello.php";
-
-    $shop=BarraFiltri($shop, $filtri,$connessione);
-
-    /********* popolamento dei prodotti *********/
-    $res = $connessione->query("SELECT DISTINCT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto")->fetch_all(MYSQLI_ASSOC);
-    $resLength = count($res);
-
-        //caso in cui ci sono più di 9 oggetti
-    if($resLength > 9){
-        $res = $connessione->query("SELECT DISTINCT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto  LIMIT 9")->fetch_all(MYSQLI_ASSOC);
-        foreach ($res as $r) {
-            $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
-            $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
-    
-            $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
-    
-            $prodotto->setContent("ID_PRODOTTO", $r['id']);
-            $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
-            $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
-    
-            // immagine prodotto
-            if (empty($url_img)) {
-                $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . "product-single/noimage.png");
-            } else {
-                $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . $url_img[0]['url_immagine']);
-            }
-    
-            // prezzo in promozione
-            if ($r['id_promozione']) {
-                // devo impostare il vecchio prezzo e calcolare il nuovo
-                $prodotto->setContent("PREZZO_PRODOTTO_PRECEDENTE", $r['prezzo']);
-                $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
-                $sconto = intval($promo[0]['sconto_percentuale']);
-                $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
-                $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
-            } else {
-                $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
-            }
-    
-            $shop->setContent('prodotti', $prodotto->get());
-        }
-
-        
-        $scrollbtn = new Template("skins/template/dtml/dtml_items/shop_scroll_button.html");
-        $scrollbtn_slideLeft = '';
-        $scrollbtn_slideRight = '<li class="page-item"><a id="swipeRight" style="font-size: 16px; color: black;" class="page-link pagerno">&gt</a></li>';
-        $scrollbtn_page = '<li class="page-item"><a id="pageNumber" style="font-size: 16px; color: black;" class="page-link pagerno">1</a></li>';
-        $scrollbtn = setScrollbtn($scrollbtn,$scrollbtn_slideLeft,$scrollbtn_page,$scrollbtn_slideRight);    
-        $shop->setContent('scrb',$scrollbtn->get());
-        $main->setContent('body', $shop->get());
-        $main->close();
-
-         
-    }else{
-        //caso in cui ci sono meno di 9 oggetti
-        foreach ($res as $r) {
-            $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
-            $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
-    
-            $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
-    
-            $prodotto->setContent("ID_PRODOTTO", $r['id']);
-            $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
-            $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
-    
-            // immagine prodotto
-            if (empty($url_img)) {
-                $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . "product-single/noimage.png");
-            } else {
-                $prodotto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . $url_img[0]['url_immagine']);
-            }
-    
-            // prezzo in promozione
-            if ($r['id_promozione']) {
-                // devo impostare il vecchio prezzo e calcolare il nuovo
-                $prodotto->setContent("PREZZO_PRODOTTO_PRECEDENTE", $r['prezzo']);
-                $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
-                $sconto = intval($promo[0]['sconto_percentuale']);
-                $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
-                $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
-            } else {
-                $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
-            }
-    
-            $shop->setContent('prodotti', $prodotto->get());
-        }
-        
-        $scrollbtn = new Template("skins/template/dtml/dtml_items/shop_scroll_button.html");
-        $scrollbtn_slideLeft = '';
-        $scrollbtn_slideRight = '';
-        $scrollbtn_page = '<li class="page-item"><a id="pageNumber" style="font-size: 16px; color: black;" class="page-link pagerno">1</a></li>';
-        $scrollbtn = setScrollbtn($scrollbtn,$scrollbtn_slideLeft,$scrollbtn_page,$scrollbtn_slideRight);
-        $shop->setContent('scrb',$scrollbtn->get());
-        $main->setContent('body', $shop->get());
-        $main->close();
-
-    }
-    
-}
-
-
-
-function BarraFiltri($shop, $filtri,$connessione)
-{
-    /********* popolamento della colonna laterale dei filtri *********/
-    $res = $connessione->query("SELECT * FROM categoria c ORDER BY c.nome_categoria")->fetch_all(MYSQLI_ASSOC);
-    foreach ($res as $r) {
-        $categoria = new Template("skins/template/dtml/dtml_items/barra laterale filtri/categoriaItem.html");
-        $categoria->setContent("NOME_CATEGORIA", $r['nome_categoria']);
-        $filtri->setContent("categorie", $categoria->get());
-    }
-
-    $res = $connessione->query("SELECT * FROM marca m ORDER BY m.nome_marca")->fetch_all(MYSQLI_ASSOC);
-    foreach ($res as $r) {
-        $marca = new Template("skins/template/dtml/dtml_items/barra laterale filtri/marcaItem.html");
-        $marca->setContent("NOME_MARCA", $r['nome_marca']);
-        $filtri->setContent('marche', $marca->get());
-    } 
-    $shop->setContent('sezione_filtri', $filtri->get());
-    return $shop;
-}
-function generaQuerry($arrCategoria,$arrGenere,$arrMarca,$arrPrezzo,$min,$max,$size,$connessione){
-    $escape = "'";
     $strquery = " SELECT DISTINCT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto JOIN Categoria c ON p.id_categoria = c.id JOIN Marca ma ON p.id_marca = ma.id ";
     $strquery = $strquery . "WHERE p.prezzo >= " . $min . " AND p.prezzo <= " . $max;
+
+
+
     if ($arrCategoria[0] !== '-1') {
 
         $strquerytmp = " SELECT id FROM Categoria WHERE nome_categoria IN (";
@@ -282,12 +75,106 @@ function generaQuerry($arrCategoria,$arrGenere,$arrMarca,$arrPrezzo,$min,$max,$s
     if ($size !== "U") {
         $strquery = $strquery . " AND m.taglia =" . $escape . $size . $escape;
     }
-    return $strquery;
-    
+    //echo $strquery;
+
+
+    $res = $connessione->query("$strquery")->fetch_all(MYSQLI_ASSOC);
+    foreach ($res as $r) {
+        $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
+        $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
+        $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
+        $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
+        $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
+
+        // immagine prodotto
+        if (empty($url_img)) {
+            $prodotto->setContent("URL_IMMAGINE", _IMG_PATH . "product-single/noimage.png");
+        } else {
+            $prodotto->setContent("URL_IMMAGINE", _IMG_PATH . $url_img[0]['url_immagine']);
+        }
+
+        if ($r['id_promozione']) {
+            // devo impostare il vecchio prezzo e calcolare il nuovo
+            $prodotto->setContent("PREZZO_PRODOTTO_PRECEDENTE", $r['prezzo']);
+            $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
+            $sconto = intval($promo[0]['sconto_percentuale']);
+            $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
+
+            $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
+        } else {
+            $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
+        }
+        echo $prodotto->get();
+    }
+} else {
+    global $connessione;
+
+    $main = new Template("skins/template/dtml/index_v2.html");
+    $shop = new Template("skins/template/shop.html");
+    $filtri = new Template("skins/template/dtml/filtri_laterali.html");
+
+    // tiene aggiornato il numero di oggetti presenti nei preferiti e nel carrello
+    require "include/php-utils/preferiti_carrello.php";
+
+    BarraFiltri($shop, $filtri);
+
+    /********* popolamento dei prodotti *********/
+    $res = $connessione->query("SELECT DISTINCT p.* FROM Prodotto p JOIN Magazzino m ON p.id = m.id_prodotto")->fetch_all(MYSQLI_ASSOC);
+    foreach ($res as $r) {
+        $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
+        $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
+
+        $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
+
+        $prodotto->setContent("ID_PRODOTTO", $r['id']);
+        $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
+        $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
+
+        // immagine prodotto
+        if (empty($url_img)) {
+            $prodotto->setContent("URL_IMMAGINE", _IMG_PATH . "product-single/noimage.png");
+        } else {
+            $prodotto->setContent("URL_IMMAGINE", _IMG_PATH . $url_img[0]['url_immagine']);
+        }
+
+        // prezzo in promozione
+        if ($r['id_promozione']) {
+            // devo impostare il vecchio prezzo e calcolare il nuovo
+            $prodotto->setContent("PREZZO_PRODOTTO_PRECEDENTE", $r['prezzo']);
+            $promo = $connessione->query("SELECT prom.sconto_percentuale FROM prodotto p LEFT JOIN promozione prom ON $r[id_promozione] = prom.id")->fetch_all(MYSQLI_ASSOC);
+            $sconto = intval($promo[0]['sconto_percentuale']);
+            $nuovoPrezzo = intval($r['prezzo']) - ($sconto * intval($r['prezzo']) / 100);
+            $prodotto->setContent("PREZZO_PRODOTTO", $nuovoPrezzo);
+        } else {
+            $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
+        }
+
+        $shop->setContent('prodotti', $prodotto->get());
+    }
+
+    $main->setContent('body', $shop->get());
+    $main->close();
+    // commento a caso 
 }
-function setScrollbtn($scrollbtn,$scrollbtn_slideLeft,$scrollbtn_page,$scrollbtn_slideRight){
-    $scrollbtn->setContent('slideLeft',$scrollbtn_slideLeft);
-    $scrollbtn->setContent('pageNumber',$scrollbtn_page);
-    $scrollbtn->setContent('slideRight',$scrollbtn_slideRight);
-    return $scrollbtn;
+
+
+
+function BarraFiltri($shop, $filtri)
+{
+    global $connessione;
+    /********* popolamento della colonna laterale dei filtri *********/
+    $res = $connessione->query("SELECT * FROM categoria c ORDER BY c.nome_categoria")->fetch_all(MYSQLI_ASSOC);
+    foreach ($res as $r) {
+        $categoria = new Template("skins/template/dtml/dtml_items/barra laterale filtri/categoriaItem.html");
+        $categoria->setContent("NOME_CATEGORIA", $r['nome_categoria']);
+        $filtri->setContent("categorie", $categoria->get());
+    }
+
+    $res = $connessione->query("SELECT * FROM marca m ORDER BY m.nome_marca")->fetch_all(MYSQLI_ASSOC);
+    foreach ($res as $r) {
+        $marca = new Template("skins/template/dtml/dtml_items/barra laterale filtri/marcaItem.html");
+        $marca->setContent("NOME_MARCA", $r['nome_marca']);
+        $filtri->setContent('marche', $marca->get());
+    }
+    $shop->setContent('sezione_filtri', $filtri->get());
 }
