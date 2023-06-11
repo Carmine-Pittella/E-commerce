@@ -1,38 +1,50 @@
 <?php
 
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_prodotto = $_POST['id_prodotto'];
     $quantita = $_POST['quantita'];
 
-    // Esempio di aggiunta dei dati a una sessione
-    session_start();
-    // session_unset();
-    // session_destroy();
 
     if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         // utente autenticato
-        echo json_encode("autenticato");
         // fare il travaso, distruggere la sessione SOLO di carrello
     } else {
         // aggiungere tutto in sessione
-        echo json_encode("non autenticato");
-        if (!isset($_SESSION['carrello'])) {
-            // setto il carrello in sessione
-            echo json_encode("carrello non stettato");
-            $_SESSION['carrello'][] = array();
+        $prod_gia_presente = false;
+        if (isset($_SESSION['carrello'])) {
+            foreach ($_SESSION['carrello'] as &$cart_elem) {
+                if ($cart_elem['id_prodotto'] == $id_prodotto) {
+                    // aggiorno la quantita
+                    $prod_gia_presente = true;
+                    $nuova_quantita = intval($cart_elem['quantita']) + intval($quantita);
+                    $cart_elem['quantita'] = $nuova_quantita;
+                    break;
+                }
+            }
+
+            if (!$prod_gia_presente) {
+                // lo aggiungo
+                $_SESSION['carrello'][] = array(
+                    'id_prodotto' => $id_prodotto,
+                    'quantita' => $quantita
+                );
+            }
+        } else {
+            // lo aggiungo
+            $_SESSION['carrello'][] = array(
+                'id_prodotto' => $id_prodotto,
+                'quantita' => $quantita
+            );
         }
 
+
+
         $a = $_SESSION['carrello'];
         echo json_encode($a);
 
-
-
-        $_SESSION['carrello'][] = array(
-            'id_prodotto' => $id_prodotto,
-            'quantita' => $quantita
-        );
-        $a = $_SESSION['carrello'];
-        echo json_encode($a);
+        // tiene aggiornato il numero di oggetti presenti nei preferiti e nel carrello
+        require "include/php-utils/preferiti_carrello.php";
     }
 }
