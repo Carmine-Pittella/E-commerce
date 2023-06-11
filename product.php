@@ -34,11 +34,11 @@ $res = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_
 $save_first = false;
 foreach ($res as $r) {
     if (!$save_first) {
-        $body->setContent("FOTO_PRINCIPALE_PRODOTTO", $_GLOBALS['_IMG_PATH'] . $r['url_immagine']);
+        $body->setContent("FOTO_PRINCIPALE_PRODOTTO", _IMG_PATH . $r['url_immagine']);
         $save_first = true;
     }
     $rullino_foto = new Template("skins/template/dtml/dtml_items/SequenzaFotoItem.html");
-    $rullino_foto->setContent("URL_IMMAGINE", $_GLOBALS['_IMG_PATH'] . $r['url_immagine']);
+    $rullino_foto->setContent("URL_IMMAGINE", _IMG_PATH . $r['url_immagine']);
 }
 $body->setContent("RULLINO_FOTO", $rullino_foto->get());
 

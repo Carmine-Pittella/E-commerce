@@ -3,7 +3,7 @@
 require "include/template2.inc.php";
 require "include/dbms.inc.php";
 
-define("_IMG_PATH", "skins/template/img/");
+require_once "include/php-utils/global.php";
 
 
 

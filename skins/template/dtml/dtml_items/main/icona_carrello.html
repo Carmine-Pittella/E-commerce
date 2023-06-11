@@ -1,4 +1,23 @@
-<a href="#">
-   <i class="icon_bag_alt"></i>
-   <span> <[oggetti_carrello]> </span>
-</a>
+<li class="cart-icon">
+   <a href="#">
+      <i class="icon_bag_alt"></i>
+      <span> <[oggetti_carrello]> </span>
+   </a>
+   <div class="cart-hover">
+      <div class="select-items">
+         <table>
+            <tbody>
+               <[foreach]> <[lista_prodotti]> <[/foreach]>
+            </tbody>
+         </table>
+      </div>
+      <div class="select-total">
+         <span>total:</span>
+         <h5>€120.00</h5>
+      </div>
+      <div class="select-button">
+         <a href="#" class="primary-btn view-card">vedi il carrello</a>
+         <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
+      </div>
+   </div>
+</li>
