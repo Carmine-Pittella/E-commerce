@@ -10,6 +10,7 @@ if (session_status() === PHP_SESSION_NONE) {
 $cart = new Template("skins/template/dtml/dtml_items/main/icona_carrello.html");
 $lista_carrello = new Template("skins/template/dtml/dtml_items/main/prodotti_lista_cart.html");
 $cart_items = 0;
+$totale_cart = 0;
 
 
 if (isset($_SESSION['auth']) && $_SESSION['auth']) {
@@ -21,20 +22,27 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
     if (isset($_SESSION['carrello'])) {
         $cart_items = count($_SESSION['carrello']);
         foreach ($_SESSION['carrello'] as &$cart_elem) {
+
+            echo json_encode($cart_elem);
+
             $lista_carrello->setContent('QUANTITA_PROD', $cart_elem['quantita']);
 
             $res = $connessione->query("SELECT * FROM Prodotto WHERE id = {$cart_elem['id_prodotto']}")->fetch_all(MYSQLI_ASSOC);
+            echo $res[0]['prezzo'];
             $lista_carrello->setContent('NOME_PROD', $res[0]['nome_prodotto']);
             $lista_carrello->setContent('PREZZO_PROD', $res[0]['prezzo']);
 
+            $prezzo_cart_elem = ceil(intval($res[0]['prezzo'])) * ceil(intval($cart_elem['quantita']));
+            $totale_cart += $prezzo_cart_elem;
+
             $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$res[0]['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
             $lista_carrello->setContent('IMMAGINE_PROD', _IMG_PATH . $url_img[0]['url_immagine']);
+            $cart->setContent('lista_prodotti', $lista_carrello->get());
         }
-        $cart->setContent('lista_prodotti', $lista_carrello->get());
     }
 }
 
-
+$cart->setContent('TOTALE_CART', $totale_cart);
 
 $cart->setContent('oggetti_carrello', $cart_items);
 $main->setContent('carrello_icon', $cart->get());
