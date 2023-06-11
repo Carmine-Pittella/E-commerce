@@ -61,6 +61,7 @@
 
       <a href="#" id="a-filter-items" class="filter-btn">Filter</a>
       <a href="shop.php" class="btn">RESET</a>
+      <!--<a href="shop.php" class="btn">RESET</a> -->
    </div>
 
    <!-- questo può anche rimanere cosi -->
@@ -126,6 +127,7 @@
             arrPrezzo.push($("#maxamount").val());
 
            inviaRichiestaFil(arrCategoria,arrGenere,arrMarca,arrPrezzo,size);
+           inviaRichiestaFilAdmint(arrCategoria, arrGenere, arrMarca, arrPrezzo, size);
 
          })
       })
