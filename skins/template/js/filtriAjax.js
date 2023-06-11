@@ -28,7 +28,7 @@ function inviaRichiestaFil(arrCategoria, arrGenere, arrMarca, arrPrezzo, size) {
    });
 }
 
-function inviaRichiestaFilAdminProduct(arrCategoria, arrGenere, arrMarca, arrPrezzo, size) {
+function inviaRichiestaFilAdmint(arrCategoria, arrGenere, arrMarca, arrPrezzo, size) {
    if (arrCategoria.length === 0) {
       arrCategoria.push(-1);
    }
@@ -47,9 +47,9 @@ function inviaRichiestaFilAdminProduct(arrCategoria, arrGenere, arrMarca, arrPre
       type: "POST",
       data: { valore: dataT },
       success: function (response) {
-         console.log("successo:", response, "fine");
+         response = '<a style="font-size: 20px;" class="d-flex justify-content-center btn btn-primary">aggiungi un nuovo prodotto</a>' + response;
          $(document).ready(function () {
-            //$("#divItems").html(response);
+            $("#divAdminContProductItems").html(response);
          });
       },
       error: function (xhr, status, error) {
