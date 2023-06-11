@@ -1,6 +1,8 @@
 <?php
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // tiene aggiornato il numero di oggetti presenti nei preferiti e nel carrello
 $cart = new Template("skins/template/dtml/dtml_items/main/icona_carrello.html");
