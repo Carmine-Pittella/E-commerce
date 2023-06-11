@@ -78,11 +78,11 @@
                         <div class="quantity">
                            <div class="pro-qty">
                               <span></span>
-                              <input type="text" value="1" disabled />
+                              <input type="text" value="1" />
                               <span></span>
                            </div>
 
-                           <a href="#" class="primary-btn pd-cart">aggiungi a carrello</a>
+                           <button class="primary-btn pd-cart" onclick="addToCart()" >aggiungi a carrello</button>
                         </div>
                         <ul class="pd-tags">
                            <li><span>CATEGORIA</span>: <[CATEGORIA_PRODOTTO]></li>
@@ -174,3 +174,23 @@
       <!-- Product Shop Section End -->
    </body>
 </html>
+
+<script>
+   function addToCart() {
+   let quantita = document.querySelector(".pro-qty input").value;
+   let id_prodotto = "<[ID_PRODOTTO]>";
+   
+   let xhr = new XMLHttpRequest();
+   xhr.open("POST", "include/php-utils/add_to_cart.php", true);
+   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+   xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+         console.log(xhr.responseText);
+         // Gestisci la risposta qui
+      }
+   };
+   xhr.send("id_prodotto=" + encodeURIComponent(id_prodotto) + "&quantita=" + encodeURIComponent(quantita));
+   window.location.href = window.location.href;
+}
+
+</script>
