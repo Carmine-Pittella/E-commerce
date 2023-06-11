@@ -154,7 +154,6 @@ if (isset($_POST['valore'])) {
 
     $main->setContent('body', $shop->get());
     $main->close();
-    // commento a caso 
 }
 
 
