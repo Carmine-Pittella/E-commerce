@@ -74,6 +74,7 @@ foreach ($res as $r) {
     $tmp = $connessione->query("SELECT * FROM Recensione WHERE id_prodotto = {$product_id};");
     $body->setContent("N_RECENSIONI_PRODOTTO", $tmp->num_rows);
     $tmp->fetch_all(MYSQLI_ASSOC);
+
     foreach ($tmp as $t) {
         $recensione = new Template("skins/template/dtml/dtml_items/RecensioniProdottoItem.html");
         $tmp2 = $connessione->query("SELECT u.nome, u.cognome FROM Utente u JOIN Recensione r ON u.id = {$t['id_utente']}")->fetch_all(MYSQLI_ASSOC);
@@ -82,8 +83,9 @@ foreach ($res as $r) {
         $recensione->setContent("TESTO_RECENSIONE", $t['testo_recensione']);
 
         $recensione->setContent("VALUTAZIONE", $t['valutazione']);
+        $body->setContent("RECENSIONI_UTENTI", $recensione->get());
     }
-    $body->setContent("RECENSIONI_UTENTI", $recensione->get());
+    // $body->setContent("RECENSIONI_UTENTI", $recensione->get());
 
     // rating
     $tmp = $connessione->query("SELECT ROUND(AVG(valutazione), 1) AS media_valutazione FROM Recensione WHERE id_prodotto = {$product_id}")->fetch_all(MYSQLI_ASSOC);
