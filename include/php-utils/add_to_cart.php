@@ -6,12 +6,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_prodotto = $_POST['id_prodotto'];
     $quantita = $_POST['quantita'];
 
+    echo $id_prodotto;
+    echo " " . $quantita;
+
 
     if (isset($_SESSION['auth']) && $_SESSION['auth']) {
-        // utente autenticato
-        // fare il travaso, distruggere la sessione SOLO di carrello
-        // ATTENTO CARMINE, IL TRAVASO VA FATTO APPENA SI LOGGA
-        // quindi qui devi gestire solo la parte di aggiungere le cose nel suo carrello
+        // aggiungere tutto sul DB
+
 
 
 
@@ -56,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
-        $a = $_SESSION['carrello'];
-        echo json_encode($a);
+        // $a = $_SESSION['carrello'];
+        // echo json_encode($a);
     }
 }
