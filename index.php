@@ -6,7 +6,6 @@ require "include/dbms.inc.php";
 
 $main = new Template("skins/template/dtml/index_v2.html");
 $body = new Template("skins/template/dtml/home.html");
-// $cart = new Template("skins/template/dtml/dtml_items/main/icona_carrello.html");
 
 // tiene aggiornato il numero di oggetti presenti nei preferiti e nel carrello
 require "include/php-utils/preferiti_carrello.php";
