@@ -1,17 +1,22 @@
 <?php
 
+require "../dbms.inc.php";
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_prodotto = $_POST['id_prodotto'];
     $quantita = $_POST['quantita'];
 
+    echo $id_prodotto . " " . $quantita;
+
     if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         // aggiungere tutto sul DB
+        global $connessione;
+
         $userid = $_SESSION['utente']['id'];
         $prod_gia_presente = false;
 
-        $res = $connessione->query("SELECT * FROM Carrello c WHERE c.id_utente = {$userid}")->fetch_all(MYSQLI_ASSOC);
+        $res = $connessione->query("SELECT * FROM Carrello WHERE id_utente = {$userid}")->fetch_all(MYSQLI_ASSOC);
         foreach ($res as $r) {
             if ($r['id_prodotto'] == $id_prodotto) {
                 // sommo
@@ -19,14 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $nuova_quantita = $quantita_attuale + $quantita;
 
                 $upd = $connessione->prepare("UPDATE Carrello SET quantita_prodotto = ? WHERE id_prodotto = ? AND id_utente = ?");
-                // && id_utente = ecc..
                 $upd->bind_param("iii", $nuova_quantita, $r['id_prodotto'], $userid);
-                //
-
-                // CONTROLLA BENE
-
-                //
-
                 if ($upd->execute()) {
                     echo "Aggiornamento tabella Carrello.";
                 } else {
@@ -35,16 +33,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $prod_gia_presente = true;
                 break;
             }
-
-            if (!$prod_gia_presente) {
-                // aggiungo
-                $add = $connessione->prepare("INSERT INTO Carrello (id_utente, id_prodotto, quantita_prodotto) VALUES (?, ?, ?)");
-                $add->bind_param("iii", $userid, $id_prodotto, $quantita);
-                if ($add->execute()) {
-                    echo "Aggiunta tabella Carrello.";
-                } else {
-                    echo "Errore durante aggiunta tabella Carrello: " . $add->error;
-                }
+        }
+        if (!$prod_gia_presente) {
+            // aggiungo
+            $add = $connessione->prepare("INSERT INTO Carrello (id_utente, id_prodotto, quantita_prodotto) VALUES (?, ?, ?)");
+            $add->bind_param("iii", $userid, $id_prodotto, $quantita);
+            if ($add->execute()) {
+                echo "Aggiunta tabella Carrello.";
+            } else {
+                echo "Errore durante aggiunta tabella Carrello: " . $add->error;
             }
         }
     } else {
