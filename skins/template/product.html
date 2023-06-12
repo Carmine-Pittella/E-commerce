@@ -203,15 +203,15 @@
 
       // ora mi spieghi perché quella sopra funziona e questa no...
 
-      let xhr = new XMLHttpRequest();
-      xhr.open("POST", "product.php", true);
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      xhr.onreadystatechange = function() {
-         if (xhr.readyState === 4 && xhr.status === 200) {
+      let aaa = new XMLHttpRequest();
+      aaa.open("POST", "product.php", true);
+      aaa.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      aaa.onreadystatechange = function() {
+         if (aaa.readyState === 4 && aaa.status === 200) {
             // Gestisci la risposta qui
          }
       };
-      xhr.send("taglia=" + encodeURIComponent(taglia));
+      aaa.send("taglia=" + encodeURIComponent(taglia));
       // window.location.href = window.location.href;
 
 

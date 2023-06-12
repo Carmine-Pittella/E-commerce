@@ -4,6 +4,8 @@ require "include/template2.inc.php";
 require "include/dbms.inc.php";
 require_once "include/php-utils/global.php";
 
+session_start();
+
 global $connessione;
 $product_id;
 $taglia_sel;
@@ -23,7 +25,7 @@ if (isset($_GET['product_id'])) {
 }
 
 // IMPOSTAZIONE DELLA TAGLIA
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "<script>alert('dsdkfjsvbfvkjbfvkhfdbvkhvbdfkbfkhb');</script>";
     echo "<script> console.log('sium') </script>";
 
