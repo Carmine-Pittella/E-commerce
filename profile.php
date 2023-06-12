@@ -15,8 +15,10 @@ $userid = "";
 require "include/php-utils/preferiti_carrello.php";
 
 
+
 if (isset($_SESSION['auth']) && $_SESSION['auth']) {
     $userid = $_SESSION['utente']['id'];
+
 
 
     /********* popolamento dati utente *********/

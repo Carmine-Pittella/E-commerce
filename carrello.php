@@ -16,13 +16,14 @@ require "include/php-utils/preferiti_carrello.php";
 
 if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
-    $main = new Template("skins/template/dtml/index_v2.html");
-    $body = new Template("skins/template/shopping-cart.html");
+    // prendere tutti gli elementi del carrello con id_utente
+    $userid = $_SESSION['utente']['id'];
 
-    // tiene aggiornato il numero di oggetti presenti nei preferiti e nel carrello
-    require "include/php-utils/preferiti_carrello.php";
-
-
+    $res = $connessione->query("SELECT * FROM Carrello WHERE id_utente = {$userid}");
+    foreach ($res as $r) {
+        $r['id_prodotto'];
+        $r['quantita'];
+    }
 
 
 
