@@ -25,12 +25,13 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
     foreach ($res as $r) {
         $r['id_prodotto'];
         $r['quantita_prodotto'];
+        $r['taglia_prodotto'];
         // quantita
         $cart_elem->setContent("QUANTITA", $r['quantita_prodotto']);
 
         // quantita massima impostabile
-        $tmp = $connessione->query("SELECT * FROM Magazzino WHERE id_prodotto = {$r['id_prodotto']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
-        $cart_elem->setContent("Q_MAX", 5);
+        $tmp = $connessione->query("SELECT * FROM Magazzino WHERE id_prodotto = {$r['id_prodotto']} AND taglia = {$r['taglia_prodotto']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
+        $cart_elem->setContent("Q_MAX", $tmp[0]['quantita']);
 
         // immagine
         $tmp = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id_prodotto']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);

@@ -62,7 +62,7 @@
                            </div>
                            <div class="sc-item">
                               <input type="radio" id="md-size" />
-                              <label for="md-size" onclick="selectTaglia('m')">m</label>
+                              <label class="active" for="md-size" onclick="selectTaglia('m')">m</label>
                            </div>
                            <div class="sc-item" >
                               <input type="radio" id="lg-size" />
@@ -80,7 +80,7 @@
                               <input type="text" value="1" />
                            </div>
 
-                           <button class="primary-btn pd-cart" onclick="addToCart()" >aggiungi a carrello</button>
+                           <button class="primary-btn" onclick="addToCart()">aggiungi a carrello</button>
                         </div>
                         <ul class="pd-tags">
                            <li><span>CATEGORIA</span>: <[CATEGORIA_PRODOTTO]></li>
@@ -212,6 +212,19 @@
       aaa.send("taglia=" + encodeURIComponent(taglia));
       // window.location.href = window.location.href;
 
-
    }
+
+   document.addEventListener('DOMContentLoaded', function() {
+   disableButton();
+   });
+
+   function disableButton() {
+      const button = document.querySelector('.primary-btn');
+      let n_disp = parseInt( "<[TAGLIA_DISPONIBILITA_PRODOTTO]>");
+      if (n_disp == 0) {
+         button.disabled = true;
+      }
+   }
+
+
 </script>
