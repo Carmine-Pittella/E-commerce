@@ -237,22 +237,24 @@
    /*-------------------
 		Quantity change
 	--------------------- */
-   var proQty = $(".pro-qty");
+   let proQty = $(".pro-qty");
    proQty.prepend('<span class="dec qtybtn">-</span>');
    proQty.append('<span class="inc qtybtn">+</span>');
    proQty.on("click", ".qtybtn", function () {
-      var $button = $(this);
-      var oldValue = $button.parent().find("input").val();
+      console.log("ciao");
+      let $button = $(this);
+      let value = parseInt($button.parent().find("input").val());
       if ($button.hasClass("inc")) {
-         var newVal = parseFloat(oldValue) + 1;
+         // se supera la quantita non deve andare avanti
+         value--;
       } else {
          // Don't allow decrementing below zero
-         if (oldValue > 0) {
-            var newVal = parseFloat(oldValue) - 1;
+         if (value > 1) {
+            value--;
          } else {
-            newVal = 0;
+            value = 1;
          }
       }
-      $button.parent().find("input").val(newVal);
+      $button.parent().find("input").val(value);
    });
 })(jQuery);
