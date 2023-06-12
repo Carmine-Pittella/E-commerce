@@ -28,6 +28,10 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         // quantita
         $cart_elem->setContent("QUANTITA", $r['quantita_prodotto']);
 
+        // quantita massima impostabile
+        $tmp = $connessione->query("SELECT * FROM Magazzino WHERE id_prodotto = {$r['id_prodotto']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
+        $cart_elem->setContent("Q_MAX", 5);
+
         // immagine
         $tmp = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id_prodotto']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
         $cart_elem->setContent("URL_IMMAGINE", _IMG_PATH . $tmp[0]['url_immagine']);
@@ -40,6 +44,8 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         // totale prodotto
         $tot = intval($r['quantita_prodotto']) * floatval($tmp[0]['prezzo']);
         $cart_elem->setContent("PREZZO_TOTALE", $tot);
+
+
 
         $tot_cart += $tot;
 

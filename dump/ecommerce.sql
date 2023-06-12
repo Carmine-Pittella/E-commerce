@@ -142,6 +142,7 @@ CREATE TABLE IF NOT EXISTS Carrello (
     id_utente INT NOT NULL,
     id_prodotto INT NOT NULL,
     quantita_prodotto INT NOT NULL,
+    taglia_prodotto ENUM('S', 'M', 'L', 'XL') DEFAULT 'M',
     FOREIGN KEY (id_utente) REFERENCES Utente(id),
     FOREIGN KEY (id_prodotto) REFERENCES Prodotto(id)
 );
@@ -169,7 +170,8 @@ CREATE TABLE IF NOT EXISTS Magazzino (
     id_prodotto INT NOT NULL, 
     quantita INT NOT NULL DEFAULT 0,
     taglia ENUM('S', 'M', 'L', 'XL') DEFAULT 'M',
-    FOREIGN KEY (id_prodotto) REFERENCES Prodotto(id)
+    FOREIGN KEY (id_prodotto) REFERENCES Prodotto(id),
+    UNIQUE (id_prodotto, taglia)
 );
 
 CREATE TABLE IF NOT EXISTS stato_italia (
@@ -356,13 +358,13 @@ VALUES
 (5, 5, 3);
 
 -- Inserimento di valori casuali nella tabella Carrello
-INSERT INTO Carrello (id_utente, id_prodotto, quantita_prodotto)
+INSERT INTO Carrello (id_utente, id_prodotto, quantita_prodotto, taglia_prodotto)
 VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 1),
-(4, 4, 1),
-(5, 5, 2);
+(1, 1, 1, 'S'),
+(2, 2, 2, 'M'),
+(3, 3, 1, 'M'),
+(4, 4, 1, 'L'),
+(5, 5, 2, 'XL');
 
 -- Inserimento di valori casuali nella tabella Recensione
 INSERT INTO Recensione (id_utente, id_prodotto, testo_recensione, valutazione, data_recensione)
@@ -394,7 +396,6 @@ INSERT INTO Magazzino (id_prodotto, quantita, taglia)
 VALUES
 (1, 10, 'S'),
 (1, 10, 'M'),
-(2, 5, 'M'),
 (2, 5, 'M'),
 (3, 3, 'M'),
 (3, 3, 'L'),

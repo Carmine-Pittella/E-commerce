@@ -241,20 +241,23 @@
    proQty.prepend('<span class="dec qtybtn">-</span>');
    proQty.append('<span class="inc qtybtn">+</span>');
    proQty.on("click", ".qtybtn", function () {
-      console.log("ciao");
       let $button = $(this);
-      let value = parseInt($button.parent().find("input").val());
+      let $input = $button.parent().find("input");
+      let value = parseInt($input.val());
+      let maxLimit = parseInt($input.attr("max")); // Ottieni il limite massimo dall'attributo 'max' dell'input
+
       if ($button.hasClass("inc")) {
-         // se supera la quantita non deve andare avanti
-         value--;
+         // Incrementa solo se il valore attuale è inferiore al limite massimo
+         if (value < maxLimit) {
+            value++;
+         }
       } else {
-         // Don't allow decrementing below zero
+         // Decrementa solo se il valore attuale è superiore a 1
          if (value > 1) {
             value--;
-         } else {
-            value = 1;
          }
       }
-      $button.parent().find("input").val(value);
+
+      $input.val(value);
    });
 })(jQuery);
