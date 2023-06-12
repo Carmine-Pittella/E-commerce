@@ -22,6 +22,16 @@ if (isset($_GET['product_id'])) {
     header('location: shop.php');
 }
 
+// IMPOSTAZIONE DELLA TAGLIA
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    echo "<script>alert('dsdkfjsvbfvkjbfvkhfdbvkhvbdfkbfkhb');</script>";
+    echo "<script> console.log('sium') </script>";
+
+    $tagliaPost = $_POST['taglia'];
+    $body->setContent("TAGLIA_DISPONIBILITA_PRODOTTO", 5);
+    echo $tagliaPost;
+}
+
 
 /********* popolamento rullino foto *********/
 $res = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$product_id};")->fetch_all(MYSQLI_ASSOC);
@@ -93,23 +103,6 @@ foreach ($res as $r) {
     $tmp = $connessione->query("SELECT SUM(quantita_prodotto) AS tot_ordini FROM Oggetto_Ordine WHERE id_prodotto = {$product_id}")->fetch_all(MYSQLI_ASSOC);
     $body->setContent("N_ORDINAZIONI", $tmp[0]['tot_ordini']);
 }
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    echo "<script> console.log('sium') </script>";
-
-    $tagliaPost = $_POST['taglia'];
-    $body->setContent("TAGLIA_DISPONIBILITA_PRODOTTO", 5);
-    echo $tagliaPost;
-}
-
-
-
-
-
-
-
-
-
 
 
 
