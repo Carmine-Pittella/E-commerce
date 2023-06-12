@@ -21,12 +21,6 @@ if (isset($_GET['product_id'])) {
 } else {
     header('location: shop.php');
 }
-// recupero la taglia dall'URL
-if (isset($_GET['taglia'])) {
-    $taglia_sel = $_GET['taglia'];
-} else {
-    $body->setContent("TAGLIA_DISPONIBILITA_PRODOTTO", "seleziona taglia");
-}
 
 
 /********* popolamento rullino foto *********/
@@ -100,7 +94,13 @@ foreach ($res as $r) {
     $body->setContent("N_ORDINAZIONI", $tmp[0]['tot_ordini']);
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    echo "<script> console.log('sium') </script>";
 
+    $tagliaPost = $_POST['taglia'];
+    $body->setContent("TAGLIA_DISPONIBILITA_PRODOTTO", 5);
+    echo $tagliaPost;
+}
 
 
 

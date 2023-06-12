@@ -64,13 +64,13 @@
                               <input type="radio" id="md-size" />
                               <label for="md-size">m</label>
                            </div>
-                           <div class="sc-item">
+                           <div class="sc-item" >
                               <input type="radio" id="lg-size" />
                               <label for="lg-size">l</label>
                            </div>
                            <div class="sc-item">
                               <input type="radio" id="xl-size" />
-                              <label for="xl-size">xl</label>
+                              <label for="xl-size" onclick="selectTaglia('xl')">xl</label>
                            </div>
                            <div class="sc-item"><h6 class="pd-tags" style="margin-left: 20px">disponibili: (<[TAGLIA_DISPONIBILITA_PRODOTTO]>)</h6></div>
                        <!-- utilizzero l'url per fare questo -->
@@ -191,5 +191,29 @@
       };
       xhr.send("id_prodotto=" + encodeURIComponent(id_prodotto) + "&quantita=" + encodeURIComponent(quantita));
       window.location.href = window.location.href;
+   }
+
+
+   function selectTaglia(taglia) {
+      console.log("lallero " + taglia);
+
+
+      // funziona, devo trovare una soluzione
+      // forse una funzione POST e qualcosa che popola la disponibilita con una query
+
+      // ora mi spieghi perché quella sopra funziona e questa no...
+
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", "product.php", true);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.onreadystatechange = function() {
+         if (xhr.readyState === 4 && xhr.status === 200) {
+            // Gestisci la risposta qui
+         }
+      };
+      xhr.send("taglia=" + encodeURIComponent(taglia));
+      // window.location.href = window.location.href;
+
+
    }
 </script>
