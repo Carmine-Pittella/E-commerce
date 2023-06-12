@@ -188,20 +188,19 @@
 <script src="skins/template/js/changeAdminCenterAjax.js"></script>
 <script src="skins/template/js/gotoShopAjax.js"></script>
 <script>
-   console.log("dioooooo");
    $(document).ready(function(){
       $("#filterUomoShop").on('click',function(){
-         gotoShopUomo();
+         gotoShop("uomo");
       });
    });
    $(document).ready(function(){
       $("#filterDonnaShop").on('click',function(){
-         gotoShopDonna();
+         gotoShop("donna");
       });
    });
    $(document).ready(function(){
       $("#filterBambiniShop").on('click',function(){
-         gotoShopBambini();
+         gotoShop("bambino");
       });
    });
 </script>

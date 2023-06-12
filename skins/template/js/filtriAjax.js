@@ -11,7 +11,6 @@ function inviaRichiestaFil(arrCategoria, arrGenere, arrMarca, arrPrezzo, size) {
    if (size === undefined) {
       size = "U";
    }
-   console.log("array Prezzo: ",arrPrezzo);
    dataT = { arrCategoria: arrCategoria, arrGenere: arrGenere, arrMarca: arrMarca, arrPrezzo: arrPrezzo, size };
    $.ajax({
       url: "shop.php",
