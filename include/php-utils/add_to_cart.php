@@ -75,10 +75,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'quantita' => $quantita
             );
         }
-
-
-
-        // $a = $_SESSION['carrello'];
-        // echo json_encode($a);
     }
 }
