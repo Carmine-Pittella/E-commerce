@@ -107,7 +107,7 @@ foreach ($res as $r) {
 }
 
 
-$body->setContent("TAGLIA_DISPONIBILITA_PRODOTTO", 0);
+$body->setContent("TAGLIA_DISPONIBILITA_PRODOTTO", "da fare");
 
 $main->setContent('body', $body->get());
 $main->close();
