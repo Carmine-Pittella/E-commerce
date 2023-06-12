@@ -51,7 +51,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         $profile->setContent("ordini_utente", $ordine->get());
     }
 } else {
-    // header("Location: login.php");
+    header("Location: login.php");
 }
 
 

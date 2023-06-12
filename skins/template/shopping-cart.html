@@ -5,10 +5,6 @@
          <div class="loader" style="display: none"></div>
       </div>
 
-      <!-- Breadcrumb Section Begin -->
-
-      <!-- Breadcrumb Section Begin -->
-
       <!-- Shopping Cart Section Begin -->
       <section class="shopping-cart spad">
          <div class="container">
@@ -29,22 +25,20 @@
                         <tbody>
                            <tr>
                               <td class="cart-pic first-row">
-                                 <img src="skins/template/img/cart-page/product-1.jpg" alt="" />
+                                 <img src="<[URL_IMMAGINE]>" alt="" />
                               </td>
                               <td class="cart-title first-row">
-                                 <h5>Pure Pineapple</h5>
+                                 <h5><[NOME_PRODOTTO]></h5>
                               </td>
-                              <td class="p-price first-row">60.00 €</td>
+                              <td class="p-price first-row"><[PREZZO_SINGOLO]> €</td>
                               <td class="qua-col first-row">
                                  <div class="quantity">
                                     <div class="pro-qty">
-                                       <span class="dec qtybtn">-</span>
                                        <input type="text" value="1" />
-                                       <span class="inc qtybtn">+</span>
                                     </div>
                                  </div>
                               </td>
-                              <td class="total-price first-row">60.00 €</td>
+                              <td class="total-price first-row"><[PREZZO_TOTALE]> €</td>
                               <td class="close-td first-row"><i class="ti-close"></i></td>
                            </tr>
                         </tbody>
@@ -53,7 +47,7 @@
                   <div class="row">
                      <div class="col-lg-4">
                         <div class="cart-buttons">
-                           <a href="#" class="primary-btn continue-shop">continua lo shopping</a>
+                           <a href="shop.php" class="primary-btn continue-shop">continua lo shopping</a>
                         </div>
                         <div class="discount-coupon">
                            <h6>Codice sconto</h6>
@@ -66,10 +60,10 @@
                      <div class="col-lg-4 offset-lg-4">
                         <div class="proceed-checkout">
                            <ul>
-                              <li class="subtotal">Subtotal <span>60.00 €</span></li>
-                              <li class="cart-total">Totale<span>60.00 €</span></li>
+                              <li class="subtotal">Subtotal <span><[TOTALE_PARZIALE_CARRELLO]> €</span></li>
+                              <li class="cart-total">Totale<span><[TOTALE_CARRELLO]> €</span></li>
                            </ul>
-                           <a href="#" class="proceed-btn">vai al pagamento</a>
+                           <a href="checkout.php" class="proceed-btn">vai al pagamento</a>
                         </div>
                      </div>
                   </div>
