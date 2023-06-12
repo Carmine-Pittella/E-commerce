@@ -17,7 +17,6 @@ function inviaRichiestaFil(arrCategoria, arrGenere, arrMarca, arrPrezzo, size) {
       type: "POST",
       data: { valore: dataT },
       success: function (response) {
-         console.log("successo:", response, "fine");
          $(document).ready(function () {
             $("#divItems").html(response);
          });
