@@ -190,18 +190,15 @@
       xhr.send("id_prodotto=" + encodeURIComponent(id_prodotto) + "&quantita=" + encodeURIComponent(quantita));
       window.location.href = window.location.href;
    }
+</script>
 
-
+<script>
    function selectTaglia(taglia) {
       console.log("lallero " + taglia);
-
-      // funziona, devo trovare una soluzione
-      // forse una funzione POST e qualcosa che popola la disponibilita con una query
-
       // ora mi spieghi perché quella sopra funziona e questa no...
 
       let aaa = new XMLHttpRequest();
-      aaa.open("POST", "product.php", true);
+      aaa.open("POST", "include/php-utils/PROVAPORCODIO.php", true);
       aaa.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       aaa.onreadystatechange = function() {
          if (aaa.readyState === 4 && aaa.status === 200) {
@@ -209,7 +206,6 @@
          }
       };
       aaa.send("taglia=" + encodeURIComponent(taglia));
-      
       // window.location.href = window.location.href;
 
       disableAddToCart();
