@@ -23,6 +23,7 @@
 <script>
    function removeToCart() {
       let id_prodotto = "<[ID_PRODOTTO]>";
+      let taglia = "<[TAGLIA_PRODOTTO]>";
 
       let xhr = new XMLHttpRequest();
       xhr.open("POST", "include/php-utils/remove_to_cart.php", true);
@@ -33,7 +34,7 @@
             // Gestisci la risposta qui
          }
       };
-      xhr.send("id_prodotto=" + encodeURIComponent(id_prodotto));
+      xhr.send("id_prodotto=" + encodeURIComponent(id_prodotto) + "&taglia=" + encodeURIComponent(taglia));
       window.location.href = window.location.href;
    }
 
