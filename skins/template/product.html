@@ -75,7 +75,9 @@
                         </div>
                         <div class="quantity">
                            <div class="pro-qty">
-                              <input type="text" value="1" max="<[TAGLIA_DISPONIBILITA_PRODOTTO]>"/>
+                              <span class="dec qtybtn">-</span>
+                              <input type="text" value="1" max="<[TAGLIA_DISPONIBILITA_PRODOTTO]>" disabled/>
+                              <span class="inc qtybtn">+</span>
                            </div>
 
                            <button class="lallero" onclick="addToCart()">aggiungi a carrello</button>
@@ -223,9 +225,9 @@
    disableAddToCart();
 
    function setLimitQuantity() {
-      var qValueSpan = document.querySelector('.Q_value');
-      var qValue = qValueSpan.textContent;
-      var qtyInput = document.querySelector('input[type="text"]');
+      let qValueSpan = document.querySelector('.Q_value');
+      let qValue = qValueSpan.textContent;
+      let qtyInput = document.querySelector('input[type="text"]');
       qtyInput.setAttribute('max', qValue);
    }
 </script>

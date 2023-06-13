@@ -21,24 +21,16 @@ require "include/php-utils/preferiti_carrello.php";
 
 
 if (isset($_GET['error'])) {
+    require_once "include/php-utils/alert.php";
     switch ($_GET['error']) {
         case 1:
-            $error = "Utente già esistente!";
-            echo "<script>alert(`$error`); window.setTimeout(function() {
-                    window.location.href = 'register.php';
-                    }, 0);</script>";
+            Alert::OpenAlert("Utente già esistente !");
             break;
         case 2:
-            $error = "Ops! qualcosa è andato storto :(";
-            echo "<script>alert(`$error`); window.setTimeout(function() {
-                    window.location.href = 'register.php';
-                    }, 0);</script>";
+            Alert::OpenAlert("Ops! qualcosa è andato storto :(");
             break;
         case 3:
-            $error = "Registrazione avvenuta con successo";
-            echo "<script>alert(`$error`); window.setTimeout(function() {
-                    window.location.href = 'register.php';
-                    }, 0);</script>";
+            Alert::OpenAlert("Registrazione avvenuta con successo");
             break;
     }
     $register->setContent("error", $error);

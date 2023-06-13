@@ -20,6 +20,64 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
     $userid = $_SESSION['utente']['id'];
     $tot_cart = 0;
+    $alertNeed = 0;
+
+
+    $res = $connessione->query("SELECT * FROM Carrello WHERE id_utente = {$userid}");
+    foreach ($res as $r) {
+        $r['id_prodotto'];
+        $r['quantita_prodotto'];
+        $r['taglia_prodotto'];
+
+        $magazzino = $connessione->query("SELECT * FROM Magazzino WHERE id_prodotto = {$r['id_prodotto']} AND taglia = {$r['taglia_prodotto']} LIMIT 1");
+        if ($magazzino[0]['quantita'] < $r['quantita_prodotto']) {
+
+            if ($magazzino[0]['quantita'] == 0) {
+                $alertNeed = 1;
+            } else {
+                $alertNeed = 2;
+            }
+        }
+    }
+
+    if ($alertNeed != 0) {
+        require_once "include/php-utils/alert.php";
+        Alert::OpenAlert("Le quantità che avevi selezionato per i  tuoi prodotti non sono più disponibili :(");
+
+        switch ($alertNeed) {
+            case 1:
+                // rimuovere il prodotto dal carrello
+                $rmv = $connessione->prepare("DELETE FROM Carrello WHERE id_utente = ? AND id_prodotto = ? AND taglia_prodotto = ?;");
+                $rmv->bind_param("iis", $userid, $r['id_prodotto'], $r['taglia_prodotto']);
+                if ($rmv->execute()) {
+                    echo "Elemento eliminato dal Carrello.";
+                } else {
+                    echo "Errore durante eliminazione in Carrello: " . $rmv->error;
+                }
+                break;
+
+            case 2:
+                // settare la quantità di quel prodotto nel carrello con id_utente = (...) a 1
+                $upd = $connessione->prepare("UPDATE Carrello SET quantita_prodotto = ? WHERE id_prodotto = ? AND id_utente = ? AND taglia_prodotto = ?");
+                $upd->bind_param("iii", $nuova_quantita, $r['id_prodotto'], $userid);
+                if ($upd->execute()) {
+                    echo "Aggiornamento tabella Carrello.";
+                } else {
+                    echo "Errore durante aggiornamento in Carrello: " . $upd->error;
+                }
+                $prod_gia_presente = true;
+                break;
+        }
+    }
+
+
+
+
+
+
+
+
+    //
 
     $res = $connessione->query("SELECT * FROM Carrello WHERE id_utente = {$userid}");
     foreach ($res as $r) {
@@ -43,7 +101,6 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
         // totale prodotto
 
-        $tot_cart += $tot;
         $body->setContent("elemento_carrello", $cart_elem->get());
     }
 

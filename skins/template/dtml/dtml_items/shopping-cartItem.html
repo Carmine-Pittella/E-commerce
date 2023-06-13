@@ -9,12 +9,14 @@
    <td class="p-price first-row"><[PREZZO_SINGOLO]> €</td>
    <td class="qua-col first-row">
       <div class="quantity">
-         <div class="pro-qty" onclick="setQuantita()">
-            <input type="text" value="<[QUANTITA]>" max="<[Q_MAX]>" />
+         <div class="pro-qty">
+            <span class="dec qtybtn" onclick="setQuantita(-1)">-</span>
+            <input type="text" value="<[QUANTITA]>" max="<[Q_MAX]>" disabled />
+            <span class="inc qtybtn" onclick="setQuantita(+1)">+</span>
          </div>
       </div>
    </td>
-   <td class="total-price first-row"><[PREZZO_TOTALE]> €</td>
+   <td class="total-price first-row"><span class="tot-price-product"></span> €</td>
    <td class="close-td first-row" onclick="removeToCart()"><i class="ti-close"></i></td>
 </tr>
 
@@ -35,18 +37,31 @@
       window.location.href = window.location.href;
    }
 
-   function setQuantita() {
+   function setQuantita(operator) {
       let quantita = document.querySelector(".pro-qty input").value;
-      console.log(quantita);
+      quantita = parseInt(quantita) + parseInt(operator);
+      if (quantita < 1) {
+         quantita++;
+      }
+      if (quantita > parseInt("<[Q_MAX]>")) {
+         quantita--;
+      }
+
+      setTotalPriceProduct(quantita);
    }
 
-   function setTotalPriceProduct() {
-      // ottenere il prezzo singolo
-      // ottenere la quantità (ogni volta che cambia bisogna richiamare questa funzione)
+   function setTotalPriceProduct(Q) {
+      let single_price = parseFloat("<[PREZZO_SINGOLO]>");
+      let quantita = parseInt(document.querySelector(".pro-qty input").value);
+      if (Q) {
+         console.log(Q);
+         quantita = Q;
+      }
 
-      // calcolare e settare
-      let single_price = "<[PREZZO_SINGOLO]>";
+      let total_price = single_price * quantita;
 
-      //
+      let totPriceSpan = document.querySelector(".tot-price-product");
+      totPriceSpan.textContent = total_price.toFixed(2);
    }
+   setTotalPriceProduct();
 </script>
