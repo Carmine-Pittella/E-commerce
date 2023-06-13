@@ -26,12 +26,11 @@ if (isset($_GET['product_id'])) {
 
 // IMPOSTAZIONE DELLA TAGLIA
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    echo "<script>alert('dsdkfjsvbfvkjbfvkhfdbvkhvbdfkbfkhb');</script>";
-    echo "<script> console.log('sium') </script>";
+    $tagliaPost = $_POST['valore'];
 
-    $tagliaPost = $_POST['taglia'];
-    $body->setContent("TAGLIA_DISPONIBILITA_PRODOTTO", 5);
-    echo $tagliaPost;
+    // query
+
+    echo "8";
 }
 
 

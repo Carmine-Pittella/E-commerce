@@ -72,7 +72,7 @@
                               <input type="radio" id="xl-size" />
                               <label for="xl-size" onclick="selectTaglia('xl')">xl</label>
                            </div>
-                           <div class="sc-item"><h6 class="pd-tags" style="margin-left: 20px">disponibili: (<[TAGLIA_DISPONIBILITA_PRODOTTO]>)</h6></div>
+                           <div id="taglia_disponibilita_prodotto" class="sc-item"><h6 class="pd-tags" style="margin-left: 20px">disponibili: (<[TAGLIA_DISPONIBILITA_PRODOTTO]>)</h6></div>
                        <!-- utilizzero l'url per fare questo -->
                         </div>
                         <div class="quantity">
@@ -195,13 +195,13 @@
 <script>
    function selectTaglia(taglia) {
       $.ajax({
-      url: "include/php-utils/PROVAPORCODIO.php",
+      url: "product.php",
       type: "POST",
       data: { valore: taglia },
       success: function (response) {
          $(document).ready(function () {
-           // $("#divItems").html(response);
-           console.log("questa è la risposta:",response);
+           $("#taglia_disponibilita_prodotto").html(response);
+           console.log("questa è la risposta:", response);
            disableAddToCart();
          });
       },
@@ -209,25 +209,6 @@
          console.log("Si è verificato un errore durante l'invio della richiesta.");
       },
    });
-      /*
-      console.log("lallero " + taglia);
-      
-      // ora mi spieghi perché quella sopra funziona e questa no...
-
-
-      let aaa = new XMLHttpRequest();
-      aaa.open("POST", "include/php-utils/PROVAPORCODIO.php", true);
-      aaa.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      aaa.onreadystatechange = function() {
-         if (aaa.readyState === 4 && aaa.status === 200) {
-            // Gestisci la risposta qui
-         }
-      };
-      aaa.send("taglia=" + encodeURIComponent(taglia));
-      // window.location.href = window.location.href;
-
-      disableAddToCart();
-      */
    }
 </script>
 
