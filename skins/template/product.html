@@ -77,10 +77,10 @@
                         </div>
                         <div class="quantity">
                            <div class="pro-qty">
-                              <input type="text" value="1" />
+                              <input type="text" value="1" max="<[TAGLIA_DISPONIBILITA_PRODOTTO]>"/>
                            </div>
 
-                           <button class="primary-btn" onclick="addToCart()">aggiungi a carrello</button>
+                           <button class="lallero" onclick="addToCart()">aggiungi a carrello</button>
                         </div>
                         <ul class="pd-tags">
                            <li><span>CATEGORIA</span>: <[CATEGORIA_PRODOTTO]></li>
@@ -195,7 +195,6 @@
    function selectTaglia(taglia) {
       console.log("lallero " + taglia);
 
-
       // funziona, devo trovare una soluzione
       // forse una funzione POST e qualcosa che popola la disponibilita con una query
 
@@ -210,21 +209,30 @@
          }
       };
       aaa.send("taglia=" + encodeURIComponent(taglia));
+      
       // window.location.href = window.location.href;
 
+      disableAddToCart();
    }
+</script>
 
-   document.addEventListener('DOMContentLoaded', function() {
-   disableButton();
-   });
 
-   function disableButton() {
-      const button = document.querySelector('.primary-btn');
-      let n_disp = parseInt( "<[TAGLIA_DISPONIBILITA_PRODOTTO]>");
+<script>
+   function disableAddToCart() {
+      let n_disp = parseInt("<[TAGLIA_DISPONIBILITA_PRODOTTO]>");
+      let addToCartBtn = document.querySelector(".lallero");
       if (n_disp == 0) {
-         button.disabled = true;
+         console.log("ciao");
+         addToCartBtn.disabled = true;
+      } else {
+         addToCartBtn.disabled = false;
       }
    }
-
-
+   disableAddToCart();
 </script>
+
+
+
+
+
+

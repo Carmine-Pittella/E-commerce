@@ -30,7 +30,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         $cart_elem->setContent("QUANTITA", $r['quantita_prodotto']);
 
         // quantita massima impostabile
-        $tmp = $connessione->query("SELECT * FROM Magazzino WHERE id_prodotto = {$r['id_prodotto']} AND taglia = {$r['taglia_prodotto']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
+        $tmp = $connessione->query("SELECT * FROM Magazzino WHERE id_prodotto = {$r['id_prodotto']} AND taglia = '{$r['taglia_prodotto']}' LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
         $cart_elem->setContent("Q_MAX", $tmp[0]['quantita']);
 
         // immagine

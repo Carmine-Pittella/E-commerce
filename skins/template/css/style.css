@@ -189,6 +189,21 @@ ol {
    text-transform: uppercase;
 }
 
+.lallero {
+   display: inline-block;
+   font-size: 14px;
+   font-weight: 700;
+   padding: 12px 30px;
+   color: #ffffff;
+   background: #e7ab3c;
+   text-transform: uppercase;
+}
+
+.lallero:disabled {
+   background: #cccccc;
+   cursor: not-allowed;
+}
+
 .site-btn {
    color: #ffffff;
    background: #e7ab3c;
