@@ -24,20 +24,6 @@ if (isset($_GET['product_id'])) {
     header('location: shop.php');
 }
 
-// IMPOSTAZIONE DELLA TAGLIA
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $tagliatmp = $_POST['valore'];
-    $str1 = '<h6 class="pd-tags" style="margin-left: 20px">disponibili:';
-    $str2= '</h6>';
-    $res = $connessione->query("SELECT quantita FROM Magazzino WHERE id_prodotto = '$product_id' AND taglia = '$tagliatmp'")->fetch_all(MYSQLI_ASSOC);
-    $jsonData = json_encode($res);
-    $stringData = (string) $jsonData;
-    $stringData = $str1.$stringData.$str2;
-    echo $stringData;
-    
-}
-
-
 /********* popolamento rullino foto *********/
 $res = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$product_id};")->fetch_all(MYSQLI_ASSOC);
 $save_first = false;
@@ -114,6 +100,3 @@ $body->setContent("TAGLIA_DISPONIBILITA_PRODOTTO", 5);
 
 $main->setContent('body', $body->get());
 $main->close();
-
-
-

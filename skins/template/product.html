@@ -73,7 +73,6 @@
                               <label for="xl-size" onclick="selectTaglia('XL')">xl</label>
                            </div>
                            <div id="taglia_disponibilita_prodotto" class="sc-item"><h6 class="pd-tags" style="margin-left: 20px">disponibili: (<[TAGLIA_DISPONIBILITA_PRODOTTO]>)</h6></div>
-                       <!-- utilizzero l'url per fare questo -->
                         </div>
                         <div class="quantity">
                            <div class="pro-qty">
@@ -194,10 +193,12 @@
 
 <script>
    function selectTaglia(taglia) {
+      let id_prodotto = "<[ID_PRODOTTO]>";
+
       $.ajax({
-      url: "product.php",
+      url: "include/php-utils/select_taglia_product.php",
       type: "POST",
-      data: { valore: taglia },
+      data: { valore: taglia, valore2: id_prodotto },
       success: function (response) {
          $(document).ready(function () {
            $("#taglia_disponibilita_prodotto").html(response);
