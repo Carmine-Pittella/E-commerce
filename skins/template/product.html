@@ -189,9 +189,7 @@
       xhr.send("id_prodotto=" + encodeURIComponent(id_prodotto) + "&quantita=" + encodeURIComponent(quantita));
       window.location.href = window.location.href;
    }
-</script>
 
-<script>
    function selectTaglia(taglia) {
       let id_prodotto = "<[ID_PRODOTTO]>";
 
@@ -212,11 +210,7 @@
       },
    });
    }
-</script>
 
-
-
-<script>
    function disableAddToCart() {
       let n_disp = document.querySelector('.Q_value').textContent;
       console.log(n_disp);
@@ -228,9 +222,7 @@
       }
    }
    disableAddToCart();
-</script>
 
-<script>
    function setLimitQuantity() {
       var qValueSpan = document.querySelector('.Q_value');
       var qValue = qValueSpan.textContent;
