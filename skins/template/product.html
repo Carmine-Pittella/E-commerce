@@ -62,7 +62,7 @@
                            </div>
                            <div class="sc-item">
                               <input type="radio" id="md-size" />
-                              <label class="active" for="md-size" onclick="selectTaglia('M')">m</label>
+                              <label for="md-size" onclick="selectTaglia('M')">m</label>
                            </div>
                            <div class="sc-item" >
                               <input type="radio" id="lg-size" />
@@ -72,7 +72,7 @@
                               <input type="radio" id="xl-size" />
                               <label for="xl-size" onclick="selectTaglia('XL')">xl</label>
                            </div>
-                           <div id="taglia_disponibilita_prodotto" class="sc-item"><h6 class="pd-tags" style="margin-left: 20px">disponibili: (<[TAGLIA_DISPONIBILITA_PRODOTTO]>)</h6></div>
+                           <div id="taglia_disponibilita_prodotto" class="sc-item"><h6 class="pd-tags" style="margin-left: 20px">disponibili: (<span class="Q_value">seleziona taglia</span>)</h6></div>
                         </div>
                         <div class="quantity">
                            <div class="pro-qty">
@@ -203,7 +203,8 @@
          $(document).ready(function () {
            $("#taglia_disponibilita_prodotto").html(response);
            console.log("questa è la risposta:", response);
-           //disableAddToCart();
+           disableAddToCart();
+           setLimitQuantity();
          });
       },
       error: function (xhr, status, error) {
@@ -214,12 +215,13 @@
 </script>
 
 
+
 <script>
    function disableAddToCart() {
-      let n_disp = parseInt("<[TAGLIA_DISPONIBILITA_PRODOTTO]>");
+      let n_disp = document.querySelector('.Q_value').textContent;
+      console.log(n_disp);
       let addToCartBtn = document.querySelector(".lallero");
-      if (n_disp == 0) {
-         console.log("ciao");
+      if (n_disp == 0 || n_disp == 'seleziona taglia') {
          addToCartBtn.disabled = true;
       } else {
          addToCartBtn.disabled = false;
@@ -228,8 +230,14 @@
    disableAddToCart();
 </script>
 
-
-
+<script>
+   function setLimitQuantity() {
+      var qValueSpan = document.querySelector('.Q_value');
+      var qValue = qValueSpan.textContent;
+      var qtyInput = document.querySelector('input[type="text"]');
+      qtyInput.setAttribute('max', qValue);
+   }
+</script>
 
 
 

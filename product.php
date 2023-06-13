@@ -24,6 +24,7 @@ if (isset($_GET['product_id'])) {
     header('location: shop.php');
 }
 
+
 /********* popolamento rullino foto *********/
 $res = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$product_id};")->fetch_all(MYSQLI_ASSOC);
 $save_first = false;
@@ -94,9 +95,6 @@ foreach ($res as $r) {
     $tmp = $connessione->query("SELECT SUM(quantita_prodotto) AS tot_ordini FROM Oggetto_Ordine WHERE id_prodotto = {$product_id}")->fetch_all(MYSQLI_ASSOC);
     $body->setContent("N_ORDINAZIONI", $tmp[0]['tot_ordini']);
 }
-
-
-$body->setContent("TAGLIA_DISPONIBILITA_PRODOTTO", 5);
 
 $main->setContent('body', $body->get());
 $main->close();
