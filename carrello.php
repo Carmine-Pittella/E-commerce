@@ -42,15 +42,12 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         $cart_elem->setContent("PREZZO_SINGOLO", $tmp[0]['prezzo']);
 
         // totale prodotto
-        $tot = intval($r['quantita_prodotto']) * floatval($tmp[0]['prezzo']);
-        $cart_elem->setContent("PREZZO_TOTALE", $tot);
 
         $tot_cart += $tot;
         $body->setContent("elemento_carrello", $cart_elem->get());
     }
 
     // totale carrello
-    $body->setContent("TOTALE_CARRELLO", $tot_cart);
 
 
 
