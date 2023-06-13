@@ -58,19 +58,19 @@
                         <div class="pd-size-choose">
                            <div class="sc-item">
                               <input type="radio" id="sm-size" />
-                              <label for="sm-size" onclick="selectTaglia('s')">s</label>
+                              <label for="sm-size" onclick="selectTaglia('S')">s</label>
                            </div>
                            <div class="sc-item">
                               <input type="radio" id="md-size" />
-                              <label class="active" for="md-size" onclick="selectTaglia('m')">m</label>
+                              <label class="active" for="md-size" onclick="selectTaglia('M')">m</label>
                            </div>
                            <div class="sc-item" >
                               <input type="radio" id="lg-size" />
-                              <label for="lg-size" onclick="selectTaglia('l')">l</label>
+                              <label for="lg-size" onclick="selectTaglia('L')">l</label>
                            </div>
                            <div class="sc-item">
                               <input type="radio" id="xl-size" />
-                              <label for="xl-size" onclick="selectTaglia('xl')">xl</label>
+                              <label for="xl-size" onclick="selectTaglia('XL')">xl</label>
                            </div>
                            <div id="taglia_disponibilita_prodotto" class="sc-item"><h6 class="pd-tags" style="margin-left: 20px">disponibili: (<[TAGLIA_DISPONIBILITA_PRODOTTO]>)</h6></div>
                        <!-- utilizzero l'url per fare questo -->
@@ -202,7 +202,7 @@
          $(document).ready(function () {
            $("#taglia_disponibilita_prodotto").html(response);
            console.log("questa è la risposta:", response);
-           disableAddToCart();
+           //disableAddToCart();
          });
       },
       error: function (xhr, status, error) {
