@@ -23,11 +23,9 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
     $res = $connessione->query("SELECT * FROM Carrello WHERE id_utente = {$userid}");
     foreach ($res as $r) {
-        $r['id_prodotto'];
-        $r['quantita_prodotto'];
-        $r['taglia_prodotto'];
-        // quantita
+        // quantita e taglia
         $cart_elem->setContent("QUANTITA", $r['quantita_prodotto']);
+        $cart_elem->setContent("TAGLIA_PRODOTTO", $r['taglia_prodotto']);
 
         // quantita massima impostabile
         $tmp = $connessione->query("SELECT * FROM Magazzino WHERE id_prodotto = {$r['id_prodotto']} AND taglia = '{$r['taglia_prodotto']}' LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
@@ -46,19 +44,11 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         $tot = intval($r['quantita_prodotto']) * floatval($tmp[0]['prezzo']);
         $cart_elem->setContent("PREZZO_TOTALE", $tot);
 
-
-
         $tot_cart += $tot;
-
-
-
-
-
         $body->setContent("elemento_carrello", $cart_elem->get());
     }
 
     // totale carrello
-    $body->setContent("TOTALE_PARZIALE_CARRELLO", $tot_cart);
     $body->setContent("TOTALE_CARRELLO", $tot_cart);
 
 
