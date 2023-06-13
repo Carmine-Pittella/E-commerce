@@ -194,9 +194,26 @@
 
 <script>
    function selectTaglia(taglia) {
+      $.ajax({
+      url: "include/php-utils/PROVAPORCODIO.php",
+      type: "POST",
+      data: { valore: taglia },
+      success: function (response) {
+         $(document).ready(function () {
+           // $("#divItems").html(response);
+           console.log("questa è la risposta:",response);
+           disableAddToCart();
+         });
+      },
+      error: function (xhr, status, error) {
+         console.log("Si è verificato un errore durante l'invio della richiesta.");
+      },
+   });
+      /*
       console.log("lallero " + taglia);
       
       // ora mi spieghi perché quella sopra funziona e questa no...
+
 
       let aaa = new XMLHttpRequest();
       aaa.open("POST", "include/php-utils/PROVAPORCODIO.php", true);
@@ -210,6 +227,7 @@
       // window.location.href = window.location.href;
 
       disableAddToCart();
+      */
    }
 </script>
 
