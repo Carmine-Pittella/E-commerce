@@ -13,15 +13,25 @@
             <input type="text" value="<[QUANTITA]>" max="<[Q_MAX]>" />
          </div>
       </div>
-
-      <!-- <div class="quantita">
-         <div class="inc-dec-q">
-            <span class="dec-q-btn">-</span>
-            <input type="text" value="1" />
-            <span class="inc-q-btn">+</span>
-         </div>
-      </div> -->
    </td>
    <td class="total-price first-row"><[PREZZO_TOTALE]> €</td>
-   <td class="close-td first-row"><i class="ti-close"></i></td>
+   <td class="close-td first-row" onclick="removeToCart()"><i class="ti-close"></i></td>
 </tr>
+
+<script>
+   function removeToCart() {
+      let id_prodotto = "<[ID_PRODOTTO]>";
+
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", "include/php-utils/remove_to_cart.php", true);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.onreadystatechange = function () {
+         if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText);
+            // Gestisci la risposta qui
+         }
+      };
+      xhr.send("id_prodotto=" + encodeURIComponent(id_prodotto));
+      window.location.href = window.location.href;
+   }
+</script>

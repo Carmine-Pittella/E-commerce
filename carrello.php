@@ -23,7 +23,8 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
     $res = $connessione->query("SELECT * FROM Carrello WHERE id_utente = {$userid}");
     foreach ($res as $r) {
-        // quantita e taglia
+        // id, quantita e taglia
+        $cart_elem->setContent("ID_PRODOTTO", $r['id_prodotto']);
         $cart_elem->setContent("QUANTITA", $r['quantita_prodotto']);
         $cart_elem->setContent("TAGLIA_PRODOTTO", $r['taglia_prodotto']);
 
