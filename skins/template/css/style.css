@@ -2872,9 +2872,14 @@ ol {
    color: #ffffff;
    background: #252525;
    text-transform: uppercase;
-   padding: 15px 25px 14px 25px;
+   padding: 15px 74px 14px 74px;
    display: block;
    text-align: center;
+}
+
+.proceed-btn:disabled {
+   background: #cccccc;
+   cursor: not-allowed;
 }
 
 /*---------------------

@@ -64,13 +64,14 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         $cart_elem->setContent("TAGLIA_PRODOTTO", $r['taglia_prodotto']);
 
         // quantita massima impostabile
-        $tmp = $connessione->query("SELECT * FROM Magazzino WHERE id_prodotto = {$r['id_prodotto']} AND taglia = '{$r['taglia_prodotto']}' LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
+        $tmp = $connessione->query("SELECT quantita FROM Magazzino WHERE id_prodotto = {$r['id_prodotto']} AND taglia = '{$r['taglia_prodotto']}'")->fetch_all(MYSQLI_ASSOC);
         $cart_elem->setContent("Q_MAX", $tmp[0]['quantita']);
 
         // immagine
-        $tmp = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id_prodotto']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
+        $tmp = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id_prodotto']}")->fetch_all(MYSQLI_ASSOC);
         $cart_elem->setContent("URL_IMMAGINE", _IMG_PATH . $tmp[0]['url_immagine']);
 
+        $lallero = $tmp[0]['url_immagine'];
         // nome e prezzo
         $tmp = $connessione->query("SELECT * FROM Prodotto WHERE id = {$r['id_prodotto']};")->fetch_all(MYSQLI_ASSOC);
         $cart_elem->setContent("NOME_PRODOTTO", $tmp[0]['nome_prodotto']);
@@ -78,7 +79,9 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
         // totale prodotto
 
-        $body->setContent("elemento_carrello", $cart_elem->get());
+        // $body->setContent("elemento_carrello", $cart_elem->get());
+
+        echo "<script> console.log('$lallero') </script>";
     }
 
     // totale carrello
