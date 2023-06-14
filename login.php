@@ -15,7 +15,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 $main = new Template("skins/template/dtml/index_v2.html");
 $login = new Template("skins/template/login.html");
 
-// tiene aggiornato il numero di oggetti presenti nei preferiti e nel carrello
+// tiene aggiornato il numero di oggetti presenti nel carrello
 require "include/php-utils/preferiti_carrello.php";
 
 

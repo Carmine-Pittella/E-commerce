@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// tiene aggiornato il numero di oggetti presenti nei preferiti e nel carrello
+// tiene aggiornato il numero di oggetti presenti nel carrello
 $cart = new Template("skins/template/dtml/dtml_items/main/icona_carrello.html");
 $lista_carrello = new Template("skins/template/dtml/dtml_items/main/prodotti_lista_cart.html");
 $cart_items = 0;

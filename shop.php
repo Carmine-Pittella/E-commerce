@@ -82,9 +82,9 @@ if (isset($_POST['valore'])) {
     //echo $strquery;
 
     /****** CHIAMATA DALLA HOME PAGE CON FILTRO Già SETTATO SU UN GENERE ******/
-    if(isset($v['changePage'])){
-        
-        
+    if (isset($v['changePage'])) {
+
+
         $main = new Template("skins/template/dtml/index_v2.html");
         $shop = new Template("skins/template/shop.html");
         $filtri = new Template("skins/template/dtml/filtri_laterali.html");
@@ -95,20 +95,20 @@ if (isset($_POST['valore'])) {
         foreach ($res as $r) {
             $marcaTmp = $connessione->query("SELECT m.nome_marca FROM prodotto p LEFT JOIN marca m ON $r[id_marca] = m.id;")->fetch_all(MYSQLI_ASSOC);
             $url_img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
-    
+
             $prodotto = new Template("skins/template/dtml/dtml_items/prodottoShopItem.html");
-    
+
             $prodotto->setContent("ID_PRODOTTO", $r['id']);
             $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
             $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
-    
+
             // immagine prodotto
             if (empty($url_img)) {
                 $prodotto->setContent("URL_IMMAGINE", _IMG_PATH . "product-single/noimage.png");
             } else {
                 $prodotto->setContent("URL_IMMAGINE", _IMG_PATH . $url_img[0]['url_immagine']);
             }
-    
+
             // prezzo in promozione
             if ($r['id_promozione']) {
                 // devo impostare il vecchio prezzo e calcolare il nuovo
@@ -120,15 +120,14 @@ if (isset($_POST['valore'])) {
             } else {
                 $prodotto->setContent("PREZZO_PRODOTTO", $r['prezzo']);
             }
-    
+
             $shop->setContent('prodotti', $prodotto->get());
         }
         echo $shop->get();
-
     }
 
     /****** CHIAMATA CON FILTRO DALLO SHOP ******/
-    else{
+    else {
 
         $res = $connessione->query("$strquery")->fetch_all(MYSQLI_ASSOC);
         foreach ($res as $r) {
@@ -160,16 +159,14 @@ if (isset($_POST['valore'])) {
             }
             echo $prodotto->get();
         }
-
     }
 
 
-/****** CHIAMATA NORMALE ******/
-    
+    /****** CHIAMATA NORMALE ******/
 } else {
     global $connessione;
 
-    // tiene aggiornato il numero di oggetti presenti nei preferiti e nel carrello
+    // tiene aggiornato il numero di oggetti presenti nel carrello
     require "include/php-utils/preferiti_carrello.php";
 
     BarraFiltri($shop, $filtri);
