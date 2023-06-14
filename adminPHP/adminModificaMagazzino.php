@@ -21,10 +21,18 @@ if(isset($_POST['formNome'])){
     $formTagliaL = $_POST['formTagliaL'];
     $formTagliaXL = $_POST['formTagliaXL'];
 
-
-
-
-
+    $res = $connessione->query("SELECT id FROM Categoria WHERE nome_categoria = '$formCategoria'")->fetch_all(MYSQLI_ASSOC);
+    $nuovo_id_categoria = $res[0]["id"];
+    $res = $connessione->query("SELECT id FROM Marca WHERE nome_marca = '$formMarca'")->fetch_all(MYSQLI_ASSOC);
+    $nuovo_id_marca = $res[0]["id"];
+    $connessione->query("UPDATE Prodotto
+    SET nome_prodotto = '$formNome', descrizione = '$formDescrizione', prezzo = '$formPrezzo', genere = '$formGenere', id_categoria = '$nuovo_id_categoria', id_marca = '$nuovo_id_marca'
+    WHERE id = '$idItem'");
+    //ora l'update delle quantità
+    $connessione->query(" UPDATE Magazzino SET quantita = '$formTagliaS' WHERE id_prodotto = '$idItem' AND taglia = 'S'");
+    $connessione->query(" UPDATE Magazzino SET quantita = '$formTagliaM' WHERE id_prodotto = '$idItem' AND taglia = 'M'");
+    $connessione->query(" UPDATE Magazzino SET quantita = '$formTagliaL' WHERE id_prodotto = '$idItem' AND taglia = 'L'");
+    $connessione->query(" UPDATE Magazzino SET quantita = '$formTagliaXL' WHERE id_prodotto = '$idItem' AND taglia = 'XL'");
     //eseguo una redirect sulla home dell'admin
     header("location:http://localhost/E-commerce/admin.php");
     exit();
