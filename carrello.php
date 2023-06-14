@@ -79,7 +79,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
         // totale prodotto
 
-        // $body->setContent("elemento_carrello", $cart_elem->get());
+        $body->setContent("elemento_carrello", $cart_elem->get());
 
         echo "<script> console.log('$lallero') </script>";
     }
