@@ -24,13 +24,13 @@ if (isset($_GET['error'])) {
     require_once "include/php-utils/alert.php";
     switch ($_GET['error']) {
         case 1:
-            Alert::OpenAlert("Utente già esistente !");
+            Alert::OpenAlert("Utente già esistente !", "login.php");
             break;
         case 2:
-            Alert::OpenAlert("Ops! qualcosa è andato storto :(");
+            Alert::OpenAlert("Ops! qualcosa è andato storto :(", "login.php");
             break;
         case 3:
-            Alert::OpenAlert("Registrazione avvenuta con successo");
+            Alert::OpenAlert("Registrazione avvenuta con successo", "login.php");
             break;
     }
     $register->setContent("error", $error);

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $rmv = $connessione->prepare("DELETE FROM Carrello WHERE id_utente = ? AND id_prodotto = ?;");
             $rmv->bind_param("ii", $userid, $id_prodotto);
             if ($rmv->execute()) {
-                echo "Elemento eliminato dal Carrello.";
+                // Elemento eliminato dal Carrello
             } else {
                 echo "Errore durante eliminazione in Carrello: " . $rmv->error;
             }
