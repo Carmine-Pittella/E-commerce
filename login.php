@@ -21,15 +21,14 @@ require "include/php-utils/preferiti_carrello.php";
 
 //in caso di errore in autenticazione, l'URL si modifica e la "variabile" 'error' viene presa da lì
 if (isset($_GET['error'])) {
+    require_once "include/php-utils/alert.php";
     switch ($_GET['error']) {
         case 1:
-            $error = "Compila tutti i campi!";
+            Alert::OpenAlert("Compila tutti i campi !");
             break;
         case 2:
-            $error = "Username e/o password errati !";
-            echo "<script>alert(`$error`); window.setTimeout(function() {
-                    window.location.href = 'login.php';
-                    }, 0);</script>";
+
+            Alert::OpenAlert("Username e/o password errati !");
             break;
     }
     session_abort();

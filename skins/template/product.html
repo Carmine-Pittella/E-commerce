@@ -47,7 +47,6 @@
                      <div class="product-details">
                         <div class="pd-title">
                            <h3><[NOME_PRODOTTO]></h3>
-                           <a class="heart-icon"><i class="icon_heart_alt"></i></a>
                         </div>
                         <div class="pd-desc">
                            <p>
@@ -62,7 +61,7 @@
                            </div>
                            <div class="sc-item">
                               <input type="radio" id="md-size" />
-                              <label class="active" for="md-size" onclick="selectTaglia('M')">m</label>
+                              <label for="md-size" onclick="selectTaglia('M')">m</label>
                            </div>
                            <div class="sc-item" >
                               <input type="radio" id="lg-size" />
@@ -72,12 +71,13 @@
                               <input type="radio" id="xl-size" />
                               <label for="xl-size" onclick="selectTaglia('XL')">xl</label>
                            </div>
-                           <div id="taglia_disponibilita_prodotto" class="sc-item"><h6 class="pd-tags" style="margin-left: 20px">disponibili: (<[TAGLIA_DISPONIBILITA_PRODOTTO]>)</h6></div>
-                       <!-- utilizzero l'url per fare questo -->
+                           <div id="taglia_disponibilita_prodotto" class="sc-item"><h6 class="pd-tags" style="margin-left: 20px">disponibili: (<span class="Q_value">seleziona taglia</span>)</h6></div>
                         </div>
                         <div class="quantity">
                            <div class="pro-qty">
-                              <input type="text" value="1" max="<[TAGLIA_DISPONIBILITA_PRODOTTO]>"/>
+                              <span class="dec qtybtn">-</span>
+                              <input type="text" value="1" max="<[TAGLIA_DISPONIBILITA_PRODOTTO]>" disabled/>
+                              <span class="inc qtybtn">+</span>
                            </div>
 
                            <button class="lallero" onclick="addToCart()">aggiungi a carrello</button>
@@ -190,19 +190,20 @@
       xhr.send("id_prodotto=" + encodeURIComponent(id_prodotto) + "&quantita=" + encodeURIComponent(quantita));
       window.location.href = window.location.href;
    }
-</script>
 
-<script>
    function selectTaglia(taglia) {
+      let id_prodotto = "<[ID_PRODOTTO]>";
+
       $.ajax({
-      url: "product.php",
+      url: "include/php-utils/select_taglia_product.php",
       type: "POST",
-      data: { valore: taglia },
+      data: { valore: taglia, valore2: id_prodotto },
       success: function (response) {
          $(document).ready(function () {
            $("#taglia_disponibilita_prodotto").html(response);
            console.log("questa è la risposta:", response);
-           //disableAddToCart();
+           disableAddToCart();
+           setLimitQuantity();
          });
       },
       error: function (xhr, status, error) {
@@ -210,25 +211,26 @@
       },
    });
    }
-</script>
 
-
-<script>
    function disableAddToCart() {
-      let n_disp = parseInt("<[TAGLIA_DISPONIBILITA_PRODOTTO]>");
+      let n_disp = document.querySelector('.Q_value').textContent;
+      console.log(n_disp);
       let addToCartBtn = document.querySelector(".lallero");
-      if (n_disp == 0) {
-         console.log("ciao");
+      if (n_disp == 0 || n_disp == 'seleziona taglia') {
          addToCartBtn.disabled = true;
       } else {
          addToCartBtn.disabled = false;
       }
    }
    disableAddToCart();
+
+   function setLimitQuantity() {
+      let qValueSpan = document.querySelector('.Q_value');
+      let qValue = qValueSpan.textContent;
+      let qtyInput = document.querySelector('input[type="text"]');
+      qtyInput.setAttribute('max', qValue);
+   }
 </script>
-
-
-
 
 
 

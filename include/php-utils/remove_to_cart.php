@@ -5,6 +5,7 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id_prodotto = $_POST['id_prodotto'];
+    $taglia_prod = $_POST['taglia'];
 
     if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         // rimuovo dal DB
@@ -12,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $userid = $_SESSION['utente']['id'];
 
-        $res = $connessione->query("SELECT * FROM Carrello WHERE id_utente = {$userid} AND id_prodotto = {$id_prodotto} LIMIT 1")->fetch_all(MYSQLI_ASSOC);
+        $res = $connessione->query("SELECT * FROM Carrello WHERE id_utente = {$userid} AND id_prodotto = {$id_prodotto} AND taglia_prodotto = '{$taglia_prod}'")->fetch_all(MYSQLI_ASSOC);
         if (!empty($res)) {
             $rmv = $connessione->prepare("DELETE FROM Carrello WHERE id_utente = ? AND id_prodotto = ?;");
             $rmv->bind_param("ii", $userid, $id_prodotto);
