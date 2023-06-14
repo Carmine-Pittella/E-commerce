@@ -20,24 +20,6 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
     $userid = $_SESSION['utente']['id'];
     $tot_cart = 0;
-    $alertNeed = 0;
-
-    // $toDelete = [];
-    // $toUpdate = [];
-
-    // class toDelete
-    // {
-    //     private $idUtente;
-    //     private $idProd;
-    //     private $tagliaProd;
-    // }
-    // class toUpdate
-    // {
-    //     private $idUtente;
-    //     private $idProd;
-    //     private $tagliaProd;
-    // }
-
 
     $res = $connessione->query("SELECT * FROM Carrello WHERE id_utente = {$userid}");
     foreach ($res as $r) {
@@ -61,12 +43,11 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
                     echo "Errore durante eliminazione in Carrello: " . $rmv->error;
                 }
             } else {
-                $alertNeed = 2;
                 // settare la quantità di quel prodotto nel carrello con id_utente = (...) a 1
                 $upd = $connessione->prepare("UPDATE Carrello SET quantita_prodotto = ? WHERE id_prodotto = ? AND id_utente = ? AND taglia_prodotto = ?");
-                $upd->bind_param("iis", 1, $r['id_prodotto'], $r['taglia_prodotto']);
+                $upd->bind_param("iiis", $lallero, $r['id_prodotto'], $userid, $r['taglia_prodotto']);
                 if ($upd->execute()) {
-                    echo "Aggiornamento tabella Carrello.";
+                    // Aggiornamento tabella Carrello
                 } else {
                     echo "Errore durante aggiornamento in Carrello: " . $upd->error;
                 }
@@ -74,47 +55,6 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         }
     }
 
-
-
-    // QUESTO VA TUTTO ALL'INTERNO DEL FOREACH, ALTRIMENTI COME FA A PRENDERE I PARAMETRI
-    // if ($alertNeed != 0) {
-    //     require_once "include/php-utils/alert.php";
-    //     Alert::OpenAlert("Le quantità che avevi selezionato per i  tuoi prodotti non sono più disponibili :(");
-
-    //     switch ($alertNeed) {
-    //         case 1:
-    //             // rimuovere il prodotto dal carrello
-    //             $rmv = $connessione->prepare("DELETE FROM Carrello WHERE id_utente = ? AND id_prodotto = ? AND taglia_prodotto = ?;");
-    //             $rmv->bind_param("iis", $userid, $r['id_prodotto'], $r['taglia_prodotto']);
-    //             if ($rmv->execute()) {
-    //                 echo "Elemento eliminato dal Carrello.";
-    //             } else {
-    //                 echo "Errore durante eliminazione in Carrello: " . $rmv->error;
-    //             }
-    //             break;
-
-    //         case 2:
-    //             // settare la quantità di quel prodotto nel carrello con id_utente = (...) a 1
-    //             $upd = $connessione->prepare("UPDATE Carrello SET quantita_prodotto = ? WHERE id_prodotto = ? AND id_utente = ? AND taglia_prodotto = ?");
-    //             $upd->bind_param("iis", 1, $r['id_prodotto'], $r['taglia_prodotto']);
-    //             if ($upd->execute()) {
-    //                 echo "Aggiornamento tabella Carrello.";
-    //             } else {
-    //                 echo "Errore durante aggiornamento in Carrello: " . $upd->error;
-    //             }
-    //             break;
-    //     }
-    // }
-    // QUESTO VA TUTTO ALL'INTERNO DEL FOREACH, ALTRIMENTI COME FA A PRENDERE I PARAMETRI
-
-
-
-
-
-
-
-
-    //
 
     $res = $connessione->query("SELECT * FROM Carrello WHERE id_utente = {$userid}");
     foreach ($res as $r) {
