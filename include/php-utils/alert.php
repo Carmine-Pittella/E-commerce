@@ -3,10 +3,15 @@
 class Alert
 {
 
-    static function OpenAlert($message)
+    static function OpenAlert($message, $href)
     {
-        echo "<script>alert(`$message`); window.setTimeout(function() {
-                    window.location.href = 'login.php';
-                    }, 0);</script>";
+        if ($href == "carrello.php") {
+            echo "<script>alert(`$message`); window.setTimeout(function() {
+                }, 0);</script>";
+        } else {
+            echo "<script>alert(`$message`); window.setTimeout(function() {
+                window.location.href = '$href';
+                }, 0);</script>";
+        }
     }
 }

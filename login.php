@@ -24,11 +24,11 @@ if (isset($_GET['error'])) {
     require_once "include/php-utils/alert.php";
     switch ($_GET['error']) {
         case 1:
-            Alert::OpenAlert("Compila tutti i campi !");
+            Alert::OpenAlert("Compila tutti i campi !", "login.php");
             break;
         case 2:
 
-            Alert::OpenAlert("Username e/o password errati !");
+            Alert::OpenAlert("Username e/o password errati !", "login.php");
             break;
     }
     session_abort();
