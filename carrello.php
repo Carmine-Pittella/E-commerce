@@ -12,7 +12,7 @@ $main = new Template("skins/template/dtml/index_v2.html");
 $body = new Template("skins/template/shopping-cart.html");
 $cart_elem = new Template("skins/template/dtml/dtml_items/shopping-cartItem.html");
 
-// tiene aggiornato il numero di oggetti presenti nei preferiti e nel carrello
+// tiene aggiornato il numero di oggetti presenti nel carrello
 require "include/php-utils/preferiti_carrello.php";
 
 
