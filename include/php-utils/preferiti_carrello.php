@@ -8,7 +8,6 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // tiene aggiornato il numero di oggetti presenti nel carrello
 $cart = new Template("skins/template/dtml/dtml_items/main/icona_carrello.html");
-$lista_carrello = new Template("skins/template/dtml/dtml_items/main/prodotti_lista_cart.html");
 $cart_items = 0;
 $totale_cart = 0.0;
 
@@ -19,6 +18,8 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
     $cart_items = count($res);
 
     foreach ($res as $r) {
+        $lista_carrello = new Template("skins/template/dtml/dtml_items/main/prodotti_lista_cart.html");
+
         $lista_carrello->setContent('QUANTITA_PROD', $r['quantita_prodotto']);
 
         $tmp = $connessione->query("SELECT * FROM Prodotto WHERE id = {$r['id_prodotto']}")->fetch_all(MYSQLI_ASSOC);

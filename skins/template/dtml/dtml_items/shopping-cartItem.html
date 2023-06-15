@@ -16,7 +16,7 @@
          </div>
       </div>
    </td>
-   <td class="total-price first-row"><span class="tot-price-product"></span> €</td>
+   <td class="total-price first-row"><span class="tot-price-product<[ID_PRODOTTO]>"></span> €</td>
    <td class="close-td first-row" onclick="removeToCart()"><i class="ti-close"></i></td>
 </tr>
 
@@ -54,13 +54,14 @@
    function setTotalPriceProduct(Q) {
       let single_price = parseFloat("<[PREZZO_SINGOLO]>");
       let quantita = parseInt(document.querySelector(".pro-qty input").value);
+
       if (Q) {
          quantita = Q;
       }
 
       let total_price = single_price * quantita;
 
-      let totPriceSpan = document.querySelector(".tot-price-product");
+      let totPriceSpan = document.querySelector(".tot-price-product<[ID_PRODOTTO]>");
       totPriceSpan.textContent = total_price.toFixed(2);
    }
    setTotalPriceProduct();

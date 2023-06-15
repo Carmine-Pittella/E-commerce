@@ -10,7 +10,7 @@ global $connessione;
 
 $main = new Template("skins/template/dtml/index_v2.html");
 $body = new Template("skins/template/shopping-cart.html");
-$cart_elem = new Template("skins/template/dtml/dtml_items/shopping-cartItem.html");
+
 
 // tiene aggiornato il numero di oggetti presenti nel carrello
 require "include/php-utils/preferiti_carrello.php";
@@ -58,6 +58,8 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
     $res = $connessione->query("SELECT * FROM Carrello WHERE id_utente = {$userid}");
     foreach ($res as $r) {
+        $cart_elem = new Template("skins/template/dtml/dtml_items/shopping-cartItem.html");
+
         // id, quantita e taglia
         $cart_elem->setContent("ID_PRODOTTO", $r['id_prodotto']);
         $cart_elem->setContent("QUANTITA", $r['quantita_prodotto']);
@@ -80,14 +82,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         // totale prodotto
 
         $body->setContent("elemento_carrello", $cart_elem->get());
-
-        echo "<script> console.log('$lallero') </script>";
     }
-
-    // totale carrello
-
-
-
 
 
 
