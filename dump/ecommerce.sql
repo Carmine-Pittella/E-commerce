@@ -84,8 +84,8 @@ CREATE TABLE IF NOT EXISTS Prodotto_Preferito (
 CREATE TABLE IF NOT EXISTS Corriere (
     id INT PRIMARY KEY AUTO_INCREMENT,
     prezzo DECIMAL(10, 2) NOT NULL,
-    tipologia VARCHAR(50) NOT NULL,
-    azienda VARCHAR(50) NOT NULL
+    azienda VARCHAR(50) NOT NULL,
+    giorni_consegna INT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Coupon (
@@ -96,8 +96,7 @@ CREATE TABLE IF NOT EXISTS Coupon (
 
 CREATE TABLE IF NOT EXISTS Metodo_Pagamento (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    tipo_pagamento VARCHAR(100) UNIQUE,
-    url_logo VARCHAR(255)
+    tipo_pagamento VARCHAR(100) UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS Indirizzo_Spedizione (
@@ -304,13 +303,13 @@ VALUES
 (5, 4);
 
 -- Inserimento di valori casuali nella tabella Corriere
-INSERT INTO Corriere (prezzo, tipologia, azienda)
+INSERT INTO Corriere (prezzo, azienda, giorni_consegna)
 VALUES
-(5.99, 'Standard', 'CorriereExpress'),
-(9.99, 'Express', 'SpeedyShipping'),
-(3.99, 'Economica', 'EcoDelivery'),
-(7.99, 'Prioritaria', 'QuickShip'),
-(4.99, 'Locale', 'LocalCourier');
+(5.99, 'CorriereExpress', 7),
+(9.99, 'SpeedyShipping', 3),
+(3.99, 'EcoDelivery', 4),
+(7.99, 'QuickShip', 8),
+(4.99, 'LocalCourier', 2);
 
 -- Inserimento di valori casuali nella tabella Coupon
 INSERT INTO Coupon (codice_coupon, sconto_percentuale)
@@ -322,13 +321,13 @@ VALUES
 ('FLASH50', 50.00);
 
 -- Inserimento di valori casuali nella tabella Metodo_Pagamento
-INSERT INTO Metodo_Pagamento (tipo_pagamento, url_logo)
+INSERT INTO Metodo_Pagamento (tipo_pagamento)
 VALUES
-('Carta di Credito', 'https://example.com/credit-card-logo.png'),
-('PayPal', 'https://example.com/paypal-logo.png'),
-('Apple Pay', 'https://example.com/applepay-logo.png'),
-('Google Pay', 'https://example.com/googlepay-logo.png'),
-('Bonifico Bancario', 'https://example.com/banktransfer-logo.png');
+('Carta di Credito'),
+('PayPal'),
+('Apple Pay'),
+('Google Pay'),
+('Bonifico Bancario');
 
 -- Inserimento di valori casuali nella tabella Indirizzo_Spedizione
 INSERT INTO Indirizzo_Spedizione (id_utente, indirizzo, citta, regione, provincia, CAP)
