@@ -1,0 +1,130 @@
+<html lang="it">
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder" style="display: none">
+        <div class="loader" style="display: none"></div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-8">
+                <div class="x100xauto banner_part rounded text-center padding_bottom_25 d-flex align-items-center justify-content-center">
+                    <div class="blog-detail-title">
+                        <h2 style="margin-top: 30px; margin-bottom: 30px">I tuoi Ordini</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+
+
+                    <div style="border-color: black; padding: 5%;">
+                        <h5 class="card-title text-center">Informazioni utente</h5>
+                        <div class="order-detail-div">
+                            <b>Nome:</b>
+                            <div class="order-detail-text-div">
+                                <span>
+                                    <[NOME_UTENTE]> <[COGNOME_UTENTE]>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="order-detail-div">
+                            <b>Indirizzo: </b>
+                            <div class="order-detail-text-div">
+                                <span>
+                                    <[indirizzo_spedizione]>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div style="border-color: black; padding: 5%;">
+                        <h5 class="card-title text-center">Informazioni spedizione</h5>
+
+                        <div class="order-detail-div">
+                            <b>Codice ordine: </b>
+                            <div class="order-detail-text-div">
+                                <span>
+                                    #<[id_ordine]>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="order-detail-div">
+                            <b>Stato:</b>
+                            <div class="order-detail-text-div">
+                                <span>
+                                    <[stato_ordine]>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="order-detail-div">
+                            <b>Consegna prevista: </b>
+                            <div class="order-detail-text-div">
+                                <span>
+                                    <[data_consegna]>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="order-detail-div">
+                            <b>Costo totale: </b>
+                            <div class="order-detail-text-div">
+                                <span>
+                                    <[totale_ordine]>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="order-detail-div">
+                            <b>Corriere: </b>
+                            <div class="order-detail-text-div">
+                                <span>
+                                    <[corriere]>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="order-detail-div">
+                            <b>Metodo di pagamento: </b>
+                            <div class="order-detail-text-div">
+                                <span>
+                                    <[metodo_pagamento]>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col-lg-8">
+                <div class="cart-table">
+                    <table>
+                        <thead style="background-color: #ffb72987;">
+                            <tr>
+                                <th>FOTO</th>
+                                <th>NOME</th>
+                                <th>TAGLIA</th>
+                                <th>QUANTITA</th>
+                                <th>PREZZO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <[foreach]> <[ELEMENTO_ORDINE]> <[/foreach]>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

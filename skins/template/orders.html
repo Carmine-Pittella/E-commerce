@@ -6,10 +6,9 @@
         <div class="loader" style="display: none"></div>
     </div>
 
-    <div class="container">
+    <div class="container" style="margin-bottom: 150px;">
         <div class="row">
-            <div class="col-lg-4"></div>
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="x100xauto banner_part rounded text-center padding_bottom_25 d-flex align-items-center justify-content-center">
                     <div class="blog-detail-title">
                         <h2 style="margin-top: 30px; margin-bottom: 30px">I tuoi Ordini</h3>
@@ -18,46 +17,39 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="card mb-4">
-                    <div class="card-body text-center">
-                        <img src="skins/template/img/profilo.png" alt="avatar" class="rounded-circle img-fluid" style="width: 200px; height: 200px" />
-                        <h5 class="my-3">
-                            <[nome_utente]>
-                                <[cognome_utente]>
-                        </h5>
-                        <p class="text-muted mb-1">
-                            <[email_utente]>
-                        </p>
-                        <div class="padding_top_50 p-3 mb-4">
-                            <div class="select-button">
-                                <a href="logout.php" class="primary-btn view-card">logout</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-8">
-                <div class="cart-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>codice</th>
-                                <th>data</th>
-                                <th>totale</th>
-                                <th>stato</th>
-                                <th>indirizzo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <[foreach]> <[ELEMENTO_ORDINE]> <[/foreach]>
-                        </tbody>
-                    </table>
-                </div>
+        <div class="col-lg-12">
+            <div class="table-responsive" style="border-color: black;">
+                <table class="table table-responsive-lg table-hover" id="order-table">
+                    <thead style="background-color: #ffb72987;">
+                        <tr>
+                            <th>CODICE</th>
+                            <th>DATA ACQUISTO</th>
+                            <th>TOTALE</th>
+                            <th>STATO</th>
+                            <th>INDIRIZZO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <[foreach]> <[ELEMENTO_ORDINE]> <[/foreach]>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+    </div>
 </body>
-
 </html>
+
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $('.item-block').css('cursor', 'pointer');
+    
+    $().ready(function(){
+        $('#order-table').on('click', 'tbody > tr' ,function(event){   
+            console.log("click");
+            let ID = $(this).find('#item-code').text();
+            window.location.href = 'dettagli-ordine.php?id_ordine='+ID;
+        });
+    });
+</script>
