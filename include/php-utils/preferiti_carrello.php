@@ -21,6 +21,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         $lista_carrello = new Template("skins/template/dtml/dtml_items/main/prodotti_lista_cart.html");
 
         $lista_carrello->setContent('QUANTITA_PROD', $r['quantita_prodotto']);
+        $lista_carrello->setContent('TAGLIA_PROD', $r['taglia_prodotto']);
 
         $tmp = $connessione->query("SELECT * FROM Prodotto WHERE id = {$r['id_prodotto']}")->fetch_all(MYSQLI_ASSOC);
         $lista_carrello->setContent('NOME_PROD', $tmp[0]['nome_prodotto']);
@@ -39,6 +40,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
     if (isset($_SESSION['carrello'])) {
         $cart_items = count($_SESSION['carrello']);
         foreach ($_SESSION['carrello'] as &$cart_elem) {
+            $lista_carrello = new Template("skins/template/dtml/dtml_items/main/prodotti_lista_cart.html");
 
             $lista_carrello->setContent('QUANTITA_PROD', $cart_elem['quantita']);
 

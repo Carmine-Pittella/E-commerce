@@ -174,10 +174,12 @@
 </html>
 
 <script>
+   let TAGLIA_SEL;
+
    function addToCart() {
       let quantita = document.querySelector(".pro-qty input").value;
       let id_prodotto = "<[ID_PRODOTTO]>";
-      
+
       let xhr = new XMLHttpRequest();
       xhr.open("POST", "include/php-utils/add_to_cart.php", true);
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -187,12 +189,15 @@
             // Gestisci la risposta qui
          }
       };
-      xhr.send("id_prodotto=" + encodeURIComponent(id_prodotto) + "&quantita=" + encodeURIComponent(quantita));
+      xhr.send("id_prodotto=" + encodeURIComponent(id_prodotto) + 
+               "&quantita=" + encodeURIComponent(quantita) + 
+               "&taglia=" + encodeURIComponent(TAGLIA_SEL));
       window.location.href = window.location.href;
    }
 
    function selectTaglia(taglia) {
       let id_prodotto = "<[ID_PRODOTTO]>";
+      TAGLIA_SEL = taglia;
 
       $.ajax({
       url: "include/php-utils/select_taglia_product.php",
