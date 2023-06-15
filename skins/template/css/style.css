@@ -2869,10 +2869,11 @@ ol {
 .proceed-checkout .proceed-btn {
    font-size: 14px;
    font-weight: 700;
+   width: 100%;
    color: #ffffff;
    background: #252525;
    text-transform: uppercase;
-   padding: 15px 74px 14px 74px;
+   padding: 15px 25px 14px 25px;
    display: block;
    text-align: center;
 }
