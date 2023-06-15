@@ -16,15 +16,15 @@
          </div>
       </div>
    </td>
-   <td class="total-price first-row"><span class="tot-price-product<[ID_PRODOTTO]>"></span> €</td>
-   <td class="close-td first-row" onclick="removeToCart()"><i class="ti-close"></i></td>
+   <td class="total-price first-row"><span class="tot-price-product"></span> €</td>
+   <td class="close-td first-row" onclick="removeToCart('<[ID_PRODOTTO]>', '<[TAGLIA_PRODOTTO]>')">
+      <i class="ti-close"></i>
+   </td>
 </tr>
 
 <script>
-   function removeToCart() {
-      let id_prodotto = "<[ID_PRODOTTO]>";
-      let taglia = "<[TAGLIA_PRODOTTO]>";
-
+   // QUESTO METODO FUNZIONA
+   function removeToCart(id_prodotto, taglia) {
       let xhr = new XMLHttpRequest();
       xhr.open("POST", "include/php-utils/remove_to_cart.php", true);
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -38,6 +38,14 @@
       window.location.href = window.location.href;
    }
 
+   /* lo scopo di setQuantita() è che quando viene premuto +/- bisogna calcolare il totale di un singolo 
+      prodotto e piazzarlo nel posto adatto.
+      il problema è che essendo tutto questo in un foreach, poi i vari <[lallero]> vengono convertiti in 
+      nomi, valori, ecc.. quindi il metodo non riesce a capire a cosa mi sto riferendo io.
+      
+      SINTESI: bisogna fare in modo che ogni Elemento per modificare la quantià sia associato allo
+               specifico prodotto (l'elemento è: <div class="quantity"> )
+   */
    function setQuantita(operator) {
       let quantita = document.querySelector(".pro-qty input").value;
       quantita = parseInt(quantita) + parseInt(operator);
@@ -51,6 +59,12 @@
       setTotalPriceProduct(quantita);
    }
 
+   /* qui il problema è simile, serve per calcolare il prezzo totale del prodotto data la quantità
+      ma come fa a sapere DOVE andare a piazzare il risultato ottenuto? 
+
+      Inoltre manca totalmente una funzione che calcoli il prezzo TOTALE del carrello
+      (per logica andrebbe messo nella pagina "shopping-cart.html")
+   */
    function setTotalPriceProduct(Q) {
       let single_price = parseFloat("<[PREZZO_SINGOLO]>");
       let quantita = parseInt(document.querySelector(".pro-qty input").value);
@@ -61,8 +75,19 @@
 
       let total_price = single_price * quantita;
 
-      let totPriceSpan = document.querySelector(".tot-price-product<[ID_PRODOTTO]>");
+      let totPriceSpan = document.querySelector(".tot-price-product");
       totPriceSpan.textContent = total_price.toFixed(2);
    }
    setTotalPriceProduct();
 </script>
+
+<!-- setQuantita() e setTotalPriceProduct() sono due metodi SBAGLIATI -->
+<!-- li ho lasciati solo per farteli vedere -->
+<!-- nel codice HTML, tutte le varie classi o id degli elementi sono quelli del Template  -->
+
+<!-- INFORMAZIONE -->
+<!-- non è detto che queste funzioni debbano stare per forza qua, c'è un esempio (diverso nel genere) -->
+<!-- nei file "orders.html" e "ordine-Item.html" pare utilizzi gli ID per differenziare gli elementi -->
+<!-- che si ripetono nel foreach (by stefano) -->
+
+<!-- sono tante informazioni -->
