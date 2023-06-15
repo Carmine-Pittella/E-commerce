@@ -12,7 +12,7 @@
             <div class="col-lg-8">
                 <div class="x100xauto banner_part rounded text-center padding_bottom_25 d-flex align-items-center justify-content-center">
                     <div class="blog-detail-title">
-                        <h2 style="margin-top: 30px; margin-bottom: 30px">I tuoi Ordini</h3>
+                        <h2 style="margin-top: 30px; margin-bottom: 30px">Ordine: #<[ID_ORDINE]></h3>
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                             <b>Indirizzo: </b>
                             <div class="order-detail-text-div">
                                 <span>
-                                    <[indirizzo_spedizione]>
+                                    <[INDIRIZZO]> - <[CITTA]> (<[PROVINCIA]>)
                                 </span>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                             <b>Codice ordine: </b>
                             <div class="order-detail-text-div">
                                 <span>
-                                    #<[id_ordine]>
+                                    #<[ID_ORDINE]>
                                 </span>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                             <b>Stato:</b>
                             <div class="order-detail-text-div">
                                 <span>
-                                    <[stato_ordine]>
+                                    <[STATO_ORDINE]>
                                 </span>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                             <b>Consegna prevista: </b>
                             <div class="order-detail-text-div">
                                 <span>
-                                    <[data_consegna]>
+                                    <[DATA_CONSEGNA]>
                                 </span>
                             </div>
                         </div>
@@ -78,7 +78,7 @@
                             <b>Costo totale: </b>
                             <div class="order-detail-text-div">
                                 <span>
-                                    <[totale_ordine]>
+                                    <[TOTALE_ORDINE]>
                                 </span>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                             <b>Corriere: </b>
                             <div class="order-detail-text-div">
                                 <span>
-                                    <[corriere]>
+                                    <[CORRIERE]>
                                 </span>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
                             <b>Metodo di pagamento: </b>
                             <div class="order-detail-text-div">
                                 <span>
-                                    <[metodo_pagamento]>
+                                    <[METODO_PAGAMENTO]>
                                 </span>
                             </div>
                         </div>
@@ -112,9 +112,8 @@
                             <tr>
                                 <th>FOTO</th>
                                 <th>NOME</th>
-                                <th>TAGLIA</th>
-                                <th>QUANTITA</th>
                                 <th>PREZZO</th>
+                                <th>QUANTITA</th>
                             </tr>
                         </thead>
                         <tbody>

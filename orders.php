@@ -14,7 +14,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
     // utente autenticato
     $userid = $_SESSION['utente']['id'];
 
-    $res = $connessione->query("SELECT * FROM Ordine WHERE id_utente = {$userid}")->fetch_all(MYSQLI_ASSOC);
+    $res = $connessione->query("SELECT * FROM Ordine WHERE id_utente = {$userid} ORDER BY data_ordine DESC")->fetch_all(MYSQLI_ASSOC);
     foreach ($res as $r) {
         $ordine = new Template("skins/template/dtml/dtml_items/ordine-Item.html");
 
