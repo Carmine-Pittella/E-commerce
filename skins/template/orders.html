@@ -47,7 +47,6 @@
     
     $().ready(function(){
         $('#order-table').on('click', 'tbody > tr' ,function(event){   
-            console.log("click");
             let ID = $(this).find('#item-code').text();
             window.location.href = 'dettagli-ordine.php?id_ordine='+ID;
         });
