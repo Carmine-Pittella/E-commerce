@@ -74,7 +74,7 @@
                                        placeholder="Hai un codice promo?"
                                        required
                                     />
-                                    <button onclick="ApplicaCoupon()" class="site-btn coupon-btn">applica</button>
+                                    <button id="applica-button" class="site-btn coupon-btn">applica</button>
                                  </form>
                               </div>
                               <button type="submit" class="site-btn place-btn">Conferma ordine</button>
@@ -93,4 +93,25 @@
 <!-- calcolare il prezzo totale finale -->
 <!-- se viene attivato un coupon il prezzo cambia -->
 
-<script></script>
+<script>
+   // lo faccio dopo
+   $("#applica-button").on("click", function () {
+      let prezzoSingolo = parseFloat("<[PREZZO_SINGOLO]>");
+      if (parseFloat($("#qt<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>").val()) === 1) {
+      } else {
+         let currQ = parseFloat($("#qt<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>").val()) - 1;
+         let currTot = prezzoSingolo * currQ;
+         currTot = currTot.toString();
+         str1 = '<span class="tot-price-product"></span>';
+         str2 = "€</td>";
+         strtot = str1 + currTot + str2;
+         $("#totPrice<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>").html(strtot);
+
+         let spanSTR = $("#idtotshoppingcartitem").html();
+         spanSTR = spanSTR.slice(0, spanSTR.length - 2);
+         spanSTR = parseFloat(spanSTR) - parseFloat(currTot);
+         spanSTR = spanSTR.toString() + " €";
+         $("#idtotshoppingcartitem").html(spanSTR);
+      }
+   });
+</script>
