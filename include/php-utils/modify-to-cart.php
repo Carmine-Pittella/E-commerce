@@ -3,11 +3,14 @@
 require "../dbms.inc.php";
 session_start();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id_prodotto = $_POST['id_prodotto'];
-    $quantita = $_POST['quantita'];
-    $taglia = $_POST['taglia'];
+if(isset($_POST['valore'])) {
+    
+    $v = $_POST['valore'];
+    $id_prodotto =$v['id_prodotto'];
+    $quantita =$v['quantita'];
+    $taglia = $v['taglia'];
 
+    
     global $connessione;
 
     $userid = $_SESSION['utente']['id'];
@@ -30,4 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
         }
     }
+
+    
 }
