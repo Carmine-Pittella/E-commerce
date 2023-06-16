@@ -26,9 +26,9 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
     $furbacchione = true;
 
     // controllo di sicurezza
-    $security = $connessione->query("SELECT id FROM Messaggio_Assistenza WHERE id_utente = $userid;")->fetch_all(MYSQLI_ASSOC);
-    foreach ($security as $s) {
-        if ($orderid == $s['id']) {
+    $res = $connessione->query("SELECT * FROM Messaggio_Assistenza WHERE id_utente = $userid;")->fetch_all(MYSQLI_ASSOC);
+    foreach ($res as $r) {
+        if ($orderid == $r['id']) {
             $furbacchione = false;
             break;
         }
@@ -37,14 +37,33 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         Alert::OpenAlert("Questi non sono affari tuoi...", "contatti.php");
     }
 
-    // Ordine
-    $ordine = $connessione->query("SELECT * FROM Ordine WHERE id = $orderid LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
-    $body->setContent("DATA_CONSEGNA", $ordine[0]['data_spedizione']);
-    $body->setContent("TOTALE_ORDINE", $ordine[0]['prezzo_ordine']);
-    $body->setContent("ID_ORDINE", $orderid);
+    // Richieste
+    foreach ($res as $r) {
+        $request = new Template("skins/template/dtml/richieste-assistenzaItem.html");
+
+        // utente
+        $utente = $connessione->query("SELECT nome, cognome, email FROM Utente WHERE id = $userid;")->fetch_all(MYSQLI_ASSOC);
+        $request->setContent("UTENTE", $utente[0]['nome'] . " " . $utente[0]['cognome']);
+        $request->setContent("EMAIL_UTENTE", $utente[0]['email']);
+
+        // messaggio
+        $request->setContent("MESSAGGIO", $r['richiesta']);
+
+
+
+
+
+
+
+        //
+    }
+
+    $body->setContent("DATA_CONSEGNA", $res[0]['data_spedizione']);
+    $body->setContent("TOTALE_ORDINE", $res[0]['prezzo_ordine']);
+    $body->setContent("TOTALE_ORDINE", $res[0]['prezzo_ordine']);
 
     // Utente
-    $utente = $connessione->query("SELECT nome, cognome FROM Utente WHERE id = $userid LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
+    $utente = $connessione->query("SELECT nome, cognome FROM Utente WHERE id_utente = $userid LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
     $body->setContent("NOME_UTENTE", $utente[0]['nome']);
     $body->setContent("COGNOME_UTENTE", $utente[0]['cognome']);
 
