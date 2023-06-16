@@ -108,6 +108,8 @@ CREATE TABLE IF NOT EXISTS Indirizzo_Spedizione (
     regione VARCHAR(100) NOT NULL,
     provincia VARCHAR(100) NOT NULL,
     CAP VARCHAR(10) NOT NULL,
+
+    UNIQUE (id_utente, indirizzo, citta, regione, provincia),
     FOREIGN KEY (id_utente) REFERENCES Utente(id)
 );
 

@@ -19,7 +19,6 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
     // utente autenticato
     $userid = $_SESSION['utente']['id'];
 
-
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $regione = $_POST['regione'];
         $provincia = $_POST['provincia'];
@@ -27,17 +26,17 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         $indirizzo = $_POST['address'];
         $cap = $_POST['postal_code'];
 
-
         // aggiungo un nuovo indirizzo all'utente con id = (...)
+        $oid = $connessione->prepare("INSERT INTO Indirizzo_Spedizione (`id_utente`, `indirizzo`, `citta`, `regione`, `provincia`, `CAP`)
+                                    VALUES (?, ?, ?, ?, ?, ?)");
+        $oid->bind_param("isssss", $userid, $indirizzo, $citta, $regione, $provincia, $cap);
+
+        if ($oid->execute()) {
+            Alert::OpenAlert("Indirizzo aggiunto con successo", "profile.php");
+        } else {
+            Alert::OpenAlert("Indirizzo già esistente", "add-indirizzo.php");
+        }
     }
-
-
-
-
-
-
-
-    //
 } else {
     Alert::OpenAlert("Devi effettuare l'accesso", "login.php");
 }

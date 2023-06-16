@@ -13,47 +13,8 @@
             <form class="checkout-form" id="tot-form-checkout" action="checkout.php" method="post">
                <div class="row">
                   <div class="col-lg-6">
-                     <!-- <h4>Informazioni di spedizione</h4>
-                     <div class="row">
-                        <div class="col-lg-6">
-                           <label for="fir">Nome<span>*</span></label>
-                           <input type="text" id="fir" />
-                        </div>
-                        <div class="col-lg-6">
-                           <label for="last">Cognome<span>*</span></label>
-                           <input type="text" id="last" />
-                        </div>
-
-                        <div class="col-lg-12">
-                           <label for="cun">Paese<span>*</span></label>
-                           <input type="text" id="cun" />
-                        </div>
-                        <div class="col-lg-12">
-                           <label for="street">Indirizzo / Via<span>*</span></label>
-                           <input type="text" id="street" class="street-first" />
-                        </div>
-
-                        <div class="col-lg-12">
-                           <label for="cap">Codice postale (CAP)<span>*</span></label>
-                           <input type="text" id="street" class="street-first" />
-                        </div>
-                        <div class="col-lg-12">
-                           <label for="town">Città<span>*</span></label>
-                           <input type="text" id="town" />
-                        </div>
-                        <div class="col-lg-6">
-                           <label for="email">Indirizzo email<span>*</span></label>
-                           <input type="text" id="email" />
-                        </div>
-                        <div class="col-lg-6">
-                           <label for="phone">Cellulare<span>*</span></label>
-                           <input type="text" id="phone" />
-                        </div>
-                        <div class="col-lg-12"></div>
-                     </div> -->
-
-                     <!--  -->
                      <h4>Seleziona il tuo indirizzo:</h4>
+                     <br /><br />
                      <form
                         class="row d-flex justify-content-center align-items-center h-100"
                         action="address-setup.php?set=1"
@@ -61,58 +22,16 @@
                      >
                         <div class="col-md-12 form-group p_star">
                            <div class="discount-coupon">
-                              <h6 for="regione">i tuoi indirizzi</h6>
-                              <select class="form-control" id="regione" required>
-                                 <[reg]>
-                                 <!-- JQUERY FILLING -->
-                              </select>
-                           </div>
-                        </div>
+                              <h6 for="regione">
+                                 i tuoi indirizzi<span style="position: absolute; right: 0; margin-right: 25px"
+                                    ><a href="add-indirizzo.php">Aggiungi Indirizzo</a></span
+                                 >
+                              </h6>
 
-                        <!--  -->
-
-                        <div class="col-md-12 form-group p_star">
-                           <div class="discount-coupon">
-                              <h6 for="provincia">Provincia</h6>
-                              <select class="form-control" id="provincia">
-                                 <[pro]>
-                                 <!-- JQUERY FILLING -->
+                              <select class="form-control" id="indirizzo_scelto" required>
+                                 <option value="seleziona">Seleziona</option>
+                                 <[foreach]> <[I_MIEI_INDIRIZZI]> <[/foreach]>
                               </select>
-                           </div>
-                        </div>
-                        <div class="col-md-12 form-group p_star">
-                           <div class="discount-coupon">
-                              <h6 for="citta">Citta</h6>
-                              <select class="form-control" id="citta">
-                                 <[cit]>
-                                 <!-- JQUERY FILLING -->
-                              </select>
-                           </div>
-                        </div>
-                        <div class="col-md-8 form-group p_star">
-                           <div class="discount-coupon">
-                              <h6 for="address">Indirizzo</h6>
-                              <input
-                                 type="text"
-                                 class="form-control"
-                                 id="address"
-                                 name="address"
-                                 value="<[via]>"
-                                 placeholder="Indirizzo"
-                              />
-                           </div>
-                        </div>
-                        <div class="col-md-3 form-group p_star">
-                           <div class="discount-coupon">
-                              <h6 for="postal_code">CAP</h6>
-                              <input
-                                 type="text"
-                                 class="form-control"
-                                 id="postal_code"
-                                 name="postal_code"
-                                 value="<[cap]>"
-                                 placeholder="CAP"
-                              />
                            </div>
                         </div>
                      </form>
@@ -160,7 +79,7 @@
 <!-- calcolare il prezzo totale finale -->
 <!-- se viene attivato un coupon il prezzo cambia -->
 
-<script>
+<!-- <script>
    // lo faccio dopo
    $("#applica-button").on("click", function () {
       let prezzoSingolo = parseFloat("<[PREZZO_SINGOLO]>");
@@ -181,4 +100,4 @@
          $("#idtotshoppingcartitem").html(spanSTR);
       }
    });
-</script>
+</script> -->

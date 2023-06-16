@@ -12,17 +12,17 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
     // utente autenticato
     $userid = $_SESSION['utente']['id'];
     $subtotal = 0.0;
-    $coupon = "";
+    // $coupon = "";
 
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $coupon = $_POST['coupon'];
-        $tmp = $connessione->query("SELECT * FROM Coupon WHERE codice_coupon = '{$coupon}' LIMIT 1")->fetch_all(MYSQLI_ASSOC);
+    // if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    //     $coupon = $_POST['coupon'];
+    //     $tmp = $connessione->query("SELECT * FROM Coupon WHERE codice_coupon = '{$coupon}' LIMIT 1")->fetch_all(MYSQLI_ASSOC);
 
-        if (empty($tmp)) {
-            // Alert::OpenAlert("Il Coupon inserito non esiste", "carrello.php");
-        }
-    }
+    //     if (empty($tmp)) {
+    //         // Alert::OpenAlert("Il Coupon inserito non esiste", "carrello.php");
+    //     }
+    // }
 
 
 
@@ -32,6 +32,18 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
     // tiene aggiornato il numero di oggetti presenti nel carrello
     require "include/php-utils/preferiti_carrello.php";
 
+    // indirizzi
+    $res = $connessione->query("SELECT * FROM Indirizzo_Spedizione WHERE id_utente = {$userid}")->fetch_all(MYSQLI_ASSOC);
+    foreach ($res as $r) {
+        $address = new Template("skins/template/dtml/dtml_items/indirizzoItem.html");
+        $address->setContent("ID_INDIRIZZO", $r['id']);
+        $address->setContent("VIA", $r['indirizzo']);
+        $address->setContent("PROVINCIA", $r['provincia']);
+
+        $body->setContent("I_MIEI_INDIRIZZI", $address->get());
+    }
+
+    // checkout
     $res = $connessione->query("SELECT * FROM Carrello WHERE id_utente = {$userid}")->fetch_all(MYSQLI_ASSOC);
     foreach ($res as $r) {
         $checkItem = new Template("skins/template/dtml/dtml_items/checkoutItem.html");
