@@ -11,33 +11,18 @@
       <div class="quantity">
          <div class="pro-qty">
             <span class="dec qtybtn" onclick="setQuantita(-1)">-</span>
-            <input type="text" value="<[QUANTITA]>" max="<[Q_MAX]>" disabled />
-            <span class="inc qtybtn" onclick="setQuantita(+1)">+</span>
+            <input id="qt<[ID_PRODOTTO]>" type="text" value="<[QUANTITA]>" max="<[Q_MAX]>" disabled />
+            <span class="inc qtybtn" onclick="setQuantita(+1, '<[QUANTITA]>')">+</span>
          </div>
       </div>
    </td>
-   <td class="total-price first-row"><span class="tot-price-product"></span> €</td>
+   <td id="totPrice<[ID_PRODOTTO]>" class="total-price first-row"><span class="tot-price-product"></span> €</td>
    <td class="close-td first-row" onclick="removeToCart('<[ID_PRODOTTO]>', '<[TAGLIA_PRODOTTO]>')">
       <i class="ti-close"></i>
    </td>
 </tr>
 
 <script>
-   // QUESTO METODO FUNZIONA
-   function removeToCart(id_prodotto, taglia) {
-      let xhr = new XMLHttpRequest();
-      xhr.open("POST", "include/php-utils/remove_to_cart.php", true);
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      xhr.onreadystatechange = function () {
-         if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log(xhr.responseText);
-            // Gestisci la risposta qui
-         }
-      };
-      xhr.send("id_prodotto=" + encodeURIComponent(id_prodotto) + "&taglia=" + encodeURIComponent(taglia));
-      window.location.href = window.location.href;
-   }
-
    /* lo scopo di setQuantita() è che quando viene premuto +/- bisogna calcolare il totale di un singolo 
       prodotto e piazzarlo nel posto adatto.
       il problema è che essendo tutto questo in un foreach, poi i vari <[lallero]> vengono convertiti in 
@@ -47,7 +32,7 @@
                specifico prodotto (l'elemento è: <div class="quantity"> )
    */
    function setQuantita(operator) {
-      let quantita = document.querySelector(".pro-qty input").value;
+      //let quantita = document.querySelector("#qt<[ID_PRODOTTO]>").value;
       quantita = parseInt(quantita) + parseInt(operator);
       if (quantita < 1) {
          quantita++;
@@ -67,15 +52,14 @@
    */
    function setTotalPriceProduct(Q) {
       let single_price = parseFloat("<[PREZZO_SINGOLO]>");
-      let quantita = parseInt(document.querySelector(".pro-qty input").value);
+      let quantita = document.querySelector("#qt<[ID_PRODOTTO]>").value;
 
       if (Q) {
          quantita = Q;
       }
-
       let total_price = single_price * quantita;
 
-      let totPriceSpan = document.querySelector(".tot-price-product");
+      let totPriceSpan = document.querySelector("#totPrice<[ID_PRODOTTO]>");
       totPriceSpan.textContent = total_price.toFixed(2);
    }
    setTotalPriceProduct();

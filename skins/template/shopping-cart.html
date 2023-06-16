@@ -52,3 +52,19 @@
       <!-- Shopping Cart Section End -->
    </body>
 </html>
+
+<script>
+   function removeToCart(id_prodotto, taglia) {
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", "include/php-utils/remove_to_cart.php", true);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.onreadystatechange = function () {
+         if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText);
+            // Gestisci la risposta qui
+         }
+      };
+      xhr.send("id_prodotto=" + encodeURIComponent(id_prodotto) + "&taglia=" + encodeURIComponent(taglia));
+      window.location.href = window.location.href;
+   }
+</script>
