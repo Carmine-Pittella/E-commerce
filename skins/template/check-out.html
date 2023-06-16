@@ -13,7 +13,7 @@
             <form class="checkout-form" id="tot-form-checkout" action="checkout.php" method="post">
                <div class="row">
                   <div class="col-lg-6">
-                     <h4>Informazioni di spedizione</h4>
+                     <!-- <h4>Informazioni di spedizione</h4>
                      <div class="row">
                         <div class="col-lg-6">
                            <label for="fir">Nome<span>*</span></label>
@@ -50,8 +50,75 @@
                            <input type="text" id="phone" />
                         </div>
                         <div class="col-lg-12"></div>
-                     </div>
+                     </div> -->
+
+                     <!--  -->
+                     <h4>Seleziona il tuo indirizzo:</h4>
+                     <form
+                        class="row d-flex justify-content-center align-items-center h-100"
+                        action="address-setup.php?set=1"
+                        method="post"
+                     >
+                        <div class="col-md-12 form-group p_star">
+                           <div class="discount-coupon">
+                              <h6 for="regione">i tuoi indirizzi</h6>
+                              <select class="form-control" id="regione" required>
+                                 <[reg]>
+                                 <!-- JQUERY FILLING -->
+                              </select>
+                           </div>
+                        </div>
+
+                        <!--  -->
+
+                        <div class="col-md-12 form-group p_star">
+                           <div class="discount-coupon">
+                              <h6 for="provincia">Provincia</h6>
+                              <select class="form-control" id="provincia">
+                                 <[pro]>
+                                 <!-- JQUERY FILLING -->
+                              </select>
+                           </div>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                           <div class="discount-coupon">
+                              <h6 for="citta">Citta</h6>
+                              <select class="form-control" id="citta">
+                                 <[cit]>
+                                 <!-- JQUERY FILLING -->
+                              </select>
+                           </div>
+                        </div>
+                        <div class="col-md-8 form-group p_star">
+                           <div class="discount-coupon">
+                              <h6 for="address">Indirizzo</h6>
+                              <input
+                                 type="text"
+                                 class="form-control"
+                                 id="address"
+                                 name="address"
+                                 value="<[via]>"
+                                 placeholder="Indirizzo"
+                              />
+                           </div>
+                        </div>
+                        <div class="col-md-3 form-group p_star">
+                           <div class="discount-coupon">
+                              <h6 for="postal_code">CAP</h6>
+                              <input
+                                 type="text"
+                                 class="form-control"
+                                 id="postal_code"
+                                 name="postal_code"
+                                 value="<[cap]>"
+                                 placeholder="CAP"
+                              />
+                           </div>
+                        </div>
+                     </form>
                   </div>
+
+                  <!--  -->
                   <div class="col-lg-6">
                      <div class="place-order">
                         <h4>Il tuo ordine</h4>
@@ -59,8 +126,8 @@
                            <ul class="order-table">
                               <li>Prodotti<span>Totale</span></li>
                               <[foreach]> <[PRODOTTO_CART]> <[/foreach]>
-                              <li class="fw-normal">Subtotal <span><[SUBTOTAL]> €</span></li>
-                              <li class="total-price">Totale<span><[SUBTOTAL]> €</span></li>
+                              <li class="fw-normal">Subtotal <span> <[SUBTOTAL]> € </span></li>
+                              <li class="total-price">Totale<span> <[SUBTOTAL]> € </span></li>
                            </ul>
                            <div class="payment-check"></div>
                            <div class="order-btn">
