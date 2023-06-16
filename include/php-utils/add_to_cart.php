@@ -8,8 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $quantita = $_POST['quantita'];
     $taglia = $_POST['taglia'];
 
-    echo $id_prodotto . " " . $quantita . " " . $taglia;
-
     if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         // aggiungere tutto sul DB
         global $connessione;
