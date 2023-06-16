@@ -3,6 +3,7 @@
 require "include/dbms.inc.php";
 require "include/template2.inc.php";
 require_once "include/php-utils/global.php";
+require_once "include/php-utils/alert.php";
 
 session_start();
 global $connessione;
@@ -33,7 +34,6 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         }
     }
     if ($furbacchione) {
-        require_once "include/php-utils/alert.php";
         Alert::OpenAlert("Hey vecchia volpe !! perché non pensi ai tuoi di ordini eh...", "orders.php");
     }
 
@@ -89,7 +89,8 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
     //
 } else {
-    header("Location: login.php");
+    Alert::OpenAlert("Devi effettuare l'accesso", "login.php");
+    // header("Location: login.php");
 }
 
 
