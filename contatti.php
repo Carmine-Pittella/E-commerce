@@ -23,12 +23,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $messaggio = $_POST['messaggioAss'];
 
         $oid = $connessione->prepare("INSERT INTO Messaggio_Assistenza (`id_utente`, `richiesta`, `risposta`)
-                                    VALUES (?, ?, ?)");
-        $oid->bind_param("iss", $userid, $messaggio, NULL);
+                                    VALUES (?, ?, NULL)");
+        $oid->bind_param("is", $userid, $messaggio);
 
         if ($oid->execute()) {
-            echo "successo";
-            // header("Location: login.php");
+            Alert::OpenAlert("Messaggio inviato con successo", "contatti.php");
         }
     } else {
         Alert::OpenAlert("Devi effettuare l'accesso", "login.php");
