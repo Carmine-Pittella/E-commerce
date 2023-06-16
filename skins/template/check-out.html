@@ -10,7 +10,7 @@
       <!-- Shopping Cart Section Begin -->
       <section class="checkout-section spad">
          <div class="container">
-            <form action="#" class="checkout-form">
+            <form class="checkout-form" id="tot-form-checkout" action="checkout.php" method="post">
                <div class="row">
                   <div class="col-lg-6">
                      <h4>Informazioni di spedizione</h4>
@@ -58,18 +58,23 @@
                         <div class="order-total">
                            <ul class="order-table">
                               <li>Prodotti<span>Totale</span></li>
-                              <li class="fw-normal">Combination x 1 <span>240.00 €</span></li>
-
-                              <li class="fw-normal">Subtotal <span>240.00 €</span></li>
-                              <li class="total-price">Totale<span>240.00 €</span></li>
+                              <[foreach]> <[PRODOTTO_CART]> <[/foreach]>
+                              <li class="fw-normal">Subtotal <span><[SUBTOTAL]> €</span></li>
+                              <li class="total-price">Totale<span><[SUBTOTAL]> €</span></li>
                            </ul>
                            <div class="payment-check"></div>
                            <div class="order-btn">
                               <div class="discount-coupon">
                                  <h6>Codice sconto</h6>
-                                 <form action="#" class="coupon-form">
-                                    <input type="text" placeholder="Inserisci il codice promo" />
-                                    <button type="submit" class="site-btn coupon-btn">applica</button>
+                                 <form id="form-checkout" action="checkout.php" class="coupon-form" method="post">
+                                    <input
+                                       type="text"
+                                       id="coupon"
+                                       name="coupon"
+                                       placeholder="Hai un codice promo?"
+                                       required
+                                    />
+                                    <button onclick="ApplicaCoupon()" class="site-btn coupon-btn">applica</button>
                                  </form>
                               </div>
                               <button type="submit" class="site-btn place-btn">Conferma ordine</button>
@@ -84,3 +89,8 @@
       <!-- Shopping Cart Section End -->
    </body>
 </html>
+
+<!-- calcolare il prezzo totale finale -->
+<!-- se viene attivato un coupon il prezzo cambia -->
+
+<script></script>
