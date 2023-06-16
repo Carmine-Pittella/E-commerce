@@ -55,9 +55,11 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
 
     $res = $connessione->query("SELECT * FROM Carrello WHERE id_utente = {$userid}");
+    $prezzoQT = 0;
     foreach ($res as $r) {
         $cart_elem = new Template("skins/template/dtml/dtml_items/shopping-cartItem.html");
 
+        
         // id, quantita e taglia
         $cart_elem->setContent("ID_PRODOTTO", $r['id_prodotto']);
         $cart_elem->setContent("QUANTITA", $r['quantita_prodotto']);
@@ -78,26 +80,18 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         $cart_elem->setContent("PREZZO_SINGOLO", $tmp[0]['prezzo']);
 
         // totale prodotto
-
+        $prezzoQT = $prezzoQT +( floatval( $tmp[0]['prezzo'])*floatval($r['quantita_prodotto']) );
+        
         $body->setContent("elemento_carrello", $cart_elem->get());
+
     }
-
-
-
-
-
-
-
+   
+    $body->setContent("TOTALE_CARRELLO", strval($prezzoQT));
 
     //
 } else {
     Alert::OpenAlert("Devi effettuare l'accesso", "login.php");
 }
-
-
-
-
-
 
 
 $main->setContent('body', $body->get());
