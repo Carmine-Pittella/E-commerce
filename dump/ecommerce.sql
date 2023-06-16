@@ -163,7 +163,6 @@ CREATE TABLE IF NOT EXISTS Messaggio_Assistenza (
     id_utente INT NOT NULL,
     richiesta TEXT(500),
     risposta TEXT(500) DEFAULT NULL,
-    data_richiesta DATE NOT NULL,
     FOREIGN KEY (id_utente) REFERENCES Utente(id)
 );
 
