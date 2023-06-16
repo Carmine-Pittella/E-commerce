@@ -21,6 +21,7 @@ DROP TABLE IF EXISTS Ordine;
 DROP TABLE IF EXISTS Oggetto_Ordine;
 DROP TABLE IF EXISTS Carrello;
 DROP TABLE IF EXISTS Recensione;
+DROP TABLE IF EXISTS Messaggio_Assistenza;
 DROP TABLE IF EXISTS Immagine_Prodotto;
 DROP TABLE IF EXISTS Magazzino;
 DROP TABLE IF EXISTS stato_italia;
@@ -155,6 +156,14 @@ CREATE TABLE IF NOT EXISTS Recensione (
     data_recensione DATE NOT NULL,
     FOREIGN KEY (id_utente) REFERENCES Utente(id),
     FOREIGN KEY (id_prodotto) REFERENCES Prodotto(id)
+);
+
+CREATE TABLE IF NOT EXISTS Messaggio_Assistenza (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_utente INT NOT NULL,
+    richiesta TEXT(500),
+    risposta TEXT(500) DEFAULT NULL,
+    FOREIGN KEY (id_utente) REFERENCES Utente(id)
 );
 
 CREATE TABLE IF NOT EXISTS Immagine_Prodotto (

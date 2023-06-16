@@ -3,6 +3,7 @@
 require "include/template2.inc.php";
 require "include/dbms.inc.php";
 require_once "include/php-utils/global.php";
+require_once "include/php-utils/alert.php";
 
 session_start();
 
@@ -29,9 +30,6 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
         $magazzino = $connessione->query("SELECT * FROM Magazzino WHERE id_prodotto = {$r['id_prodotto']} AND taglia = '{$r['taglia_prodotto']}' LIMIT 1")->fetch_all(MYSQLI_ASSOC);;
         if ($magazzino[0]['quantita'] < $r['quantita_prodotto']) {
-            require_once "include/php-utils/alert.php";
-
-            Alert::OpenAlert("Il numero di prodotti disponibili è cambiato :(\nIl tuo carrello è stato aggiornato.", "carrello.php");
 
             if ($magazzino[0]['quantita'] == 0) {
                 // rimuovere il prodotto dal carrello
@@ -93,7 +91,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
     //
 } else {
-    header("Location: login.php");
+    Alert::OpenAlert("Devi effettuare l'accesso", "login.php");
 }
 
 
