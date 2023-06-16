@@ -3,6 +3,45 @@
     require "include/dbms.inc.php";
     global $connessione;
 
+    /***** DISPLAY ADD PRODOTTO NEL MAGAZZINO *****/
+    if(isset($_GET['add'])){
+        $addMagazzino = new Template("../skins/template/adminModificaMagazzino.html");
+        $res = $connessione->query("SELECT * FROM Categoria")->fetch_all(MYSQLI_ASSOC);
+        $res2 = $connessione->query(" SELECT Prodotto.id AS id_prodotto,Prodotto.nome_prodotto,Prodotto.descrizione,Prodotto.prezzo,Prodotto.genere,Categoria.id AS id_categoria,Categoria.nome_categoria,Marca.id AS id_marca,Marca.nome_marca,Magazzino.quantita,Magazzino.taglia
+        FROM Prodotto JOIN Categoria ON Prodotto.id_categoria = Categoria.id JOIN Marca ON Prodotto.id_marca = Marca.id JOIN Magazzino ON Prodotto.id = Magazzino.id_prodotto;")->fetch_all(MYSQLI_ASSOC);
+        $resFiltered = array();
+        foreach ($res2 as $row) {
+            if ($row['id_prodotto'] == $idItem) {
+                $resFiltered[] = $row;
+            }
+        }
+
+        //popola e seleziona la categoria
+        $tot = "";
+        foreach($res as $r){
+            $str = $r['nome_categoria'];
+            $str = '<option value="'.$str.'">'.$str."</option>";
+            $tot = $tot.$str;
+        }
+        $addMagazzino->setContent("select_categoria",$tot);
+        $addMagazzino->setContent("id_P",$idItem);
+        $res = $connessione->query("SELECT * FROM Marca")->fetch_all(MYSQLI_ASSOC);
+
+        //popola e seleziona la marca
+        $tot = "";
+        foreach($res as $r){
+            $str = $r['nome_marca'];
+            if($r['nome_marca']===$resFiltered[0]['nome_marca']){
+                $str = '<option value="'.$str.'" selected>'.$str."</option>";
+                $tot = $tot.$str;
+            }else{
+                $str = '<option value="'.$str.'">'.$str."</option>";
+                $tot = $tot.$str;
+            }
+        }
+    }
+
+
     /***** CASO POST PER FILTRI *****/
     if (isset($_POST['valore'])){
 
