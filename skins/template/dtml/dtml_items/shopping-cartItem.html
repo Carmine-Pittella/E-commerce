@@ -10,13 +10,13 @@
    <td class="qua-col first-row">
       <div class="quantity">
          <div class="pro-qty">
-            <span id="t<[ID_PRODOTTO]>" class="dec qtybtn">-</span>
-            <input id="qt<[ID_PRODOTTO]>" type="text" value="<[QUANTITA]>" max="<[Q_MAX]>" disabled />
-            <span id="a<[ID_PRODOTTO]>" class="inc qtybtn">+</span>
+            <span id="t<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>" class="dec qtybtn">-</span>
+            <input id="qt<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>" type="text" value="<[QUANTITA]>" max="<[Q_MAX]>" disabled />
+            <span id="a<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>" class="inc qtybtn">+</span>
          </div>
       </div>
    </td>
-   <td id="totPrice<[ID_PRODOTTO]>" class="total-price first-row">
+   <td id="totPrice<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>" class="total-price first-row">
       <span class="tot-price-product"></span><[PREZZO_SINGOLO]>€
    </td>
    <td class="close-td first-row" onclick="removeToCart('<[ID_PRODOTTO]>', '<[TAGLIA_PRODOTTO]>')">
@@ -28,85 +28,42 @@
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
    $(document).ready(function () {
-      $("#a<[ID_PRODOTTO]>").on("click", function () {
+      $("#a<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>").on("click", function () {
          let prezzoSingolo = parseFloat("<[PREZZO_SINGOLO]>");
-         let currQ = parseFloat($("#qt<[ID_PRODOTTO]>").val()) + 1;
+         let currQ = parseFloat($("#qt<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>").val()) + 1;
          let currTot = prezzoSingolo * currQ;
          currTot = currTot.toString();
          str1 = '<span class="tot-price-product"></span>';
          str2 = "€</td>";
          strtot = str1 + currTot + str2;
-         $("#totPrice<[ID_PRODOTTO]>").html(strtot);
+         $("#totPrice<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>").html(strtot);
+        
+         let spanSTR = $("#idtotshoppingcartitem").html();
+         spanSTR = spanSTR.slice(0, spanSTR.length - 2);
+         spanSTR = parseFloat(spanSTR)+parseFloat(currTot);
+         spanSTR = spanSTR.toString()+" €";
+         $("#idtotshoppingcartitem").html(spanSTR);
+
       });
-      $("#t<[ID_PRODOTTO]>").on("click", function () {
+      $("#t<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>").on("click", function () {
          let prezzoSingolo = parseFloat("<[PREZZO_SINGOLO]>");
-         if (parseFloat($("#qt<[ID_PRODOTTO]>").val()) === 1) {
+         if (parseFloat($("#qt<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>").val()) === 1) {
          } else {
-            let currQ = parseFloat($("#qt<[ID_PRODOTTO]>").val()) - 1;
+            let currQ = parseFloat($("#qt<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>").val()) - 1;
             let currTot = prezzoSingolo * currQ;
             currTot = currTot.toString();
             str1 = '<span class="tot-price-product"></span>';
             str2 = "€</td>";
             strtot = str1 + currTot + str2;
-            $("#totPrice<[ID_PRODOTTO]>").html(strtot);
+            $("#totPrice<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>").html(strtot);
+
+            let spanSTR = $("#idtotshoppingcartitem").html();
+            spanSTR = spanSTR.slice(0, spanSTR.length - 2);
+            spanSTR = parseFloat(spanSTR)-parseFloat(currTot);
+            spanSTR = spanSTR.toString()+" €";
+            $("#idtotshoppingcartitem").html(spanSTR);
          }
       });
    });
 </script>
 
-<!--
-   /* lo scopo di setQuantita() è che quando viene premuto +/- bisogna calcolare il totale di un singolo 
-      prodotto e piazzarlo nel posto adatto.
-      il problema è che essendo tutto questo in un foreach, poi i vari <[lallero]> vengono convertiti in 
-      nomi, valori, ecc.. quindi il metodo non riesce a capire a cosa mi sto riferendo io.
-      
-      SINTESI: bisogna fare in modo che ogni Elemento per modificare la quantià sia associato allo
-               specifico prodotto (l'elemento è: <div class="quantity"> )
-   */
-   /*
-   function setQuantita(operator) {
-      //let quantita = document.querySelector("#qt<[ID_PRODOTTO]>").value;
-      quantita = parseInt(quantita) + parseInt(operator);
-      if (quantita < 1) {
-         quantita++;
-      }
-      if (quantita > parseInt("<[Q_MAX]>")) {
-         quantita--;
-      }
-
-      setTotalPriceProduct(quantita);
-   }
-   */
-   /* qui il problema è simile, serve per calcolare il prezzo totale del prodotto data la quantità
-      ma come fa a sapere DOVE andare a piazzare il risultato ottenuto? 
-
-      Inoltre manca totalmente una funzione che calcoli il prezzo TOTALE del carrello
-      (per logica andrebbe messo nella pagina "shopping-cart.html")
-   */
-  /*
-   function setTotalPriceProduct(Q) {
-      let single_price = parseFloat("<[PREZZO_SINGOLO]>");
-      let quantita = document.querySelector("#qt<[ID_PRODOTTO]>").value;
-
-      if (Q) {
-         quantita = Q;
-      }
-      let total_price = single_price * quantita;
-
-      let totPriceSpan = document.querySelector("#totPrice<[ID_PRODOTTO]>");
-      totPriceSpan.textContent = total_price.toFixed(2);
-   }
-   setTotalPriceProduct();
-   */
-   -->
-
-<!-- setQuantita() e setTotalPriceProduct() sono due metodi SBAGLIATI -->
-<!-- li ho lasciati solo per farteli vedere -->
-<!-- nel codice HTML, tutte le varie classi o id degli elementi sono quelli del Template  -->
-
-<!-- INFORMAZIONE -->
-<!-- non è detto che queste funzioni debbano stare per forza qua, c'è un esempio (diverso nel genere) -->
-<!-- nei file "orders.html" e "ordine-Item.html" pare utilizzi gli ID per differenziare gli elementi -->
-<!-- che si ripetono nel foreach (by stefano) -->
-
-<!-- sono tante informazioni -->
