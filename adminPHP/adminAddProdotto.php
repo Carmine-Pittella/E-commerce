@@ -100,7 +100,7 @@ if(isset($_POST['formCategoria'])){
         $connessione->query( "INSERT INTO Magazzino (id_prodotto, taglia, quantita)
         VALUES ('$ultimoID', 'XL',  '$formTagliaXL')");
 
-        header("location:http://localhost/E-commerce/adminPHP/adminImmaginiProdotto.php?img=$ultimoID");
+        header("location:http://localhost/E-commerce/adminPHP/adminImmaginiProdotto.php?img=$ultimoID&no=1");
         exit();
        
        

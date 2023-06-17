@@ -4,49 +4,59 @@ require "../include/dbms.inc.php";
 
 require_once "../include/php-utils/global.php";
 // variabile _IMG_PATH  skins/template/img/        products/nomeimg.png
+global $connessione;
 
 //img è l'id dell'ultimo elemento inserito, la chiamata viene da adminAddProdotto
 if(isset($_GET['img'])){
-    $str = $_GET['img'];
-    $str = "eskere dentro adminImgPr  ". $str;
-    $str = "<script>console.log('".$str."')</script>";
-    echo $str;
+    $idP = $_GET['img'];
+    $temp = new Template("../skins/template/adminImgProdotto.html");
+    
+    //caso in cui non ci sono immagini
+   if(isset($_GET['no'])){
+    $temp->setContent("lista-img","<div class='col'> non ci sono immagini </div>");
+    $temp->setContent("id_p",$idP);
+    $temp->close();
+   }
+
+   //caso in cui ci sono immagini
+   else{
+    echo '<script>console.log("dio porco")</script>';
+
+   }
 }
-
-
-
-
-
-
-/*
 if(isset($_FILES['formImage'])){
+
+    
+    
+    //(1, 'products/M-element-Tshirt-front-blu.jpg'),
     $file= $_FILES['formImage'];
     $fileName = $file['name'];
     $tmpFilePath = $file['tmp_name'];
 
+    
+    $idP = $_POST['formId'];
+    $pathDB = "products/".$fileName;
+    $connessione->query("INSERT INTO Immagine_Prodotto (id_prodotto, url_immagine)
+    VALUES ( $idP, '$pathDB')");
+    
+    
     $uploadDir = 'C:\Users\fabri\Desktop\xampp\htdocs\E-commerce\skins\template\img\products\\'; 
     $uploadPath = $uploadDir . $fileName;
-    if (move_uploaded_file($tmpFilePath, $uploadPath)) {
-        echo '<script>console.log("successo")</script>';
-    } else {
-        echo '<script>console.log("successo")</script>';
-    }
+    move_uploaded_file($tmpFilePath, $uploadPath);
+    header("location:http://localhost/E-commerce/adminPHP/adminImmaginiProdotto.php?img=$idP");
+    exit();
+
+    
 }
 
- $str = '<div class="col">le immaggini verranno inserite qui</div>';
-    $template->setContent("lista-img",$str);
 
+////////////// http://localhost/E-commerce/adminPHP/adminImmaginiProdotto.php?img=17&no=1
 
-<form  action="adminAddProdotto.php" method="post" enctype="multipart/form-data">
-        <div style="height: 200px; position: relative; top: 30px;" id="imageContainer" class="container">
-          <h4 style="position: relative; bottom: 20px;">Inserisci immagini</h4>
-          <div class="row">
-            <div class="col">
-              <input type="file" name="formImage">
-            </div>
-            <[lista-img]>
-          </div>
-          <button type="submit" class="btn btn-primary">carica immagine</button>
-        </div>
-      </form>
+/*
+
+ if (move_uploaded_file($tmpFilePath, $uploadPath)) {
+        echo '<script>console.log("successo")</script>';
+    } else {
+        echo '<script>console.log("fallimento")</script>';
+    }
 */
