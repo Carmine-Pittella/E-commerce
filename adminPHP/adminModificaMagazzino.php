@@ -97,6 +97,16 @@ else{
         $modMagazzino->setContent("descrizione_P",$resFiltered[0]["descrizione"]);
         $modMagazzino->setContent("prezzo_P",$resFiltered[0]["prezzo"]);
 
+        //per la query string img
+        $res3 = $connessione->query("SELECT * FROM Immagine_Prodotto WHERE id_prodotto = '$idItem' ")->fetch_all(MYSQLI_ASSOC);
+        if(count($res3)===0){
+            $queryString ="img=".strval($idItem)."&no=1";
+            $modMagazzino->setContent("querystringImg", $queryString);
+        }else{
+            $queryString ="img=".strval($idItem);
+            $modMagazzino->setContent("querystringImg", $queryString);
+        }
+
         $modMagazzino->close();
     }
     //chiamata su delete 

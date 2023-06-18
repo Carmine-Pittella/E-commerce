@@ -71,12 +71,24 @@ if( (!isset($_REQUEST['mc_id']))&&(!isset($_POST['NAME_FIELD']))&&(!isset($_GET[
         $item->setContent("MARCA_CATEGORIA", $r['nome_categoria']);
         $item->setContent("ID_MC", $r['id']);
         $item->setContent("FILE","adminCategoria");
+        $tmpid = $r['id'];
+        $q = $connessione->query("SELECT * FROM Prodotto WHERE id_categoria = $tmpid")->fetch_all(MYSQLI_ASSOC); 
+        //caso in cui nessun prodotto appartiene alla categoria
+        if(count($q)===0){
+          $str1='<a href="adminPHP/adminCategoria.php?deleteMC_id=';
+          $str2='" class="btn btn-danger">Cancella</a>';
+          $str3=$str1.$tmpid.$str2;
+          $item->setContent("delete",$str3);
+        }
+        //caso in cui almeno un prodotto appartiene alla categoria
+        else{
+          $item->setContent("delete",'<a style="pointer-events: none; opacity: 0.5;" class="btn btn-danger">Cancella</a>');
+        }
         $admin_container->setContent('item',$item->get());
         
     }
     $admin_container ->close();
 }
-
 
 
 
