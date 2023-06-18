@@ -26,7 +26,7 @@ if (!empty($res)) {
     $promo = $connessione->query("SELECT * FROM Promozione WHERE id = {$res[0]['id_promozione']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
     $body->setContent("NOME_PROMOZIONE", $promo[0]['nome_promozione']);
     $body->setContent("DESCRIZIONE_PROMOZIONE", $promo[0]['descrizione']);
-    $body->setContent("SCONTO_PERCENTUALE", $promo[0]['sconto_percentuale']);
+    $body->setContent("SCONTO_PERCENTUALE", intval($promo[0]['sconto_percentuale']));
 
     $data = strtotime($promo[0]['data_fine']);
     $body->setContent("GG", date("d", $data));
