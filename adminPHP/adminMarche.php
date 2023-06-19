@@ -60,11 +60,19 @@ if(isset($_POST['formAddMarca'])){
   }
 
 }
+// cancellazione di una marca
+if(isset($_GET['deleteMC_id'])){
+  $idToDel = $_GET['deleteMC_id'];
+  $connessione->query("DELETE FROM Marca WHERE id = $idToDel");
+  header("location:http://localhost/E-commerce/admin.php");
+    exit();
+
+}
 
 
  
 // display lista marche
-if( (!isset($_REQUEST['mc_id']))&&(!isset($_POST['NAME_FIELD']))&&(!isset($_GET['add']))&&(!isset($_POST['formAddMarca'])) ){
+if( (!isset($_REQUEST['mc_id']))&&(!isset($_POST['NAME_FIELD']))&&(!isset($_GET['add']))&&(!isset($_POST['formAddMarca']))&&(!isset($_GET['deleteMC_id'])) ){
     $admin_container = new Template("../skins/template/adminContainer2.html");
     $admin_container->setContent('elemento',"una nuova marca");
     $admin_container->setContent("HREF","adminPHP/adminMarche.php?add=1");

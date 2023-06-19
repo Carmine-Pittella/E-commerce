@@ -17,6 +17,17 @@
     <title>Ecommerce</title>
   </head>
   <body>
-    
+    <div>
+      <form  action="adminPromozione.php" method="post">
+        <input style="display: none;" name="formIDProm" value="<[form_id_prom]>">
+        <div class="form-group">
+          <label for="categoria">Categoria</label>
+          <select class="form-control" name="formCategoria">
+            <[select_categoria]> 
+          </select>
+        </div>
+       <button type="submit" class="btn btn-primary">applica</button>
+      </form>
+    </div>
   </body>
 </html>

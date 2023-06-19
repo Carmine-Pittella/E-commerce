@@ -59,9 +59,18 @@ if(isset($_POST['formAddCategoria'])){
     }
   
   }
+  // cancellazione di una categoria
+if(isset($_GET['deleteMC_id'])){
+  $idToDel = $_GET['deleteMC_id'];
+  $connessione->query("DELETE FROM Categoria WHERE id = $idToDel");
+  header("location:http://localhost/E-commerce/admin.php");
+    exit();
+
+}
+
 
 //display lista Categorie
-if( (!isset($_REQUEST['mc_id']))&&(!isset($_POST['NAME_FIELD']))&&(!isset($_GET['add']))&&(!isset($_POST['formAddCategoria'])) ){
+if( (!isset($_REQUEST['mc_id']))&&(!isset($_POST['NAME_FIELD']))&&(!isset($_GET['add']))&&(!isset($_POST['formAddCategoria']))&&(!isset($_GET['deleteMC_id'])) ){
     $admin_container = new Template("../skins/template/adminContainer2.html");
     $admin_container->setContent('elemento',"una nuova categoria");
     $admin_container->setContent("HREF","adminPHP/adminCategoria.php?add=1");
