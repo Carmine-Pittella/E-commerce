@@ -388,9 +388,12 @@ VALUES
 -- Inserimento di valori casuali nella tabella Immagine_Prodotto
 INSERT INTO Immagine_Prodotto (id_prodotto, url_immagine)
 VALUES
-(1, 'products/M-element-Tshirt-front-blu.jpg'),
+(1, 'products/M-element-Tshirt-front-black.jpg'),
+(1, 'products/M-element-Tshirt-back-black.jpg'),
 (2, 'products/M-element-Tshirt2-front-grey.jpg'),
+(2, 'products/M-element-Tshirt2-back-grey.jpg'),
 (3, 'products/M-element-Tshirt3-front-yellow.jpg'),
+(3, 'products/M-element-Tshirt3-back-yellow.jpg'),
 (4, 'products/M-adidas-sweatshirt-front-black.jpg'),
 (5, 'products/M-adidas-sweatshirt-front-white.jpg'),
 (6, 'products/M-H&H-sweatshirt-front-grey.jpg'),

@@ -32,6 +32,17 @@ if (!empty($res)) {
     $body->setContent("GG", date("d", $data));
     $body->setContent("MM", date("m", $data));
     $body->setContent("AAAA", date("Y", $data));
+
+    //setto l'immagine
+    $idTmp = $res[0]['id_promozione'];
+    $res3 = $connessione->query("SELECT * FROM Prodotto WHERE id_promozione = '$idTmp'")->fetch_all(MYSQLI_ASSOC);
+    $idTmp = $res3[0]['id'];
+    $res3 = $connessione->query("SELECT * FROM Immagine_Prodotto WHERE id_prodotto = '$idTmp'")->fetch_all(MYSQLI_ASSOC);
+    $pathImg = $res3[0]['url_immagine'];
+    $body->setContent("SET_IMG",$pathImg);
+
+    //products/M-element-longshirt-front-black.jpg
+    //SET_IMG
 }
 
 
