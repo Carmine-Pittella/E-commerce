@@ -11,7 +11,13 @@
       <div class="quantity">
          <div class="pro-qty">
             <span id="t<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>" class="dec qtybtn">-</span>
-            <input id="qt<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>" type="text" value="<[QUANTITA]>" max="<[Q_MAX]>" disabled />
+            <input
+               id="qt<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>"
+               type="text"
+               value="<[QUANTITA]>"
+               max="<[Q_MAX]>"
+               disabled
+            />
             <span id="a<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>" class="inc qtybtn">+</span>
          </div>
       </div>
@@ -35,27 +41,26 @@
          let prezzoSingolo = parseFloat("<[PREZZO_SINGOLO]>");
          let currQ = parseFloat($("#qt<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>").val()) + 1;
          let currTot = prezzoSingolo * currQ;
-         if(prezzoSingolo * massimo < currTot){
+         if (prezzoSingolo * massimo < currTot) {
             //si è sforato il massimo
-         }else{
+         } else {
             currTot = currTot.toFixed(2);
             currTot = currTot.toString();
             str1 = '<span class="tot-price-product"></span>';
             str2 = "€</td>";
             strtot = str1 + currTot + str2;
             $("#totPrice<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>").html(strtot);
-         
+
             let spanSTR = $("#idtotshoppingcartitem").html();
             spanSTR = spanSTR.slice(0, spanSTR.length - 2);
             //spanSTR = parseFloat(spanSTR)+parseFloat(currTot);
             //parseFloat($("#qt<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>").val())
             spanSTR = parseFloat(spanSTR) + prezzoSingolo;
             spanSTR = spanSTR.toFixed(2);
-            spanSTR = spanSTR.toString()+" €";
+            spanSTR = spanSTR.toString() + " €";
             $("#idtotshoppingcartitem").html(spanSTR);
-            aggiornaDB('<[ID_PRODOTTO]>',currQ.toString(),'<[TAGLIA_PRODOTTO]>');
+            aggiornaDB("<[ID_PRODOTTO]>", currQ.toString(), "<[TAGLIA_PRODOTTO]>");
          }
-
       });
       $("#t<[ID_PRODOTTO]><[TAGLIA_PRODOTTO]>").on("click", function () {
          let prezzoSingolo = parseFloat("<[PREZZO_SINGOLO]>");
@@ -72,13 +77,12 @@
 
             let spanSTR = $("#idtotshoppingcartitem").html();
             spanSTR = spanSTR.slice(0, spanSTR.length - 2);
-            spanSTR = parseFloat(spanSTR)-prezzoSingolo;
+            spanSTR = parseFloat(spanSTR) - prezzoSingolo;
             spanSTR = spanSTR.toFixed(2);
-            spanSTR = spanSTR.toString()+" €";
+            spanSTR = spanSTR.toString() + " €";
             $("#idtotshoppingcartitem").html(spanSTR);
-            aggiornaDB('<[ID_PRODOTTO]>',currQ.toString(),'<[TAGLIA_PRODOTTO]>');
+            aggiornaDB("<[ID_PRODOTTO]>", currQ.toString(), "<[TAGLIA_PRODOTTO]>");
          }
       });
    });
 </script>
-

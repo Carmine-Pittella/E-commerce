@@ -14,6 +14,9 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
     $subtotal = 0.0;
     // $coupon = "";
 
+    // controllo di sicurezza per le quantità nel magazzino
+    require "include/php-utils/check-quantita-magazzino.php";
+
 
     // if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //     $coupon = $_POST['coupon'];
@@ -57,7 +60,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         // totale
         $tot = intval($prod[0]['prezzo']) * intval($r['quantita_prodotto']);
         if ($prod[0]['id_promozione']) {
-            $promo = $connessione->query("SELECT sconto_percentuale FROM Prodmozione WHERE id = {$prod[0]['id_promozione']} LIMIT 1")->fetch_all(MYSQLI_ASSOC);
+            $promo = $connessione->query("SELECT sconto_percentuale FROM Promozione WHERE id = {$prod[0]['id_promozione']} LIMIT 1")->fetch_all(MYSQLI_ASSOC);
             $sconto = intval($promo[0]['sconto_percentuale']);
             $prezzoVecchio = $tot;
             $checkItem->setContent("PREZZO_VECCHIO", $prezzoVecchio);

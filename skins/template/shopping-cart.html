@@ -38,10 +38,12 @@
                         <div class="proceed-checkout">
                            <ul>
                               <li class="cart-total">
-                                 Totale<span id="idtotshoppingcartitem" class="tot-price-cart"><[TOTALE_CARRELLO]> €</span>
+                                 Totale<span id="idtotshoppingcartitem" class="tot-price-cart"
+                                    ><[TOTALE_CARRELLO]> €</span
+                                 >
                               </li>
                            </ul>
-                           <a href="checkout.php" class="proceed-btn">vai al pagamento</a>
+                           <button id="proceedCheckout" class="proceed-btn">vai al pagamento</button>
                         </div>
                      </div>
                   </div>
@@ -67,4 +69,16 @@
       xhr.send("id_prodotto=" + encodeURIComponent(id_prodotto) + "&taglia=" + encodeURIComponent(taglia));
       window.location.href = window.location.href;
    }
+   document.addEventListener("DOMContentLoaded", function () {
+      var totaleCarrello = parseFloat(document.getElementById("idtotshoppingcartitem").textContent);
+      var proceedCheckoutBtn = document.getElementById("proceedCheckout");
+
+      if (totaleCarrello === 0) {
+         proceedCheckoutBtn.disabled = true;
+      } else {
+         proceedCheckoutBtn.addEventListener("click", function () {
+            window.location.href = "checkout.php";
+         });
+      }
+   });
 </script>
