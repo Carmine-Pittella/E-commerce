@@ -113,8 +113,6 @@ else{
     else{
         $idTodel = $_GET['del'];
         $connessione->query("DELETE FROM Magazzino WHERE id_prodotto = $idTodel");
-        // cosa devo cancellare? anche il carrello / oggetto ordine ? da chiedere a carmine
-         //eseguo una redirect sulla home dell'admin
         header("location:http://localhost/E-commerce/admin.php");
         exit();
 

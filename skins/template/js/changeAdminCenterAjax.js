@@ -49,9 +49,9 @@ function changeCenterToPromozioni(){
      });
     
 }
-function changeCenterToOrdini(){
+function changeCenterToAssistenza(){
     $.ajax({
-        url: "./adminPHP/adminOrdine.php",
+        url: "./adminPHP/adminAssistenza.php",
         type: "POST",
         data: { valore: "" },
         success: function (response) {
