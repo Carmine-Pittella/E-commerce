@@ -276,7 +276,8 @@ VALUES
 ('Element'),
 ('Levis'),
 ('H&H'),
-('Puma');
+('Puma'),
+('Stradivarius');
 
 
 -- Inserimento di valori casuali nella tabella Promozione
@@ -303,6 +304,8 @@ VALUES
 ('pantalone', 'descrizione bla bla', 199.99, 'uomo', 3, 5, NULL),
 ('pantalone', 'descrizione bla bla', 199.99, 'uomo', 3, 5, NULL),
 ('camicia', 'descrizione bla bla', 44.99, 'uomo', 6, 5, NULL);
+('camicia semplice', 'descrizione bla bla', 44.99, 'donna', 6, 8, NULL);
+('camicia semplice', 'descrizione bla bla', 44.99, 'donna', 6, 8, NULL); 
 
 -- Inserimento di valori casuali nella tabella Prodotto_Preferito
 INSERT INTO Prodotto_Preferito (id_utente, id_prodotto)
@@ -401,7 +404,11 @@ VALUES
 (8, 'products/M-levis-jeans-front-blu.jpg'),
 (9, 'products/M-levis-jeans-front-darkblu.jpg'),
 (10, 'products/M-levis-pants-front-beige.jpg'),
-(11, 'products/M-levis-pants-front-red.jpg');
+(11, 'products/M-levis-pants-front-red.jpg'), 
+(13, 'products/D-Stradivarius-camicia-front-green.jpg'),
+(13, 'products/D-Stradivarius-camicia-back-green.jpg'),
+(14, 'products/D-Stradivarius-camicia2-front-lightBlu.jpg'),
+(14, 'products/D-Stradivarius-camicia2-back-lightBlu.jpg');
 
 
 -- Inserimento di valori casuali nella tabella Magazzino
@@ -450,7 +457,15 @@ VALUES
 (11, 30, 'S'),
 (11, 0, 'M'),
 (11, 30, 'L'),
-(11, 30, 'XL');
+(11, 30, 'XL'),
+(13, 30, 'S'),
+(13, 30, 'M'),
+(13, 30, 'L'),
+(13, 30, 'XL'),
+(14, 30, 'S'),
+(14, 30, 'M'),
+(14, 30, 'L'),
+(14, 30, 'XL');
 
 -- Inserimento di valori casuali nella tabella Service
 INSERT INTO Service (id, script, description) VALUES

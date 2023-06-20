@@ -78,9 +78,12 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
         $tmp = $connessione->query("SELECT * FROM Prodotto WHERE id = {$r['id_prodotto']};")->fetch_all(MYSQLI_ASSOC);
         $cart_elem->setContent("NOME_PRODOTTO", $tmp[0]['nome_prodotto']);
         $cart_elem->setContent("PREZZO_SINGOLO", $tmp[0]['prezzo']);
+        //elemento singolo totale
+        $var = floatval( $tmp[0]['prezzo'])*floatval($r['quantita_prodotto']);
+        $cart_elem->setContent("PREZZO_SINGOLO_TOT",$var);
 
         // totale prodotto
-        $prezzoQT = $prezzoQT +( floatval( $tmp[0]['prezzo'])*floatval($r['quantita_prodotto']) );
+        $prezzoQT = $prezzoQT + $var;
         
         $body->setContent("elemento_carrello", $cart_elem->get());
 
