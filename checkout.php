@@ -71,8 +71,36 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
         $body->setContent("PRODOTTO_CART", $checkItem->get());
     }
-
     $body->setContent("SUBTOTAL", $subtotal);
+
+
+
+    // corriere
+    $res = $connessione->query("SELECT * FROM Corriere")->fetch_all(MYSQLI_ASSOC);
+    foreach ($res as $r) {
+        $corriere = new Template("skins/template/dtml/dtml_items/corriereItem.html");
+
+        $corriere->setContent("ID_CORRIERE", $r['id']);
+        $corriere->setContent("COSTO_CORRIERE", $r['prezzo']);
+        $corriere->setContent("AZIENDA_CORRIERE", $r['azienda']);
+        $corriere->setContent("GIORNI_CONSEGNA_CORRIERE", $r['giorni_consegna']);
+
+        $body->setContent("ELEMENTO_CORRIERE", $corriere->get());
+    }
+
+
+    // metodo pagamento
+    $res = $connessione->query("SELECT * FROM Metodo_Pagamento")->fetch_all(MYSQLI_ASSOC);
+    foreach ($res as $r) {
+        $pagamento = new Template("skins/template/dtml/dtml_items/metodo-pagamentoItem.html");
+        $pagamento->setContent("ID_PAGAMENTO", $r['id']);
+        $pagamento->setContent("TIPO_PAGAMENTO", $r['tipo_pagamento']);
+        $body->setContent("ELEMENTO_METODO_PAGAMENTO", $pagamento->get());
+    }
+
+
+
+
 
 
 
