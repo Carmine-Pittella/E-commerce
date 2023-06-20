@@ -10,11 +10,10 @@
       <!-- Shopping Cart Section Begin -->
       <section class="checkout-section spad">
          <div class="container">
-            <form class="checkout-form" id="tot-form-checkout">
+            <div class="checkout-form" id="tot-form-checkout">
                <div class="row">
                   <div class="col-lg-6">
                      <h4>Seleziona il tuo indirizzo:</h4>
-                     <br /><br />
                      <form class="row d-flex justify-content-center align-items-center h-100">
                         <div class="col-md-12 form-group p_star">
                            <div class="discount-coupon">
@@ -99,7 +98,7 @@
                      </div>
                   </div>
                </div>
-            </form>
+            </div>
          </div>
       </section>
       <!-- Shopping Cart Section End -->
@@ -143,28 +142,44 @@
 
    function Conferma() {
       if (idCorriere == 0 || idPagamento == 0 || idIndirizzo == 0) {
-         console.log("non va bene");
+         alert("Seleziona tutti i campi !");
       } else {
-         console.log("ora va bene");
+         var totalElement = document.querySelector("li.total-price");
+         var totalText = totalElement.textContent;
+         var totalValue = totalText.replace("Totale", "").replace("€", "").trim();
+
+         let xhr = new XMLHttpRequest();
+         xhr.open("POST", "include/php-utils/conferma_checkout.php", true);
+         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+         xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+               console.log(xhr.responseText);
+               // Gestisci la risposta qui
+            }
+         };
+         xhr.send(
+            "address=" +
+               encodeURIComponent(idIndirizzo) +
+               "&corriere=" +
+               encodeURIComponent(idCorriere) +
+               "&pagamento=" +
+               encodeURIComponent(idPagamento) +
+               "&totale=" +
+               encodeURIComponent(totalValue)
+         );
+         // window.location.href = window.location.href;
       }
    }
 
-   // // disabilita bottone
-   // document.addEventListener("DOMContentLoaded", function () {
-   //    var confermaBtn = document.getElementById("conferma-btn");
+   // disabilita bottone
+   document.addEventListener("DOMContentLoaded", function () {
+      var confermaBtn = document.getElementById("conferma-btn");
+      var totalElement = document.querySelector("li.total-price");
+      var totalText = totalElement.textContent;
+      var totalValue = totalText.replace("Totale", "").replace("€", "").trim();
 
-   //    console.log(idCorriere);
-   //    console.log(idPagamento);
-   //    console.log(idIndirizzo);
-   //    if (idCorriere == 0 || idPagamento == 0 || idIndirizzo == 0) {
-   //       confermaBtn.disabled = true;
-   //    } else {
-   //       confermaBtn.disabled = false;
-   //       confermaBtn.addEventListener("click", function () {
-   //          //concludi il pagamento
-   //          // window.location.href = "checkout.php";
-   //          console.log("ciao");
-   //       });
-   //    }
-   // });
+      if (totalValue == 0) {
+         confermaBtn.disabled = true;
+      }
+   });
 </script>

@@ -18,17 +18,6 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
     require "include/php-utils/check-quantita-magazzino.php";
 
 
-    // if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    //     $coupon = $_POST['coupon'];
-    //     $tmp = $connessione->query("SELECT * FROM Coupon WHERE codice_coupon = '{$coupon}' LIMIT 1")->fetch_all(MYSQLI_ASSOC);
-
-    //     if (empty($tmp)) {
-    //         // Alert::OpenAlert("Il Coupon inserito non esiste", "carrello.php");
-    //     }
-    // }
-
-
-
     $main = new Template("skins/template/dtml/index_v2.html");
     $body = new Template("skins/template/check-out.html");
 
