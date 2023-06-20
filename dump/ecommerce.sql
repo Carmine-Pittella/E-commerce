@@ -303,8 +303,8 @@ VALUES
 ('jeans', 'descrizione bla bla', 99.99, 'uomo', 3, 5, NULL),
 ('pantalone', 'descrizione bla bla', 199.99, 'uomo', 3, 5, NULL),
 ('pantalone', 'descrizione bla bla', 199.99, 'uomo', 3, 5, NULL),
-('camicia', 'descrizione bla bla', 44.99, 'uomo', 6, 5, NULL);
-('camicia semplice', 'descrizione bla bla', 44.99, 'donna', 6, 8, NULL);
+('camicia', 'descrizione bla bla', 44.99, 'uomo', 6, 5, NULL),
+('camicia semplice', 'descrizione bla bla', 44.99, 'donna', 6, 8, NULL),
 ('camicia semplice', 'descrizione bla bla', 44.99, 'donna', 6, 8, NULL); 
 
 -- Inserimento di valori casuali nella tabella Prodotto_Preferito
