@@ -14,6 +14,9 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
     $subtotal = 0.0;
     // $coupon = "";
 
+    // controllo di sicurezza per le quantità nel magazzino
+    require "include/php-utils/check-quantita-magazzino.php";
+
 
     // if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //     $coupon = $_POST['coupon'];
