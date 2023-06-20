@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_pagamento = $_POST['pagamento'];
     $totale = $_POST['totale'];
     $id_coupon = 1; // questo va cambiato
-    $id_ordine;
+    $id_ordine; // serve dopo
 
     // giorni di consegna
     $corriere = $connessione->query("SELECT giorni_consegna FROM Corriere WHERE id = {$id_corriere} LIMIT 1")->fetch_all(MYSQLI_ASSOC);
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($oid->execute()) {
         $id_ordine = $oid->insert_id;
     } else {
-        Alert::OpenAlert("Ops! qualcosa è andato storto", "add-indirizzo.php");
+        echo "Errore inserimento in Ordine: " . $oid->error;
     }
 
     // creazione Oggetti Ordine
