@@ -48,14 +48,6 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
         // messaggio
         $request->setContent("MESSAGGIO", $r['richiesta']);
-
-
-
-
-
-
-
-        //
     }
 
     $body->setContent("DATA_CONSEGNA", $res[0]['data_spedizione']);

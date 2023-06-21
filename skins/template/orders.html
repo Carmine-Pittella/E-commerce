@@ -35,20 +35,30 @@
                 </table>
             </div>
         </div>
+
+    </div>
+    <div class="container" style="text-align: center; margin-top: 50px;">
+        <button id="my-button" class="btn btn-primary">Il mio bottone</button>
     </div>
     </div>
+
 </body>
+
 </html>
 
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
     $('.item-block').css('cursor', 'pointer');
-    
-    $().ready(function(){
-        $('#order-table').on('click', 'tbody > tr' ,function(event){   
+
+    $().ready(function () {
+        $('#order-table').on('click', 'tbody > tr', function (event) {
             let ID = $(this).find('#item-code').text();
-            window.location.href = 'dettagli-ordine.php?id_ordine='+ID;
+            window.location.href = 'dettagli-ordine.php?id_ordine=' + ID;
         });
+    });
+
+    document.getElementById("my-button").addEventListener("click", function() {
+    window.location.href = "recensioni.php";
     });
 </script>
