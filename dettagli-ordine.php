@@ -19,6 +19,7 @@ if (isset($_GET['id_ordine'])) {
 
 $main = new Template("skins/template/dtml/index_v2.html");
 $body = new Template("skins/template/order-details.html");
+$recensione = new Template("skins/template/dtml/dtml_items/lasciaRecensione.html");
 
 if (isset($_SESSION['auth']) && $_SESSION['auth']) {
     // utente autenticato
@@ -69,6 +70,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
         // Prodotto
         $prodotto = $connessione->query("SELECT id, nome_prodotto, prezzo FROM Prodotto WHERE id = {$ogg['id_prodotto']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
+        $prodotto_ordine->setContent("ID_PRODOTTO", $prodotto[0]['id']);
         $prodotto_ordine->setContent("NOME", $prodotto[0]['nome_prodotto']);
         $prodotto_ordine->setContent("PREZZO", $prodotto[0]['prezzo']);
         $prodotto_ordine->setContent("QUANTITA", $ogg['quantita_prodotto']);
@@ -87,12 +89,13 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
 
 
 
+
     //
 } else {
     Alert::OpenAlert("Devi effettuare l'accesso", "login.php");
     // header("Location: login.php");
 }
 
-
+$body->setContent('LASCIA_RECENSIONE_AREA', $recensione->get());
 $main->setContent('body', $body->get());
 $main->close();
