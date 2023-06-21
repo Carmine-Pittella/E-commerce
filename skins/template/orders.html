@@ -34,9 +34,6 @@
                     </tbody>
                 </table>
             </div>
-            <div class="container" style="text-align: center; margin-top: 50px;" style="margin-top: 30px;">
-                <button id="my-button" class="lallero">RECENSISCI I PRODOTTI ACQUISTATI</button>
-         </div>
         </div>
 
     </div>
@@ -57,9 +54,5 @@
             let ID = $(this).find('#item-code').text();
             window.location.href = 'dettagli-ordine.php?id_ordine=' + ID;
         });
-    });
-
-    document.getElementById("my-button").addEventListener("click", function() {
-    window.location.href = "recensioni.php";
     });
 </script>
