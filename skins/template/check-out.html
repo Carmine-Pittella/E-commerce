@@ -116,6 +116,7 @@
    let idPagamento = 0;
    let idIndirizzo = 0;
    let idCoupon = 0;
+   let totaleCarrello = 0;
 
    // corriere
    function selectCorriere(row, id_corriere, costo) {
@@ -126,10 +127,7 @@
       row.querySelector("input[type='radio']").checked = true;
       idCorriere = id_corriere;
 
-      var totalElement = document.querySelector("li.total-price");
-      var totalText = totalElement.textContent;
-      var totalValue = totalText.replace("Totale", "").replace("€", "").trim();
-      let nuovoPrezzo = parseInt(totalValue) + parseFloat(costo);
+      let nuovoPrezzo = totaleCarrello + parseFloat(costo);
       var price = document.querySelector(".total-price");
       var priceElement = price.querySelector("span");
       var newPrice = nuovoPrezzo + " €";
@@ -245,4 +243,13 @@
          confermaBtn.disabled = true;
       }
    });
+
+   // memorizza il totale del carrello
+   function SalvaTotaleCarrello() {
+      var totalElement = document.querySelector("li.total-price");
+      var totalText = totalElement.textContent;
+      var totalValue = totalText.replace("Totale", "").replace("€", "").trim();
+      totaleCarrello = parseFloat(totalValue);
+   }
+   SalvaTotaleCarrello();
 </script>
