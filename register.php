@@ -30,6 +30,7 @@ if (isset($_GET['error'])) {
             Alert::OpenAlert("Ops! qualcosa è andato storto :(", "login.php");
             break;
         case 3:
+            require "include/php-utils/trasferimento_dati_sessione.php";
             Alert::OpenAlert("Registrazione avvenuta con successo", "login.php");
             break;
     }
