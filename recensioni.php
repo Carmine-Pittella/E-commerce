@@ -8,9 +8,6 @@ session_start();
 
 global $connessione;
 
-$main = new Template("skins/template/dtml/index_v2.html");
-$body = new Template("skins/template/profile.html");
-
 if (isset($_SESSION['auth']) && $_SESSION['auth']) {
     // utente autenticato
     $userid = $_SESSION['utente']['id'];

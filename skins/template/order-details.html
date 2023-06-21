@@ -137,8 +137,6 @@
     function SelectProduct(id_prodotto) {
         idProdotto = id_prodotto;
 
-
-        // query che vede se ho già lasciato il feedback
         let xhr = new XMLHttpRequest();
         xhr.open("POST", "include/php-utils/check_recensione_lasciata.php", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -156,11 +154,18 @@
                     var textareaElement = document.getElementById("messaggioAss");
                     textareaElement.value = responseObject.messaggio;
                     disableContactForm();
+                } else {
+                    enableContactForm();
+                    // imposto i valori standard
+                    stelle = 1;
+                    const valutazione = document.getElementById('star1');
+                    valutazione.checked = true;
+                    var textareaElement = document.getElementById("messaggioAss");
+                    textareaElement.value = "";
                 }
             }
         };
         xhr.send("id_prodotto=" + encodeURIComponent(id_prodotto));
-
         updateContactFormVisibility();
     }
 
@@ -184,11 +189,49 @@
         });
     });
 
+    // invia feedback
+    function InviaFeedback() {
+        var textareaElement = document.getElementById("messaggioAss");
+        if (textareaElement.value) {
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "include/php-utils/invia_recensione.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Gestisci la risposta qui
+                    alert("Recensione inviata con successo!");
+                }
+            };
+            xhr.send("id_prodotto=" + encodeURIComponent(idProdotto) + 
+                    "&testo=" + encodeURIComponent(textareaElement.value) + 
+                    "&valutazione=" + encodeURIComponent(stelle));
+            window.location.href = window.location.href;
+
+
+
+
+
+
+
+
+            //
+        } else {
+            alert("Inserisci un testo nella recensione");
+        }
+    }
+
     // disabilita il form recensione
     function disableContactForm() {
         var contactForm = document.querySelector(".contact-form");
         contactForm.style.pointerEvents = "none"; // Disabilita gli eventi del mouse sul div
         contactForm.style.opacity = "0.6"; // Opacità ridotta per indicare che il div è disabilitato
+    }
+
+    // Abilita il form recensione
+    function enableContactForm() {
+        var contactForm = document.querySelector(".contact-form");
+        contactForm.style.pointerEvents = "auto"; // Abilita gli eventi del mouse sul div
+        contactForm.style.opacity = "1"; // Ripristina l'opacità normale
     }
     
 
