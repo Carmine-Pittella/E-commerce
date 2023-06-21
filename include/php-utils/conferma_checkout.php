@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_corriere = $_POST['corriere'];
     $id_pagamento = $_POST['pagamento'];
     $totale = $_POST['totale'];
-    $id_coupon = 1; // questo va cambiato
+    $id_coupon = $_POST['coupon'];
     $id_ordine; // serve dopo
 
     // giorni di consegna
@@ -28,8 +28,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data_spedizione = $data_spedizione->format("Y-m-d");
 
     // creazione dell'ordine
-    $oid = $connessione->prepare("INSERT INTO Ordine (`id_utente`, `id_corriere`, `id_coupon`, `id_metodo_pagamento`, `id_indirizzo_spedizione`, `data_ordine`, `data_spedizione`, `prezzo_ordine`)
+    if ($id_coupon == 0) {
+        $oid = $connessione->prepare("INSERT INTO Ordine (`id_utente`, `id_corriere`, `id_coupon`, `id_metodo_pagamento`, `id_indirizzo_spedizione`, `data_ordine`, `data_spedizione`, `prezzo_ordine`)
+                                    VALUES (?, ?, NULL, ?, ?, ?, ?, ?)");
+    } else {
+        $oid = $connessione->prepare("INSERT INTO Ordine (`id_utente`, `id_corriere`, `id_coupon`, `id_metodo_pagamento`, `id_indirizzo_spedizione`, `data_ordine`, `data_spedizione`, `prezzo_ordine`)
                                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    }
     $oid->bind_param("iiiiisss", $userid, $id_corriere, $id_coupon, $id_pagamento, $id_indirizzo, $data_ordine, $data_spedizione, $totale);
     if ($oid->execute()) {
         $id_ordine = $oid->insert_id;

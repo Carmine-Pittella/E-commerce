@@ -24,6 +24,13 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
     // tiene aggiornato il numero di oggetti presenti nel carrello
     require "include/php-utils/preferiti_carrello.php";
 
+
+    // coupon POST
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $regione = $_POST['coupon'];
+        echo $regione;
+    }
+
     // indirizzi
     $res = $connessione->query("SELECT * FROM Indirizzo_Spedizione WHERE id_utente = {$userid}")->fetch_all(MYSQLI_ASSOC);
     foreach ($res as $r) {
