@@ -154,6 +154,7 @@ CREATE TABLE IF NOT EXISTS Messaggio_Assistenza (
     id_utente INT NOT NULL,
     richiesta TEXT(500),
     risposta TEXT(500) DEFAULT NULL,
+    data_richiesta DATE NOT NULL,
     FOREIGN KEY (id_utente) REFERENCES Utente(id)
 );
 
@@ -444,12 +445,12 @@ VALUES
 -- Inserimento di valori nella tabella Messaggio_Assistenza
 -- utente con id1 ('Mario', 'Rossi', 'mario.rossi@example.com', 'password123'),
 -- utente con id2 ('Giulia', 'Bianchi', 'giulia.bianchi@example.com', 'pass1234'),
-INSERT INTO Messaggio_Assistenza (id,id_utente,richiesta,risposta) VALUES
-(1,1,'quando sarà disponibile la prossima promozione?','la prossima promozione sarà una promozione sui prodotti estivi e sarà disponibile fra 3 mesi'),
-(2,1,'saranno mai venduti occhiali da sole?',NULL),
-(3,1,'saranno mai venduti bracciali?',NULL),
-(4,2,'ho eseguito un ordine 3 mesi fa, è possibile eseuguire un reso?',NULL),
-(5,2,'ho appena eseguito un ordine, è possibile annullarlo?',NULL);
+INSERT INTO Messaggio_Assistenza (id,id_utente,richiesta,risposta, data_richiesta) VALUES
+(1,1,'quando sarà disponibile la prossima promozione?','la prossima promozione sarà una promozione sui prodotti estivi e sarà disponibile fra 3 mesi', '2023-06-07'),
+(2,1,'saranno mai venduti occhiali da sole?',NULL, '2023-06-07'),
+(3,1,'saranno mai venduti bracciali?',NULL, '2023-06-07'),
+(4,2,'ho eseguito un ordine 3 mesi fa, è possibile eseuguire un reso?',NULL, '2023-06-07'),
+(5,2,'ho appena eseguito un ordine, è possibile annullarlo?',NULL, '2023-06-07');
 
 -- Inserimento di valori casuali nella tabella Service
 INSERT INTO Service (id, script, description) VALUES

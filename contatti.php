@@ -22,9 +22,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userid = $_SESSION['utente']['id'];
         $messaggio = $_POST['messaggioAss'];
 
-        $oid = $connessione->prepare("INSERT INTO Messaggio_Assistenza (`id_utente`, `richiesta`, `risposta`)
-                                    VALUES (?, ?, NULL)");
-        $oid->bind_param("is", $userid, $messaggio);
+        $oggi = new DateTime();
+        $oggi_str = $oggi->format('Y-m-d');
+
+        $oid = $connessione->prepare("INSERT INTO Messaggio_Assistenza (`id_utente`, `richiesta`, `risposta`, `data_richiesta`)
+                                    VALUES (?, ?, NULL, ?)");
+        $oid->bind_param("iss", $userid, $messaggio, $oggi_str);
 
         if ($oid->execute()) {
             Alert::OpenAlert("Messaggio inviato con successo", "contatti.php");
