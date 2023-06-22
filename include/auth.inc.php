@@ -38,44 +38,30 @@ class Auth
                     $_SESSION['utente'] = $data;
                     $_SESSION['auth'] = true;
 
-                    
-                    $id= $_SESSION['utente']['id'];
-                    $res = $connessione->query("SELECT * FROM User_has_ugroup WHERE id_utente = '$id'")->fetch_all(MYSQLI_ASSOC);
+                    $id = $_SESSION['utente']['id'];
+                    $res = $connessione->query("SELECT * FROM User_has_ugroup WHERE id_utente = {$id} LIMIT 1")->fetch_all(MYSQLI_ASSOC);
                     $UgroupId = $res[0]['id_ugroup'];
+
+                    echo "<script> console.log($UgroupId) </script>";
+
                     //caso Administrator
-                    if($UgroupId===1){
+                    if ($UgroupId === "1") {
+                        $_SESSION['admin'] = true;
                         $res = $connessione->query("SELECT Service.* FROM Ugroup_has_service JOIN Service ON Ugroup_has_service.service_id = Service.id WHERE Ugroup_has_service.ugroup_id = '$UgroupId'")->fetch_all(MYSQLI_ASSOC);
                         $script = $res[0]['script'];
-                        $path = "location:http://localhost/E-commerce/"."porcaPuttana";
+                        $path = "location:http://localhost/E-commerce/" . $script;
                         header($path);
                         exit();
                     }
                     //caso User
-                    else{
+                    else {
                         $res = $connessione->query("SELECT Service.* FROM Ugroup_has_service JOIN Service ON Ugroup_has_service.service_id = Service.id WHERE Ugroup_has_service.ugroup_id = '$UgroupId'")->fetch_all(MYSQLI_ASSOC);
                         $script = $res[0]['script'];
-                        $path = "location:http://localhost/E-commerce/"."porcaMadonna";
+                        require "include/php-utils/trasferimento_dati_sessione.php";
+                        $path = "location:http://localhost/E-commerce/" . $script;
                         header($path);
                         exit();
                     }
-
-                    require "include/php-utils/trasferimento_dati_sessione.php";
-
-                    header("Location: profile.php");
-
-                    // // qui "carica i servizi di cui dispone l'utente che ha fatto l'accesso"
-                    // $result = $connessione->query("select user.username, user_role.id_role, service.name, service.script
-                    //     from user
-                    //     left join user_role
-                    //     on user_role.username = user.username
-                    //     left join role_service
-                    //     on role_service.id_role = user_role.id_role
-                    //     left join service
-                    //     on service.id = role_service.id_service
-                    //     where user.username = '{$_POST['username']}'");
-
-
-
 
                     if (!$result) {
                         // errore durante l'esecuzione della query (creare una pagine ERRORE da visualizzare)

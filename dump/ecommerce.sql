@@ -455,7 +455,7 @@ INSERT INTO Messaggio_Assistenza (id,id_utente,richiesta,risposta, data_richiest
 -- Inserimento di valori casuali nella tabella Service
 INSERT INTO Service (id, script, description) VALUES
 (1, 'admin.php', NULL),
-(2, 'index.php', NULL);
+(2, 'profile.php', NULL);
 
 -- Inserimento di valori casuali nella tabella Ugroup
 INSERT INTO Ugroup (id, name, description) VALUES
