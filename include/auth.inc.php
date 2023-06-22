@@ -33,6 +33,7 @@ class Auth
                     exit;
                 } else {
                     // utente trovato
+
                     $data = $result->fetch_assoc();
                     $_SESSION['utente'] = $data;
                     $_SESSION['auth'] = true;
