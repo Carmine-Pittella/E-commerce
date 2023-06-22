@@ -3,7 +3,7 @@
     require "include/dbms.inc.php";
     global $connessione;
 
-
+    if (isset($_SESSION['admin']) && $_SESSION['admin']) {
     /***** CASO POST PER FILTRI *****/
     if (isset($_POST['valore'])){
 
@@ -130,3 +130,10 @@
         }
         return $strquery;
     }
+}
+//display error 403
+else{
+    $temp = new Template("skins/template/dtml/error403.html");
+    $temp->close();
+  
+  }

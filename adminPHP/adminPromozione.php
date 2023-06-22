@@ -3,7 +3,7 @@ require "../include/template2.inc.php";
 require "../include/dbms.inc.php";
 global $connessione;
 
-
+if (isset($_SESSION['admin']) && $_SESSION['admin']) {
 // display per l'applicazione di una promo
 if(isset($_GET['prom_id'])){
     $page = new Template("../skins/template/adminPromozioni.html");
@@ -95,4 +95,11 @@ if( (!isset($_GET['prom_id']))&&(!isset($_GET['prom_idDlt']))&&(!isset($_POST['f
     }
     echo ($admin_container2->get());
 }
+}
+//display error 403
+else{
+    $temp = new Template("../skins/template/dtml/error403.html");
+    $temp->close();
+  
+  }
     

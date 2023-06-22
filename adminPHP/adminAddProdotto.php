@@ -7,7 +7,7 @@ require_once "../include/php-utils/global.php";
 
 global $connessione;
 
-
+if (isset($_SESSION['admin']) && $_SESSION['admin']) {
 //display della form per l'aggiunta di un prodotto
 if(isset($_GET['add'])){
     $template = new Template("../skins/template/adminAddProdotto.html");
@@ -108,6 +108,13 @@ if(isset($_POST['formCategoria'])){
     }
 
 }
+}
+//display error 403
+else{
+    $temp = new Template("../skins/template/dtml/error403.html");
+    $temp->close();
+  
+  }
 
 
 

@@ -5,7 +5,7 @@ require "../include/template2.inc.php";
 require "../include/dbms.inc.php";
 global $connessione;
 
-
+if (isset($_SESSION['admin']) && $_SESSION['admin']) {
  //display form per la modifica della marca
  if(isset($_REQUEST['mc_id'])){
     $idC = $_REQUEST['mc_id'];
@@ -100,4 +100,10 @@ if( (!isset($_REQUEST['mc_id']))&&(!isset($_POST['NAME_FIELD']))&&(!isset($_GET[
     $admin_container ->close();
 }
 
+}
+//display error 403
+else{
+  $temp = new Template("../skins/template/dtml/error403.html");
+  $temp->close();
 
+}

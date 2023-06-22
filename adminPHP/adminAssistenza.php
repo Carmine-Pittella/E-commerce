@@ -3,7 +3,7 @@ require "../include/template2.inc.php";
 require "../include/dbms.inc.php";
 global $connessione;
 
-
+if (isset($_SESSION['admin']) && $_SESSION['admin']) {
 // display per la form di risposta
 if (isset($_GET['r'])) {
     $domanda = $_GET['r'];
@@ -42,14 +42,10 @@ if ((!isset($_GET['r'])) && (!isset($_POST['formRisposta']))) {
     }
     $admin_container3->close();
 }
-/*
-adminPHP/adminAssistenza.php?i=<[ID]>$r=<[RICHIESTA]>
-
-CREATE TABLE IF NOT EXISTS Messaggio_Assistenza (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    id_utente INT NOT NULL,
-    richiesta TEXT(500),
-    risposta TEXT(500) DEFAULT NULL,
-    FOREIGN KEY (id_utente) REFERENCES Utente(id)
-);
-*/
+}
+//display error 403
+else{
+    $temp = new Template("../skins/template/dtml/error403.html");
+    $temp->close();
+  
+  }

@@ -6,6 +6,8 @@ require "../include/dbms.inc.php";
 global $connessione;
 global $idItem;
 
+
+if (isset($_SESSION['admin']) && $_SESSION['admin']) {
 // chiata per salvare la modifica di un prodotto nel magazzino
 if(isset($_POST['formNome'])){
     
@@ -151,3 +153,10 @@ function selectGenere($str1) {
 
     return $toret;
 }
+}
+//display error 403
+else{
+    $temp = new Template("../skins/template/dtml/error403.html");
+    $temp->close();
+  
+  }

@@ -97,3 +97,9 @@ if (isset($_SESSION['admin']) && $_SESSION['admin']) {
     $admin_container->close();
   }
 }
+//display error 403
+else{
+  $temp = new Template("../skins/template/dtml/error403.html");
+  $temp->close();
+
+}

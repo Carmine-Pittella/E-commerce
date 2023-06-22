@@ -3,9 +3,10 @@ require "../include/template2.inc.php";
 require "../include/dbms.inc.php";
 
 require_once "../include/php-utils/global.php";
-// variabile _IMG_PATH  skins/template/img/        products/nomeimg.png
+// variabile _IMG_PATH = skins/template/img/     
 global $connessione;
 
+if (isset($_SESSION['admin']) && $_SESSION['admin']) {
 //img è l'id dell'ultimo elemento inserito, la chiamata viene da adminAddProdotto
 if(isset($_GET['img'])){
     $idP = $_GET['img'];
@@ -90,49 +91,10 @@ function popolaRullino($idProduct,$connessione){
 
 }
 
-
-////////////// http://localhost/E-commerce/adminPHP/adminImmaginiProdotto.php?img=17&no=1
-
-/*
-
-                    <div class="product-thumbs">
-                        <div class="product-thumbs-track ps-slider owl-carousel owl-loaded owl-drag">
-                           <div class="owl-stage-outer">
-                              <div class="owl-stage">
-                                 <[foreach]> <[RULLINO_FOTO]> <[/foreach]>
-                              </div>
-                           </div>
-                           <div class="owl-nav">
-                              <button type="button" role="presentation" class="owl-prev">
-                                 <i class="fa fa-angle-left"></i></button
-                              ><button type="button" role="presentation" class="owl-next disabled">
-                                 <i class="fa fa-angle-right"></i>
-                              </button>
-                           </div>
-                           <div class="owl-dots disabled"></div>
-                        </div>
-                     </div>
-
-    /********* popolamento rullino foto *********/
-    /*
-$res = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$product_id};")->fetch_all(MYSQLI_ASSOC);
-$save_first = false;
-foreach ($res as $r) {
-    if (!$save_first) {
-        $body->setContent("FOTO_PRINCIPALE_PRODOTTO", _IMG_PATH . $r['url_immagine']);
-        $save_first = true;
-    }
-    $rullino_foto = new Template("skins/template/dtml/dtml_items/SequenzaFotoItem.html");
-    $rullino_foto->setContent("URL_IMMAGINE", _IMG_PATH . $r['url_immagine']);
 }
-$body->setContent("RULLINO_FOTO", $rullino_foto->get());
-
-<div class="owl-item active" style="width: 103.333px; margin-right: 10px">
-   <div class="pt" data-imgbigurl="<[URL_IMMAGINE]>">
-      <img src="<[URL_IMMAGINE]>" alt="rullino" />
-   </div>
-</div>
-
-
-
-*/
+//display error 403
+else{
+    $temp = new Template("../skins/template/dtml/error403.html");
+    $temp->close();
+  
+  }
