@@ -38,9 +38,9 @@ class Auth
                     $_SESSION['utente'] = $data;
                     $_SESSION['auth'] = true;
 
-
+                    
                     $id= $_SESSION['utente']['id'];
-                    $res = $connessione->query("SELECT * FROM User_has_ugroup WHERE 'id_utente' = {$id}")->fetch_all(MYSQLI_ASSOC);
+                    $res = $connessione->query("SELECT * FROM User_has_ugroup WHERE id_utente = '$id'")->fetch_all(MYSQLI_ASSOC);
                     $UgroupId = $res[0]['id_ugroup'];
                     //caso Administrator
                     if($UgroupId===1){
@@ -54,15 +54,14 @@ class Auth
                     else{
                         $res = $connessione->query("SELECT Service.* FROM Ugroup_has_service JOIN Service ON Ugroup_has_service.service_id = Service.id WHERE Ugroup_has_service.ugroup_id = '$UgroupId'")->fetch_all(MYSQLI_ASSOC);
                         $script = $res[0]['script'];
-                        //$path = "location:http://localhost/E-commerce/"."porcaMadonna";
-                        //header($path);
-                        //exit();
-                        echo "<div>  '$UgroupId' </div>";
+                        $path = "location:http://localhost/E-commerce/"."porcaMadonna";
+                        header($path);
+                        exit();
                     }
 
-                    //require "include/php-utils/trasferimento_dati_sessione.php";
+                    require "include/php-utils/trasferimento_dati_sessione.php";
 
-                   // header("Location: profile.php");
+                    header("Location: profile.php");
 
                     // // qui "carica i servizi di cui dispone l'utente che ha fatto l'accesso"
                     // $result = $connessione->query("select user.username, user_role.id_role, service.name, service.script
