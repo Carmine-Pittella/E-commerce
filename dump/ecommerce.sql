@@ -453,24 +453,34 @@ INSERT INTO Messaggio_Assistenza (id,id_utente,richiesta,risposta) VALUES
 
 -- Inserimento di valori casuali nella tabella Service
 INSERT INTO Service (id, script, description) VALUES
-(1, 'dashboard.php', NULL),
+(1, 'admin.php', NULL),
 (2, 'index.php', NULL);
 
 -- Inserimento di valori casuali nella tabella Ugroup
 INSERT INTO Ugroup (id, name, description) VALUES
 (1, 'Administrator', NULL),
-(2, 'User', NULL),
-(3, 'WebMaster', 'All the services');
+(2, 'User', NULL);
 
 -- Inserimento di valori casuali nella tabella Ugroup_has_service
 INSERT INTO Ugroup_has_service (ugroup_id, service_id) VALUES
 (1, 1),
-(2, 2),
-(3, 1),
-(3, 2);
+(2, 2);
 
 -- Inserimento di valori casuali nella tabella User_has_ugroup
 INSERT INTO User_has_ugroup (id, id_utente, id_ugroup) VALUES
 (1, 1, 1),
-(2, 2, 2);
+(2, 2, 2),
+(3, 3, 2),
+(4, 4, 2),
+(5, 5, 2);
+
+/*
+('Mario', 'Rossi', 'mario.rossi@example.com', 'password123'), ADMIN
+('Giulia', 'Bianchi', 'giulia.bianchi@example.com', 'pass1234'), USER
+('Luca', 'Verdi', 'luca.verdi@example.com', 'securepass'), USER
+('Martina', 'Gialli', 'martina.gialli@example.com', '123456'), USER
+('Simone', 'Neri', 'simone.neri@example.com', 'password456'); USER
+*/
+
+
 
