@@ -31,11 +31,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($id_coupon == 0) {
         $oid = $connessione->prepare("INSERT INTO Ordine (`id_utente`, `id_corriere`, `id_coupon`, `id_metodo_pagamento`, `id_indirizzo_spedizione`, `data_ordine`, `data_spedizione`, `prezzo_ordine`)
                                     VALUES (?, ?, NULL, ?, ?, ?, ?, ?)");
+        $oid->bind_param("iiiisss", $userid, $id_corriere, $id_pagamento, $id_indirizzo, $data_ordine, $data_spedizione, $totale);
     } else {
         $oid = $connessione->prepare("INSERT INTO Ordine (`id_utente`, `id_corriere`, `id_coupon`, `id_metodo_pagamento`, `id_indirizzo_spedizione`, `data_ordine`, `data_spedizione`, `prezzo_ordine`)
                                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $oid->bind_param("iiiiisss", $userid, $id_corriere, $id_coupon, $id_pagamento, $id_indirizzo, $data_ordine, $data_spedizione, $totale);
     }
-    $oid->bind_param("iiiiisss", $userid, $id_corriere, $id_coupon, $id_pagamento, $id_indirizzo, $data_ordine, $data_spedizione, $totale);
     if ($oid->execute()) {
         $id_ordine = $oid->insert_id;
     } else {
