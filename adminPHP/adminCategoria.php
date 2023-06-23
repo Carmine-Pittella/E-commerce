@@ -2,6 +2,7 @@
 require "../include/template2.inc.php";
 require "../include/dbms.inc.php";
 global $connessione;
+session_start();
 
 
 if (isset($_SESSION['admin']) && $_SESSION['admin']) {

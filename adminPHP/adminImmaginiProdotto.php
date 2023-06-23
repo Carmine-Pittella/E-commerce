@@ -5,6 +5,7 @@ require "../include/dbms.inc.php";
 require_once "../include/php-utils/global.php";
 // variabile _IMG_PATH = skins/template/img/     
 global $connessione;
+session_start();
 
 if (isset($_SESSION['admin']) && $_SESSION['admin']) {
 //img è l'id dell'ultimo elemento inserito, la chiamata viene da adminAddProdotto

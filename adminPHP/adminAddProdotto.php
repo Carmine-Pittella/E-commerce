@@ -6,6 +6,7 @@ require_once "../include/php-utils/global.php";
 // variabile _IMG_PATH  skins/template/img/        products/nomeimg.png
 
 global $connessione;
+session_start();
 
 if (isset($_SESSION['admin']) && $_SESSION['admin']) {
 //display della form per l'aggiunta di un prodotto
