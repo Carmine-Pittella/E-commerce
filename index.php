@@ -64,14 +64,6 @@ foreach ($res as $r) {
 }
 
 
-// selezionare le ultime 3 recensioni {
-
-// selezionare nome e cognome Utente
-// selezionare url_immagine del prodotto
-
-
-// }
-
 
 
 
