@@ -35,7 +35,7 @@ if(isset($_POST['formMarca'])){
 // display aggiungi una nuova marca
 if(isset($_GET['add'])){
   $add_template = new Template ("../skins/template/adminAggiungiCat_Mar.html");
-  $add_template->setContent("CAT_MAT", "aggiungi una nuova marca");
+  $add_template->setContent("CAT_MAR", "aggiungi una nuova marca");
   $add_template->setContent("NAME_FIELD","formAddMarca");
   $add_template->setContent("ACTION_FORM","adminMarche.php");
   $add_template->setContent("errore","");

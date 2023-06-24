@@ -53,7 +53,17 @@ if(isset($_FILES['formImage'])){
     
 }
 
-function displayImg($idProduct,$connessione){
+
+
+}
+//display error 403
+else{
+    $temp = new Template("../skins/template/dtml/error403.html");
+    $temp->close();
+  
+  }
+
+  function displayImg($idProduct,$connessione){
     $strTOReturn="";
     $str1 = '<div class="product-thumbs">
                 <div class="product-thumbs-track ps-slider owl-carousel owl-loaded owl-drag">
@@ -91,11 +101,3 @@ function popolaRullino($idProduct,$connessione){
     return $strTOReturn;
 
 }
-
-}
-//display error 403
-else{
-    $temp = new Template("../skins/template/dtml/error403.html");
-    $temp->close();
-  
-  }

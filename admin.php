@@ -83,6 +83,7 @@ function setItems($res,$connessione,$admin_container){
         $prodotto->setContent("MARCA_PRODOTTO", $marcaTmp[0]['nome_marca']);
         $prodotto->setContent("NOME_PRODOTTO", $r['nome_prodotto']);
         $prodotto->setContent("ID_PRODOTTO", $r['id']);
+        $prodotto->setContent("PREZZO",floatval($r['prezzo']));
         $admin_container->setContent('item', $prodotto->get());
     }
     return $admin_container;

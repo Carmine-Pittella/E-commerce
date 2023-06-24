@@ -23,7 +23,7 @@ if (isset($_POST['formRisposta'])) {
     $idRischiestaAss = $_POST['formIda'];
     $risposta = $_POST['formRisposta'];
     $connessione->query("UPDATE Messaggio_Assistenza SET risposta = '$risposta' WHERE id = '$idRischiestaAss'");
-    header("location:http://localhost/ecommerce/admin.php");
+    header("location:http://localhost/E-commerce/admin.php");
     exit();
 }
 

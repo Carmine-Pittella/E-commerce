@@ -36,7 +36,7 @@ if (isset($_SESSION['admin']) && $_SESSION['admin']) {
   // display aggiungi una nuova marca
   if (isset($_GET['add'])) {
     $add_template = new Template("../skins/template/adminAggiungiCat_Mar.html");
-    $add_template->setContent("CAT_MAT", "aggiungi una nuova categoria");
+    $add_template->setContent("CAT_MAR", "aggiungi una nuova categoria");
     $add_template->setContent("NAME_FIELD", "formAddCategoria");
     $add_template->setContent("ACTION_FORM", "adminCategoria.php");
     $add_template->setContent("errore", "");
@@ -53,7 +53,7 @@ if (isset($_SESSION['admin']) && $_SESSION['admin']) {
     } else {
       // caso in cui l'elemento già esiste
       $add_template = new Template("../skins/template/adminAggiungiCat_Mar.html");
-      $add_template->setContent("CAT_MAT", "aggiungi una nuova categoria");
+      $add_template->setContent("CAT_MAR", "aggiungi una nuova categoria");
       $add_template->setContent("NAME_FIELD", "formAddCategoria");
       $add_template->setContent("ACTION_FORM", "adminCategoria.php");
       $add_template->setContent("errore", ' <label style="color: red;">categoria già esistente</label>');

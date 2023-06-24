@@ -124,8 +124,15 @@ else{
 }
 
 
+}
+//display error 403
+else{
+    $temp = new Template("../skins/template/dtml/error403.html");
+    $temp->close();
+  
+  }
 
-function selectGenere($str1) {
+  function selectGenere($str1) {
     $toret = '';
     
     switch ($str1) {
@@ -154,10 +161,3 @@ function selectGenere($str1) {
 
     return $toret;
 }
-}
-//display error 403
-else{
-    $temp = new Template("../skins/template/dtml/error403.html");
-    $temp->close();
-  
-  }
