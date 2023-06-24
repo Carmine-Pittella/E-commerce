@@ -39,11 +39,41 @@ if (!empty($res)) {
     $idTmp = $res3[0]['id'];
     $res3 = $connessione->query("SELECT * FROM Immagine_Prodotto WHERE id_prodotto = '$idTmp'")->fetch_all(MYSQLI_ASSOC);
     $pathImg = $res3[0]['url_immagine'];
-    $body->setContent("SET_IMG",$pathImg);
-
-    //products/M-element-longshirt-front-black.jpg
-    //SET_IMG
+    $body->setContent("SET_IMG", $pathImg);
 }
+
+$res = $connessione->query("SELECT * FROM Recensione ORDER BY data_recensione LIMIT 3;")->fetch_all(MYSQLI_ASSOC);
+foreach ($res as $r) {
+    $feedback = new Template("skins/template/dtml/dtml_items/ultime_3_recensioniItem.html");
+
+    // elementi recensione
+    $feedback->setContent("DATA_RECENSIONE", $r['data_recensione']);
+    $feedback->setContent("STELLE", $r['valutazione']);
+    $feedback->setContent("TESTO_RECENSIONE", $r['testo_recensione']);
+    $feedback->setContent("ID_PRODOTTO", $r['id_prodotto']);
+
+    // dati utente
+    $utente = $connessione->query("SELECT nome, cognome FROM Utente WHERE id = {$r['id_utente']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
+    $feedback->setContent("NOME_COGNOME_UTENTE", $utente[0]['nome'] . " " . $utente[0]['cognome']);
+
+    // url_immagine
+    $img = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$r['id_prodotto']} LIMIT 1;")->fetch_all(MYSQLI_ASSOC);
+    $feedback->setContent("URL_IMMAGINE", _IMG_PATH . $img[0]['url_immagine']);
+
+    $body->setContent("FEEDBACK", $feedback->get());
+}
+
+
+// selezionare le ultime 3 recensioni {
+
+// selezionare nome e cognome Utente
+// selezionare url_immagine del prodotto
+
+
+// }
+
+
+
 
 
 
