@@ -42,7 +42,7 @@ if (!empty($res)) {
     $body->setContent("SET_IMG", $pathImg);
 }
 
-$res = $connessione->query("SELECT * FROM Recensione ORDER BY data_recensione LIMIT 3;")->fetch_all(MYSQLI_ASSOC);
+$res = $connessione->query("SELECT * FROM Recensione ORDER BY data_recensione DESC LIMIT 3;")->fetch_all(MYSQLI_ASSOC);
 foreach ($res as $r) {
     $feedback = new Template("skins/template/dtml/dtml_items/ultime_3_recensioniItem.html");
 
