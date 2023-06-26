@@ -121,6 +121,7 @@
                         </tbody>
                     </table>
                 </div>
+                <label class="visibility-feedback">Clicca su un elemento per lasciare un recensione</label>
                 <[LASCIA_RECENSIONE_AREA]>
             </div>
         </div>
@@ -172,10 +173,13 @@
     // modulo recensione
     function updateContactFormVisibility() {
         var contactForm = document.querySelector(".contact-form");
+        var labelFeed = document.querySelector(".visibility-feedback");
         if (idProdotto == 0) {
         contactForm.style.display = "none"; // Nascondi il div
+        labelFeed.style.display = "block"; // Nascondi il div
         } else {
         contactForm.style.display = "block"; // Mostra il div
+        labelFeed.style.display = "none"; // Mostra il div
         }
     }
     updateContactFormVisibility();

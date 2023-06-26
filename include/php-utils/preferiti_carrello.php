@@ -43,6 +43,7 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
             $lista_carrello = new Template("skins/template/dtml/dtml_items/main/prodotti_lista_cart.html");
 
             $lista_carrello->setContent('QUANTITA_PROD', $cart_elem['quantita']);
+            $lista_carrello->setContent('TAGLIA_PROD', $cart_elem['taglia']);
 
             $res = $connessione->query("SELECT * FROM Prodotto WHERE id = {$cart_elem['id_prodotto']}")->fetch_all(MYSQLI_ASSOC);
             $lista_carrello->setContent('NOME_PROD', $res[0]['nome_prodotto']);
