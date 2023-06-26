@@ -35,8 +35,10 @@ foreach ($res as $r) {
     }
     $rullino_foto = new Template("skins/template/dtml/dtml_items/SequenzaFotoItem.html");
     $rullino_foto->setContent("URL_IMMAGINE", _IMG_PATH . $r['url_immagine']);
+
+    $body->setContent("RULLINO_FOTO", $rullino_foto->get());
 }
-$body->setContent("RULLINO_FOTO", $rullino_foto->get());
+
 
 
 
