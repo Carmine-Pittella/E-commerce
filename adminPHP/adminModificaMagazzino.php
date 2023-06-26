@@ -3,6 +3,8 @@
 
 require "../include/template2.inc.php";
 require "../include/dbms.inc.php";
+require "../include/php-utils/global.php";
+
 global $connessione;
 global $idItem;
 session_start();
@@ -45,10 +47,14 @@ if (isset($_SESSION['admin']) && $_SESSION['admin']) {
         if (isset($_GET['mod'])) {
             $modMagazzino = new Template("../skins/template/adminModificaMagazzino.html");
             $idItem = $_GET['mod'];
+
+            $img_product = $connessione->query("SELECT url_immagine FROM Immagine_Prodotto WHERE id_prodotto = {$idItem} LIMIT 1")->fetch_all(MYSQLI_ASSOC);
+            $modMagazzino->setContent("URL_IMMAGINE", "../skins/template/img/" . $img_product[0]['url_immagine']);
+
             $res = $connessione->query("SELECT * FROM Categoria")->fetch_all(MYSQLI_ASSOC);
 
             $res2 = $connessione->query(" SELECT Prodotto.id AS id_prodotto,Prodotto.nome_prodotto,Prodotto.descrizione,Prodotto.prezzo,Prodotto.genere,Categoria.id AS id_categoria,Categoria.nome_categoria,Marca.id AS id_marca,Marca.nome_marca,Magazzino.quantita,Magazzino.taglia
-        FROM Prodotto JOIN Categoria ON Prodotto.id_categoria = Categoria.id JOIN Marca ON Prodotto.id_marca = Marca.id JOIN Magazzino ON Prodotto.id = Magazzino.id_prodotto;")->fetch_all(MYSQLI_ASSOC);
+                    FROM Prodotto JOIN Categoria ON Prodotto.id_categoria = Categoria.id JOIN Marca ON Prodotto.id_marca = Marca.id JOIN Magazzino ON Prodotto.id = Magazzino.id_prodotto;")->fetch_all(MYSQLI_ASSOC);
             $resFiltered = array();
             foreach ($res2 as $row) {
                 if ($row['id_prodotto'] == $idItem) {
