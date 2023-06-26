@@ -33,7 +33,7 @@
 <!-- Banner Section End -->
 
 <!-- Deal Of The Week Section Begin-->
-<section>
+<section class="promozione">
    <div
       class="deal-of-week set-bg spad"
       data-setbg="skins/template/img/<[SET_IMG]>"
@@ -154,5 +154,15 @@
          gotoShop("bambino");
       });
    });
+
+   function updateContactFormVisibility() {
+      var contactForm = document.querySelector(".promozione");
+      var nomePromozione = document.querySelector(".promozione h2").innerHTML;
+      if (nomePromozione == "Promozione - ") {
+         contactForm.style.display = "none"; // Nascondi il div
+      } else {
+         contactForm.style.display = "block"; // Mostra il div
+      }
+   }
+   updateContactFormVisibility();
 </script>
-<!-- Latest Message End -->
