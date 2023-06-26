@@ -56,8 +56,6 @@ if (isset($_SESSION['auth']) && $_SESSION['auth']) {
             $lista_carrello->setContent('IMMAGINE_PROD', _IMG_PATH . $url_img[0]['url_immagine']);
 
             $cart->setContent('lista_prodotti', $lista_carrello->get());
-
-            // IO NON CAPISCO PERCHE COMPARE SEMPRE LO STESSO PRODOTTO NELLA GRAFICA PORCAMADONNA
         }
     }
 }
