@@ -137,6 +137,7 @@ function setQuery($arrCategoria,$arrGenere,$arrMarca,$arrPrezzo,$min,$max,$size,
     }
     if ($size !== "U") {
         $strquery = $strquery . " AND m.taglia =" . $escape . $size . $escape;
+        $strquery = $strquery . " AND m.quantita > 0";
     }
     return $strquery;
 }

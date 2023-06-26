@@ -78,10 +78,12 @@ if (isset($_POST['valore'])) {
     }
     if ($size !== "U") {
         $strquery = $strquery . " AND m.taglia =" . $escape . $size . $escape;
+        $strquery = $strquery . " AND m.quantita > 0";
     }
     //echo $strquery;
 
     /****** CHIAMATA DALLA HOME PAGE CON FILTRO Già SETTATO SU UN GENERE ******/
+    
     if (isset($v['changePage'])) {
 
 
@@ -127,6 +129,7 @@ if (isset($_POST['valore'])) {
     }
 
     /****** CHIAMATA CON FILTRO DALLO SHOP ******/
+    
     else {
 
         $res = $connessione->query("$strquery")->fetch_all(MYSQLI_ASSOC);
@@ -160,7 +163,7 @@ if (isset($_POST['valore'])) {
             echo $prodotto->get();
         }
     }
-
+    
 
     /****** CHIAMATA NORMALE ******/
 } else {
